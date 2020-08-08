@@ -3,10 +3,13 @@ import { Geometry } from './geometry/geometry';
 import { Plane } from './geometry/plane';
 import { vec3, mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
-import * as THREE from 'three';
+// import * as THREE from 'three';
 import { Scene } from './rendering/scene';
 import { SVGRenderer } from './rendering/svgRenderer';
 import { IFace, Face4 } from './geometry/face';
+import { IColor } from './geometry/color';
+import { Cube } from './geometry/cube';
+import { RubiksCube } from './puzzles/rubiksCube';
 
 
 let red: Geometry;
@@ -16,6 +19,8 @@ let purple: Geometry;
 let orange: Geometry;
 let yellow: Geometry;
 let camera: Camera = new Camera();
+let cube: Cube;
+let rubiksCube: RubiksCube;
 
 let renderer;
 let scene;
@@ -65,9 +70,12 @@ let whiteVerticies: vec3[] = [
   vec3.fromValues(1/2,-1/2,-1/2),
   vec3.fromValues(1/2,1/2,-1/2),
 ];
-let faces: IFace[] = [
-  new Face4(0, 1, 2, 3)
-];
+
+let faces = function(color: string): Face4[] {
+  return [
+    new Face4(0,1,2,3,null,{value: color})
+  ]
+}
 
 function setInputs() {
   if (camera && camera.matrix) {
@@ -118,22 +126,31 @@ export function getInputs() {
 }
 
 export function dothething() {
-  red = new Geometry(redVerticies, faces, {value: 'red'});
-  green = new Geometry(greenVerticies, faces, {value: 'green'});
-  blue = new Geometry(blueVerticies, faces, {value: 'blue'});
-  purple = new Geometry(whiteVerticies, faces, {value: 'purple'});
-  orange = new Geometry(orangeVerticies, faces, {value: 'orange'});
-  yellow = new Geometry(yellowVerticies, faces, {value: 'yellow'});
+  red = new Geometry(redVerticies, faces('#FF0000'));
+  green = new Geometry(greenVerticies, faces('#00FF00'));
+  blue = new Geometry(blueVerticies, faces('#0000FF'));
+  purple = new Geometry(whiteVerticies, faces('#FF00FF'));
+  orange = new Geometry(orangeVerticies, faces('#FFA500'));
+  yellow = new Geometry(yellowVerticies, faces('#FFFF00'));
 
   scene = new Scene();
   renderer = new SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  scene.add(green);
-  scene.add(blue);
-  scene.add(red);
-  scene.add(purple);
-  scene.add(orange);
-  scene.add(yellow);
+  const start = new Date().getTime();
+  rubiksCube = new RubiksCube(3);
+  const end = new Date().getTime();
+  console.log(end - start);
+
+  rubiksCube.stickers.forEach(sticker => {
+    scene.add(sticker);
+  })
+
+  // scene.add(green);
+  // scene.add(blue);
+  // scene.add(red);
+  // scene.add(purple);
+  // scene.add(orange);
+  // scene.add(yellow);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -143,7 +160,7 @@ export function dothething() {
 
 document.addEventListener("DOMContentLoaded", function (event) {
   dothething();
-  threejs();
+  // threejs();
 });
 
 export function svgStep() {
@@ -153,56 +170,58 @@ export function svgStep() {
   purple.rotate(Math.PI/16, [1,1,0]);
   orange.rotate(Math.PI/16, [1,1,0]);
   yellow.rotate(Math.PI/16, [1,1,0]);
+  // cube.rotate(Math.PI/16, [1,1,0]);
+
   renderer.render(scene, camera);
 }
 
-function threejs() {
-  var scene = new THREE.Scene();
-  var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+// function threejs() {
+//   var scene = new THREE.Scene();
+//   var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
 
-  var renderer = new THREE.WebGLRenderer();
-  renderer.setSize(width, height);
-  document.getElementById('threejs').appendChild(renderer.domElement);
+//   var renderer = new THREE.WebGLRenderer();
+//   renderer.setSize(width, height);
+//   document.getElementById('threejs').appendChild(renderer.domElement);
 
-  var origin = new THREE.Object3D();
+//   var origin = new THREE.Object3D();
 
-  var redGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-  var redMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000, side: THREE.DoubleSide });
-  // redGeo.translate(planewidth/2, 0, 0);
-  var redMesh = new THREE.Mesh(redGeo, redMaterial);
-  redMesh.translateZ(planewidth/2);
+//   var redGeo = new THREE.PlaneGeometry(planewidth, planewidth);
+//   var redMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000, side: THREE.DoubleSide });
+//   // redGeo.translate(planewidth/2, 0, 0);
+//   var redMesh = new THREE.Mesh(redGeo, redMaterial);
+//   redMesh.translateZ(planewidth/2);
 
-  var greenGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-  greenGeo.rotateX(Math.PI/2);
-  var greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00, side: THREE.DoubleSide });
-  var greenMesh = new THREE.Mesh(greenGeo, greenMaterial);
-  greenMesh.translateY(planewidth/2);
-  // greenGeo.translate(planewidth/2, 0, 0);
+//   var greenGeo = new THREE.PlaneGeometry(planewidth, planewidth);
+//   greenGeo.rotateX(Math.PI/2);
+//   var greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00, side: THREE.DoubleSide });
+//   var greenMesh = new THREE.Mesh(greenGeo, greenMaterial);
+//   greenMesh.translateY(planewidth/2);
+//   // greenGeo.translate(planewidth/2, 0, 0);
 
-  var blueGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-  blueGeo.rotateY(Math.PI/2);
-  var blueMaterial = new THREE.MeshBasicMaterial({color: 0x0000FF, side: THREE.DoubleSide})
-  var blueMesh = new THREE.Mesh(blueGeo, blueMaterial);
-  blueMesh.translateX(-planewidth/2);
+//   var blueGeo = new THREE.PlaneGeometry(planewidth, planewidth);
+//   blueGeo.rotateY(Math.PI/2);
+//   var blueMaterial = new THREE.MeshBasicMaterial({color: 0x0000FF, side: THREE.DoubleSide})
+//   var blueMesh = new THREE.Mesh(blueGeo, blueMaterial);
+//   blueMesh.translateX(-planewidth/2);
 
-  origin.add(redMesh);
-  origin.add(greenMesh);
-  origin.add(blueMesh);
+//   origin.add(redMesh);
+//   origin.add(greenMesh);
+//   origin.add(blueMesh);
 
-  scene.add(origin);
+//   scene.add(origin);
 
-  camera.position.z = 5;
-  console.log(camera.projectionMatrix);
+//   camera.position.z = 5;
+//   console.log(camera.projectionMatrix);
 
-  var animate = function () {
-    requestAnimationFrame(animate);
+//   var animate = function () {
+//     requestAnimationFrame(animate);
 
-    origin.rotateX(Math.PI/124);
+//     origin.rotateX(Math.PI/124);
 
-    // plane.rotation.y += 0.01;
+//     // plane.rotation.y += 0.01;
 
-    renderer.render(scene, camera);
-  };
+//     renderer.render(scene, camera);
+//   };
 
-  animate();
-}
+//   animate();
+// }

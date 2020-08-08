@@ -7,15 +7,15 @@ export class Plane extends Geometry {
 
   constructor(width: number, height: number, color: IColor) {
     let verticies: vec3[] = [
-      vec3.clone([-width/2,height/2,0]),
-      vec3.clone([width/2,height/2,0]),
-      vec3.clone([width/2,-height/2,0]),
-      vec3.clone([-width/2,-height/2,0]),
+      vec3.clone([0,0,0]),
+      vec3.clone([width,0,0]),
+      vec3.clone([width,-height,0]),
+      vec3.clone([0,-height,0]),
     ];
     let faces: IFace[] = [
-      new Face4(0, 1, 2, 3)
+      new Face4(0, 1, 2, 3, null, color)
     ];
-    super(verticies, faces, color);
+    super(verticies, faces);
   }
  
 }

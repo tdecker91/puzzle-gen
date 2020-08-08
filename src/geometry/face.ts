@@ -4,6 +4,7 @@ import { IColor } from "./color";
 export interface IFace {
   normal: vec3;
   verticies: number[];
+  color?: IColor;
 }
 
 export class Face4 implements IFace {
@@ -13,6 +14,7 @@ export class Face4 implements IFace {
   d: number;
   verticies: number[];
   normal: vec3;
+  color: IColor;
 
   constructor(a: number, b: number, c: number, d: number, normal?: vec3, color?: IColor) {
     this.a = a;
@@ -20,6 +22,7 @@ export class Face4 implements IFace {
     this.c = c;
     this.d = d;
     this.verticies = [a, b, c, d];
+    this.color = color;
 
     console.warn('need to calculate or set normal');
 

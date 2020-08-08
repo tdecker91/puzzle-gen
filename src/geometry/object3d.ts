@@ -1,15 +1,14 @@
-import { mat4, vec3, ReadonlyVec3 } from "gl-matrix";
+import { mat4, ReadonlyVec3 } from "gl-matrix";
 import * as uuid from 'uuid/v4';
 import { IColor } from "./color";
 
 export class Object3D {
   matrix: mat4;
   uid: string;
-  color: IColor;
+  color?: IColor;
 
-  constructor(color: IColor) {
+  constructor() {
     this.uid = uuid();
-    this.color = color;
     this.matrix = mat4.create();
   }
 
@@ -19,5 +18,9 @@ export class Object3D {
 
   rotate(rad: number, axis: ReadonlyVec3) {
     mat4.rotate(this.matrix, this.matrix, rad, axis);
+  }
+
+  setColor(color: IColor) {
+    this.color = color;
   }
 }

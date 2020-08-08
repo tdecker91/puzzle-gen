@@ -44,6 +44,8 @@ export class SVGRenderer {
   private renderObject(object: Geometry, camera: Camera) {
     let modelView = mat4.mul(mat4.create(), camera.matrix, object.matrix);
 
+    // TODO: Sort faces by distance to camera
+
     object.faces.forEach(face => {
       let points: vec3[] = [];
       face.verticies
@@ -53,13 +55,13 @@ export class SVGRenderer {
           let screenPoint = vec3.multiply(v, v, [1, -1, 1])
           points.push(screenPoint);
         });
-      this.drawPolygon(points, object.color);
+      this.drawPolygon(points, face.color || object.color);
     });
   }
 
-  private drawPolygon(points: vec3[], color: IColor) {
+  private drawPolygon(points: vec3[], color?: IColor) {
     this.svgDoc.polygon(points.map(point => [point[0], point[1]]))
-      .fill(color.value);
+      .fill(color ? color.value : 'black');
   }
 
 }

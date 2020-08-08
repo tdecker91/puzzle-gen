@@ -8,8 +8,8 @@ export class Geometry extends Object3D {
   faces: IFace[];
   centroid: vec3;
 
-  constructor(vertices: vec3[], faces: IFace[], color: IColor) {
-    super(color);
+  constructor(vertices: vec3[], faces: IFace[]) {
+    super();
 
     this.vertices = vertices;
     this.faces = faces;
