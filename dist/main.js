@@ -20,7 +20,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 		var moduleId, chunkId, i = 0, resolves = [];
 /******/ 		for(;i < chunkIds.length; i++) {
 /******/ 			chunkId = chunkIds[i];
-/******/ 			if(installedChunks[chunkId]) {
+/******/ 			if(Object.prototype.hasOwnProperty.call(installedChunks, chunkId) && installedChunks[chunkId]) {
 /******/ 				resolves.push(installedChunks[chunkId][0]);
 /******/ 			}
 /******/ 			installedChunks[chunkId] = 0;
@@ -56,6 +56,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 				result = __webpack_require__(__webpack_require__.s = deferredModule[0]);
 /******/ 			}
 /******/ 		}
+/******/
 /******/ 		return result;
 /******/ 	}
 /******/
@@ -174,6 +175,7 @@ return /******/ (function(modules) { // webpackBootstrap
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Face4 = void 0;
 var Face4 = /** @class */ (function () {
     function Face4(a, b, c, d, normal, color) {
         this.a = a;
@@ -214,6 +216,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Geometry = void 0;
 var gl_matrix_1 = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 var object3d_1 = __webpack_require__(/*! ./object3d */ "./src/geometry/object3d.ts");
 var Geometry = /** @class */ (function (_super) {
@@ -254,6 +257,7 @@ exports.Geometry = Geometry;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Object3D = void 0;
 var gl_matrix_1 = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 var uuid = __webpack_require__(/*! uuid/v4 */ "./node_modules/uuid/v4.js");
 var Object3D = /** @class */ (function () {
@@ -285,6 +289,7 @@ exports.Object3D = Object3D;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.svgStep = exports.dothething = exports.getInputs = void 0;
 var geometry_1 = __webpack_require__(/*! ./geometry/geometry */ "./src/geometry/geometry.ts");
 var gl_matrix_1 = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 var camera_1 = __webpack_require__(/*! ./rendering/camera */ "./src/rendering/camera.ts");
@@ -292,12 +297,13 @@ var THREE = __webpack_require__(/*! three */ "./node_modules/three/build/three.m
 var scene_1 = __webpack_require__(/*! ./rendering/scene */ "./src/rendering/scene.ts");
 var svgRenderer_1 = __webpack_require__(/*! ./rendering/svgRenderer */ "./src/rendering/svgRenderer.ts");
 var face_1 = __webpack_require__(/*! ./geometry/face */ "./src/geometry/face.ts");
-var svg;
-var plane;
-var another;
+var red;
+var blue;
 var green;
+var purple;
+var orange;
+var yellow;
 var camera = new camera_1.Camera();
-var test;
 var renderer;
 var scene;
 var width = 500;
@@ -306,7 +312,6 @@ var minx = -2;
 var miny = -2;
 var svgwidth = 4;
 var svgheight = 4;
-var rotationRad = 0;
 var planewidth = 1;
 var redVerticies = [
     gl_matrix_1.vec3.clone([-1 / 2, 1 / 2, 1 / 2]),
@@ -314,17 +319,35 @@ var redVerticies = [
     gl_matrix_1.vec3.clone([1 / 2, -1 / 2, 1 / 2]),
     gl_matrix_1.vec3.clone([-1 / 2, -1 / 2, 1 / 2]),
 ];
+var orangeVerticies = [
+    gl_matrix_1.vec3.clone([-1 / 2, 1 / 2, -1 / 2]),
+    gl_matrix_1.vec3.clone([1 / 2, 1 / 2, -1 / 2]),
+    gl_matrix_1.vec3.clone([1 / 2, -1 / 2, -1 / 2]),
+    gl_matrix_1.vec3.clone([-1 / 2, -1 / 2, -1 / 2]),
+];
 var greenVerticies = [
     gl_matrix_1.vec3.clone([-1 / 2, 1 / 2, 1 / 2]),
     gl_matrix_1.vec3.clone([-1 / 2, 1 / 2, -1 / 2]),
     gl_matrix_1.vec3.clone([1 / 2, 1 / 2, -1 / 2]),
     gl_matrix_1.vec3.clone([1 / 2, 1 / 2, 1 / 2]),
 ];
+var yellowVerticies = [
+    gl_matrix_1.vec3.clone([-1 / 2, -1 / 2, 1 / 2]),
+    gl_matrix_1.vec3.clone([-1 / 2, -1 / 2, -1 / 2]),
+    gl_matrix_1.vec3.clone([1 / 2, -1 / 2, -1 / 2]),
+    gl_matrix_1.vec3.clone([1 / 2, -1 / 2, 1 / 2]),
+];
 var blueVerticies = [
     gl_matrix_1.vec3.fromValues(-1 / 2, 1 / 2, 1 / 2),
     gl_matrix_1.vec3.fromValues(-1 / 2, -1 / 2, 1 / 2),
     gl_matrix_1.vec3.fromValues(-1 / 2, -1 / 2, -1 / 2),
     gl_matrix_1.vec3.fromValues(-1 / 2, 1 / 2, -1 / 2),
+];
+var whiteVerticies = [
+    gl_matrix_1.vec3.fromValues(1 / 2, 1 / 2, 1 / 2),
+    gl_matrix_1.vec3.fromValues(1 / 2, -1 / 2, 1 / 2),
+    gl_matrix_1.vec3.fromValues(1 / 2, -1 / 2, -1 / 2),
+    gl_matrix_1.vec3.fromValues(1 / 2, 1 / 2, -1 / 2),
 ];
 var faces = [
     new face_1.Face4(0, 1, 2, 3)
@@ -371,64 +394,22 @@ function getInputs() {
 }
 exports.getInputs = getInputs;
 function dothething() {
-    // if (test) {
-    //   test.remove();
-    //   svg.remove();
-    // }
-    // svg = SVG('idsomething');
-    // svg.width(width);
-    // svg.height(height);
-    // svg.viewbox(minx, miny, svgwidth, svgheight);
-    // let rectsvg = svg.rect(25,25);
-    // rectsvg.x(-12.5)
-    // rectsvg.y(-12.5)
-    // another = new Plane(planewidth, planewidth, {value: 'blue'});
-    // green = new Plane(planewidth, planewidth, {value: 'green'});
-    // plane = new Plane(planewidth, planewidth, { value: 'red' });
-    plane = new geometry_1.Geometry(redVerticies, faces, { value: 'red' });
+    red = new geometry_1.Geometry(redVerticies, faces, { value: 'red' });
     green = new geometry_1.Geometry(greenVerticies, faces, { value: 'green' });
-    another = new geometry_1.Geometry(blueVerticies, faces, { value: 'blue' });
-    // plane.translate(vec3.fromValues(0,0,-20));
-    // green.rotate(Math.PI/2, [0,1,0]);
-    // green.translate([-planewidth/2,0,0]);
-    // another.rotate(Math.PI/2, [1,0,0]);
-    // another.translate([0,planewidth/2,0]);
-    // plane.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-    // plane.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
-    // green.rotate(Math.PI/2, vec3.fromValues(1,0,0))
-    // green.translate(vec3.fromValues(0,planewidth/2,0));
-    // green.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-    // green.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
-    // another.rotate(Math.PI/2, vec3.fromValues(0,0,1));
-    // another.translate(vec3.fromValues(-planewidth/2, 0, 0));
-    // another.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-    // another.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
+    blue = new geometry_1.Geometry(blueVerticies, faces, { value: 'blue' });
+    purple = new geometry_1.Geometry(whiteVerticies, faces, { value: 'purple' });
+    orange = new geometry_1.Geometry(orangeVerticies, faces, { value: 'orange' });
+    yellow = new geometry_1.Geometry(yellowVerticies, faces, { value: 'yellow' });
     scene = new scene_1.Scene();
     renderer = new svgRenderer_1.SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
     scene.add(green);
-    scene.add(another);
-    scene.add(plane);
+    scene.add(blue);
+    scene.add(red);
+    scene.add(purple);
+    scene.add(orange);
+    scene.add(yellow);
     document.getElementById('idsomething').appendChild(renderer.domElement);
     renderer.render(scene, camera);
-    // let rotation: mat4 = mat4.create()
-    // mat4.rotate(rotation, rotation, Math.PI/4, [0,0,1]);
-    // mat4.rotate(rotation, rotation, Math.PI / 4, [1, 0, 0]);
-    // let modelView = mat4.mul(mat4.create(), camera.matrix, rotation);
-    // let points: vec3[] = [];
-    // // console.log(plane.vertices);
-    // plane.vertices.forEach(vertex => {
-    //   let test = vec3.transformMat4(vec3.create(), vertex, modelView);
-    //   // console.log(test);
-    //   points.push(test);
-    // })
-    // test = svg.polygon([
-    //   [points[0][0], points[0][1]],
-    //   [points[1][0], points[1][1]],
-    //   [points[2][0], points[2][1]],
-    //   [points[3][0], points[3][1]],
-    // ]);
-    // test.fill('green');
-    // test.stroke('black');
     setInputs();
 }
 exports.dothething = dothething;
@@ -437,12 +418,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
     threejs();
 });
 function svgStep() {
-    // plane.translate([0,0,-.5]);
-    plane.rotate(Math.PI / 16, [1, 0, 0]);
-    green.rotate(Math.PI / 16, [1, 0, 0]);
-    another.rotate(Math.PI / 16, [1, 0, 0]);
-    // green.rotate(Math.PI/8, [1,0,0]);
-    // another.translate([0,planewidth/2,0]);
+    red.rotate(Math.PI / 16, [1, 1, 0]);
+    green.rotate(Math.PI / 16, [1, 1, 0]);
+    blue.rotate(Math.PI / 16, [1, 1, 0]);
+    purple.rotate(Math.PI / 16, [1, 1, 0]);
+    orange.rotate(Math.PI / 16, [1, 1, 0]);
+    yellow.rotate(Math.PI / 16, [1, 1, 0]);
     renderer.render(scene, camera);
 }
 exports.svgStep = svgStep;
@@ -497,6 +478,7 @@ function threejs() {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Camera = void 0;
 var gl_matrix_1 = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 var Camera = /** @class */ (function () {
     function Camera() {
@@ -504,9 +486,6 @@ var Camera = /** @class */ (function () {
         gl_matrix_1.mat4.perspective(this.matrix, Math.PI / 2, 1, .1, 1000);
         gl_matrix_1.mat4.translate(this.matrix, this.matrix, [0, 0, -5]);
         gl_matrix_1.mat4.scale(this.matrix, this.matrix, [4, 4, 1]);
-        // let v = vec3.clone([0,0,0]);
-        // mat4.getTranslation(v, this.matrix);
-        // console.log(v);
     }
     return Camera;
 }());
@@ -525,6 +504,7 @@ exports.Camera = Camera;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Scene = void 0;
 var Scene = /** @class */ (function () {
     function Scene() {
         this.objects = [];
@@ -549,6 +529,7 @@ exports.Scene = Scene;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.SVGRenderer = void 0;
 var SVG = __webpack_require__(/*! svg.js */ "./node_modules/svg.js/dist/svg.js");
 var gl_matrix_1 = __webpack_require__(/*! gl-matrix */ "./node_modules/gl-matrix/esm/index.js");
 var SVGRenderer = /** @class */ (function () {
@@ -563,6 +544,16 @@ var SVGRenderer = /** @class */ (function () {
     SVGRenderer.prototype.render = function (scene, camera) {
         var _this = this;
         this.svgDoc.clear();
+        var cameraPosition = gl_matrix_1.mat4.getTranslation(gl_matrix_1.vec3.create(), camera.matrix);
+        // Sort objects by centroid furthest from camera
+        scene.objects.sort(function (a, b) {
+            var aModelView = gl_matrix_1.mat4.mul(gl_matrix_1.mat4.create(), camera.matrix, a.matrix);
+            var bModelView = gl_matrix_1.mat4.mul(gl_matrix_1.mat4.create(), camera.matrix, b.matrix);
+            var aCentroid = gl_matrix_1.vec3.transformMat4(gl_matrix_1.vec3.create(), a.centroid, aModelView);
+            var bCentroid = gl_matrix_1.vec3.transformMat4(gl_matrix_1.vec3.create(), b.centroid, bModelView);
+            // TODO actually use camera, currently only sorting by Z
+            return bCentroid[2] - aCentroid[2];
+        });
         scene.objects.forEach(function (object) {
             _this.renderObject(object, camera);
         });
