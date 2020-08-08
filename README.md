@@ -11,4 +11,5 @@ Really I just wanted an excuse to fiddle with very rudimentary 3d rendering. So 
 Sure, something like three.js SVGRenderer would probably be much better. 
 
 ...But it works!
-![default cube](https://raw.githubusercontent.com/tdecker91/puzzle-visualizer/master/assets/render.gif)
+
+![default cube](https://raw.githubusercontent.com/tdecker91/puzzle-visualizer/master/assets/svg-cube.gif)
