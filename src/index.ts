@@ -9,12 +9,14 @@ import { SVGRenderer } from './rendering/svgRenderer';
 import { IFace, Face4 } from './geometry/face';
 
 
-let svg;
-let plane: Geometry;
-let another: Geometry;
+let red: Geometry;
+let blue: Geometry;
 let green: Geometry;
+let purple: Geometry;
+let orange: Geometry;
+let yellow: Geometry;
 let camera: Camera = new Camera();
-let test;
+
 let renderer;
 let scene;
 
@@ -25,7 +27,6 @@ let miny: number = -2;
 let svgwidth: number = 4;
 let svgheight: number = 4;
 
-let rotationRad: number = 0;
 let planewidth: number = 1;
 
 let redVerticies: vec3[] = [
@@ -34,17 +35,35 @@ let redVerticies: vec3[] = [
   vec3.clone([1/2,-1/2,1/2]),
   vec3.clone([-1/2,-1/2,1/2]),
 ];
+let orangeVerticies: vec3[] = [
+  vec3.clone([-1/2,1/2,-1/2]),
+  vec3.clone([1/2,1/2,-1/2]),
+  vec3.clone([1/2,-1/2,-1/2]),
+  vec3.clone([-1/2,-1/2,-1/2]),
+];
 let greenVerticies: vec3[] = [
   vec3.clone([-1/2,1/2,1/2]),
   vec3.clone([-1/2,1/2,-1/2]),
   vec3.clone([1/2,1/2,-1/2]),
   vec3.clone([1/2,1/2,1/2]),
 ];
+let yellowVerticies: vec3[] = [
+  vec3.clone([-1/2,-1/2,1/2]),
+  vec3.clone([-1/2,-1/2,-1/2]),
+  vec3.clone([1/2,-1/2,-1/2]),
+  vec3.clone([1/2,-1/2,1/2]),
+];
 let blueVerticies: vec3[] = [
   vec3.fromValues(-1/2,1/2,1/2),
   vec3.fromValues(-1/2,-1/2,1/2),
   vec3.fromValues(-1/2,-1/2,-1/2),
   vec3.fromValues(-1/2,1/2,-1/2),
+];
+let whiteVerticies: vec3[] = [
+  vec3.fromValues(1/2,1/2,1/2),
+  vec3.fromValues(1/2,-1/2,1/2),
+  vec3.fromValues(1/2,-1/2,-1/2),
+  vec3.fromValues(1/2,1/2,-1/2),
 ];
 let faces: IFace[] = [
   new Face4(0, 1, 2, 3)
@@ -88,7 +107,6 @@ export function getInputs() {
 
   camera.matrix = mat4.fromValues(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16)
 
-
   width = parseFloat((<any>document.getElementById(`width`)).value);
   height = parseFloat((<any>document.getElementById(`height`)).value);
   minx = parseFloat((<any>document.getElementById(`minx`)).value);
@@ -100,75 +118,25 @@ export function getInputs() {
 }
 
 export function dothething() {
-  // if (test) {
-  //   test.remove();
-  //   svg.remove();
-  // }
-  // svg = SVG('idsomething');
-  // svg.width(width);
-  // svg.height(height);
-  // svg.viewbox(minx, miny, svgwidth, svgheight);
-
-  // let rectsvg = svg.rect(25,25);
-  // rectsvg.x(-12.5)
-  // rectsvg.y(-12.5)
-
-  // another = new Plane(planewidth, planewidth, {value: 'blue'});
-  // green = new Plane(planewidth, planewidth, {value: 'green'});
-  // plane = new Plane(planewidth, planewidth, { value: 'red' });
-
-  plane = new Geometry(redVerticies, faces, {value: 'red'});
+  red = new Geometry(redVerticies, faces, {value: 'red'});
   green = new Geometry(greenVerticies, faces, {value: 'green'});
-  another = new Geometry(blueVerticies, faces, {value: 'blue'});
+  blue = new Geometry(blueVerticies, faces, {value: 'blue'});
+  purple = new Geometry(whiteVerticies, faces, {value: 'purple'});
+  orange = new Geometry(orangeVerticies, faces, {value: 'orange'});
+  yellow = new Geometry(yellowVerticies, faces, {value: 'yellow'});
 
-  // plane.translate(vec3.fromValues(0,0,-20));
-  // green.rotate(Math.PI/2, [0,1,0]);
-  // green.translate([-planewidth/2,0,0]);
-  // another.rotate(Math.PI/2, [1,0,0]);
-  // another.translate([0,planewidth/2,0]);
-
-  // plane.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-  // plane.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
-  // green.rotate(Math.PI/2, vec3.fromValues(1,0,0))
-  // green.translate(vec3.fromValues(0,planewidth/2,0));
-  // green.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-  // green.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
-  // another.rotate(Math.PI/2, vec3.fromValues(0,0,1));
-  // another.translate(vec3.fromValues(-planewidth/2, 0, 0));
-  // another.rotate(-Math.PI/4, vec3.fromValues(1,0,0));
-  // another.rotate(-Math.PI/4, vec3.fromValues(0,1,0));
   scene = new Scene();
   renderer = new SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
   scene.add(green);
-  scene.add(another);
-  scene.add(plane);
+  scene.add(blue);
+  scene.add(red);
+  scene.add(purple);
+  scene.add(orange);
+  scene.add(yellow);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
-
-  // let rotation: mat4 = mat4.create()
-  // mat4.rotate(rotation, rotation, Math.PI/4, [0,0,1]);
-  // mat4.rotate(rotation, rotation, Math.PI / 4, [1, 0, 0]);
-  // let modelView = mat4.mul(mat4.create(), camera.matrix, rotation);
-
-  // let points: vec3[] = [];
-  // // console.log(plane.vertices);
-  // plane.vertices.forEach(vertex => {
-  //   let test = vec3.transformMat4(vec3.create(), vertex, modelView);
-  //   // console.log(test);
-  //   points.push(test);
-  // })
-
-  // test = svg.polygon([
-  //   [points[0][0], points[0][1]],
-  //   [points[1][0], points[1][1]],
-  //   [points[2][0], points[2][1]],
-  //   [points[3][0], points[3][1]],
-  // ]);
-
-  // test.fill('green');
-  // test.stroke('black');
 
   setInputs();
 }
@@ -179,31 +147,22 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export function svgStep() {
-  // plane.translate([0,0,-.5]);
-  plane.rotate(Math.PI/16, [1,0,0]);
-  green.rotate(Math.PI/16, [1,0,0]);
-  another.rotate(Math.PI/16, [1,0,0]);
-  // green.rotate(Math.PI/8, [1,0,0]);
-  // another.translate([0,planewidth/2,0]);
+  red.rotate(Math.PI/16, [1,1,0]);
+  green.rotate(Math.PI/16, [1,1,0]);
+  blue.rotate(Math.PI/16, [1,1,0]);
+  purple.rotate(Math.PI/16, [1,1,0]);
+  orange.rotate(Math.PI/16, [1,1,0]);
+  yellow.rotate(Math.PI/16, [1,1,0]);
   renderer.render(scene, camera);
 }
 
 function threejs() {
   var scene = new THREE.Scene();
-  // var camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
   var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-  // camera.translateZ(-15);
 
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize(width, height);
   document.getElementById('threejs').appendChild(renderer.domElement);
-
-  // var geometry = new THREE.PlaneGeometry(planewidth, planewidth);
-  // var material = new THREE.MeshBasicMaterial({ color: 0x00FF00 });
-  // var plane = new THREE.Mesh(geometry, material);
-  // var geometry2 = new THREE.PlaneGeometry(planewidth, planewidth);
-  // var material2 = new THREE.MeshBasicMaterial({ color: 0xFF0000 });
-  // var plane2 = new THREE.Mesh(geometry2, material2);
 
   var origin = new THREE.Object3D();
 

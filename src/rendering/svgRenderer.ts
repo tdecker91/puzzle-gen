@@ -21,6 +21,21 @@ export class SVGRenderer {
 
   render(scene: Scene, camera: Camera) {
     this.svgDoc.clear();
+
+    let cameraPosition = mat4.getTranslation(vec3.create(), camera.matrix);
+    
+    // Sort objects by centroid furthest from camera
+    scene.objects.sort((a, b) => {
+      let aModelView = mat4.mul(mat4.create(), camera.matrix, a.matrix);
+      let bModelView = mat4.mul(mat4.create(), camera.matrix, b.matrix);
+
+      let aCentroid: vec3 = vec3.transformMat4(vec3.create(), a.centroid, aModelView)
+      let bCentroid: vec3 = vec3.transformMat4(vec3.create(), b.centroid, bModelView)
+
+      // TODO actually use camera, currently only sorting by Z
+      return bCentroid[2] - aCentroid[2]
+    })
+    
     scene.objects.forEach(object => {
       this.renderObject(object, camera);
     });
@@ -34,7 +49,9 @@ export class SVGRenderer {
       face.verticies
         .map(index => object.vertices[index])
         .forEach(vertex => {
-          points.push(vec3.transformMat4(vec3.create(), vertex, modelView));
+          let v: vec3 = vec3.transformMat4(vec3.create(), vertex, modelView)
+          let screenPoint = vec3.multiply(v, v, [1, -1, 1])
+          points.push(screenPoint);
         });
       this.drawPolygon(points, object.color);
     });
