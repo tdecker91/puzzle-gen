@@ -2,10 +2,12 @@ import { Plane } from "../geometry/plane";
 import { IColor } from "../geometry/color";
 import { vec3 } from "gl-matrix";
 import { Group } from "../geometry/group";
+import { Cube } from "../geometry/cube";
 
 export class RubiksCube {
 
   stickers: Plane[];
+  cube: Cube;
   group: Group;
 
   constructor(size: number) {
@@ -14,21 +16,24 @@ export class RubiksCube {
     const cubeWidth = (width * size) + (spacing * (size + 1));
     const halfWidth = cubeWidth/2;
 
-    const red = this.makeStickers(size, {value: '#FF0000A0'}, width, spacing);
-    const orange = this.makeStickers(size, {value: '#FFA500A0'}, width, spacing);
-    const blue = this.makeStickers(size, {value: '#0000FFA0'}, width, spacing, [0,1,0]);
-    const green = this.makeStickers(size, {value: '#00FF00A0'}, width, spacing, [0,1,0]);
-    const yellow = this.makeStickers(size, {value: '#FFFF00A0'}, width, spacing, [1,0,0]);
-    const white = this.makeStickers(size, {value: '#FFFFFFA0'}, width, spacing, [1,0,0]);
+    const red = this.makeStickers(size, {value: '#FF0000'}, width, spacing);
+    const orange = this.makeStickers(size, {value: '#FFA500'}, width, spacing);
+    const blue = this.makeStickers(size, {value: '#0000FF'}, width, spacing, [0,1,0]);
+    const green = this.makeStickers(size, {value: '#00FF00'}, width, spacing, [0,1,0]);
+    const yellow = this.makeStickers(size, {value: '#FFFF00'}, width, spacing, [1,0,0]);
+    const white = this.makeStickers(size, {value: '#FFFFFF'}, width, spacing, [1,0,0]);
+
     red.forEach(sticker => sticker.translate([0,0,halfWidth]));
     orange.forEach(sticker => sticker.translate([0,0,-halfWidth]));
     blue.forEach(sticker => sticker.translate([0,0,-halfWidth]));
     green.forEach(sticker => sticker.translate([0,0,halfWidth]));
     yellow.forEach(sticker => sticker.translate([0,0,-halfWidth]));
     white.forEach(sticker => sticker.translate([0,0,halfWidth]));
+
     this.stickers = [...red, ...orange, ...blue, ...green, ...yellow, ...white];
 
     this.group = new Group(this.stickers);
+
     this.group.rotate(0.593411946, [1,0,0]);
     this.group.rotate(0.785398, [0,1,0]);
   }

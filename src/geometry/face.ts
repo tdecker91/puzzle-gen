@@ -7,6 +7,27 @@ export interface IFace {
   color?: IColor;
 }
 
+export class Face3 implements IFace {
+  a: number;
+  b: number;
+  c: number;
+  verticies: number[];
+  normal: vec3;
+  color: IColor;
+
+  constructor(a: number, b: number, c: number, normal?: vec3, color?: IColor) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+    this.verticies = [a, b, c];
+    this.color = color;
+
+    console.warn('need to calculate or set normal');
+
+    this.normal = normal;
+  }
+}
+
 export class Face4 implements IFace {
   a: number;
   b: number;

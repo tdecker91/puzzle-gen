@@ -8,6 +8,7 @@ import { Face4 } from './geometry/face';
 import { Cube } from './geometry/cube';
 import { RubiksCube } from './puzzles/rubiksCube';
 import { CustomSVGRenderer } from './rendering/customSvgRenderer';
+import { Skewb } from './puzzles/skewb';
 
 
 let red: Geometry;
@@ -19,6 +20,7 @@ let yellow: Geometry;
 let camera: Camera = new Camera();
 let cube: Cube;
 let rubiksCube: RubiksCube;
+let skewb: Skewb;
 
 let renderer;
 let scene;
@@ -124,34 +126,15 @@ export function getInputs() {
 }
 
 export function dothething() {
-  red = new Geometry(redVerticies, faces('#FF0000'));
-  green = new Geometry(greenVerticies, faces('#00FF00'));
-  blue = new Geometry(blueVerticies, faces('#0000FF'));
-  purple = new Geometry(whiteVerticies, faces('#FF00FF'));
-  orange = new Geometry(orangeVerticies, faces('#FFA500'));
-  yellow = new Geometry(yellowVerticies, faces('#FFFF00'));
 
   scene = new Scene();
-  // renderer = new SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  const start = new Date().getTime();
   rubiksCube = new RubiksCube(3);
-  const end = new Date().getTime();
-  console.log(end - start);
+  skewb = new Skewb();
 
-  // rubiksCube.stickers.forEach(sticker => {
-  //   scene.add(sticker);
-  // })
-
-  scene.add(rubiksCube.group);
-
-  // scene.add(green);
-  // scene.add(blue);
-  // scene.add(red);
-  // scene.add(purple);
-  // scene.add(orange);
-  // scene.add(yellow);
+  // scene.add(rubiksCube.group);
+  scene.add(skewb.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -165,19 +148,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export function svgStep() {
-  // red.rotate(Math.PI/16, [1,1,0]);
-  // green.rotate(Math.PI/16, [1,1,0]);
-  // blue.rotate(Math.PI/16, [1,1,0]);
-  // purple.rotate(Math.PI/16, [1,1,0]);
-  // orange.rotate(Math.PI/16, [1,1,0]);
-  // yellow.rotate(Math.PI/16, [1,1,0]);
-  // cube.rotate(Math.PI/16, [1,1,0]);
-  const start = new Date().getTime();
   rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
+  skewb.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
-  const end = new Date().getTime();
-  console.log(end-start);
 }
 
 // function threejs() {
