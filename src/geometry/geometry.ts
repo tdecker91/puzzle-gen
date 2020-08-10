@@ -6,7 +6,6 @@ import { IColor } from './color';
 export class Geometry extends Object3D {
   vertices: vec3[];
   faces: IFace[];
-  centroid: vec3;
 
   constructor(vertices: vec3[], faces: IFace[]) {
     super();

@@ -1,7 +1,7 @@
 var path = require('path');
 
 var config = {
-  mode: 'development',
+  mode: 'production',
   entry: __dirname + '/src/index.ts',
   devtool: 'source-map',
   output: {

@@ -1,14 +1,14 @@
-import { Geometry } from "../geometry/geometry";
+import { Object3D } from "../geometry/object3d";
 
 export class Scene {
 
-  objects: Geometry[];
+  objects: Object3D[];
 
   constructor() {
     this.objects = [];
   }
 
-  add(geometry: Geometry) {
+  add(geometry: Object3D) {
     this.objects.push(geometry);
   }
 

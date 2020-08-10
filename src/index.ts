@@ -1,15 +1,13 @@
-import * as SVG from 'svg.js'
 import { Geometry } from './geometry/geometry';
-import { Plane } from './geometry/plane';
 import { vec3, mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
 // import * as THREE from 'three';
 import { Scene } from './rendering/scene';
-import { SVGRenderer } from './rendering/svgRenderer';
-import { IFace, Face4 } from './geometry/face';
-import { IColor } from './geometry/color';
+// import { SVGRenderer } from './rendering/svgRenderer';
+import { Face4 } from './geometry/face';
 import { Cube } from './geometry/cube';
 import { RubiksCube } from './puzzles/rubiksCube';
+import { CustomSVGRenderer } from './rendering/customSvgRenderer';
 
 
 let red: Geometry;
@@ -134,16 +132,19 @@ export function dothething() {
   yellow = new Geometry(yellowVerticies, faces('#FFFF00'));
 
   scene = new Scene();
-  renderer = new SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
+  // renderer = new SVGRenderer(width, height, minx, miny, svgwidth, svgheight);
+  renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
   const start = new Date().getTime();
   rubiksCube = new RubiksCube(3);
   const end = new Date().getTime();
   console.log(end - start);
 
-  rubiksCube.stickers.forEach(sticker => {
-    scene.add(sticker);
-  })
+  // rubiksCube.stickers.forEach(sticker => {
+  //   scene.add(sticker);
+  // })
+
+  scene.add(rubiksCube.group);
 
   // scene.add(green);
   // scene.add(blue);
@@ -164,15 +165,19 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export function svgStep() {
-  red.rotate(Math.PI/16, [1,1,0]);
-  green.rotate(Math.PI/16, [1,1,0]);
-  blue.rotate(Math.PI/16, [1,1,0]);
-  purple.rotate(Math.PI/16, [1,1,0]);
-  orange.rotate(Math.PI/16, [1,1,0]);
-  yellow.rotate(Math.PI/16, [1,1,0]);
+  // red.rotate(Math.PI/16, [1,1,0]);
+  // green.rotate(Math.PI/16, [1,1,0]);
+  // blue.rotate(Math.PI/16, [1,1,0]);
+  // purple.rotate(Math.PI/16, [1,1,0]);
+  // orange.rotate(Math.PI/16, [1,1,0]);
+  // yellow.rotate(Math.PI/16, [1,1,0]);
   // cube.rotate(Math.PI/16, [1,1,0]);
+  const start = new Date().getTime();
+  rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
+  const end = new Date().getTime();
+  console.log(end-start);
 }
 
 // function threejs() {
