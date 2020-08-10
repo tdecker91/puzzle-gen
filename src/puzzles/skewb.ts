@@ -1,4 +1,3 @@
-import { IFace } from "../geometry/face";
 import { Group } from "../geometry/group";
 import { IColor } from "../geometry/color";
 import { vec3 } from "gl-matrix";

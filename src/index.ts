@@ -1,25 +1,15 @@
-import { Geometry } from './geometry/geometry';
-import { vec3, mat4 } from 'gl-matrix';
+import { mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
-// import * as THREE from 'three';
 import { Scene } from './rendering/scene';
-// import { SVGRenderer } from './rendering/svgRenderer';
-import { Face4 } from './geometry/face';
-import { Cube } from './geometry/cube';
 import { RubiksCube } from './puzzles/rubiksCube';
 import { CustomSVGRenderer } from './rendering/customSvgRenderer';
 import { Skewb } from './puzzles/skewb';
+import { RubiksCubeNet } from './puzzles/rubiksCubeNet';
 
 
-let red: Geometry;
-let blue: Geometry;
-let green: Geometry;
-let purple: Geometry;
-let orange: Geometry;
-let yellow: Geometry;
 let camera: Camera = new Camera();
-let cube: Cube;
 let rubiksCube: RubiksCube;
+let cubeNet: RubiksCubeNet;
 let skewb: Skewb;
 
 let renderer;
@@ -31,51 +21,7 @@ let minx: number = -2;
 let miny: number = -2;
 let svgwidth: number = 4;
 let svgheight: number = 4;
-
 let planewidth: number = 1;
-
-let redVerticies: vec3[] = [
-  vec3.clone([-1/2,1/2,1/2]),
-  vec3.clone([1/2,1/2,1/2]),
-  vec3.clone([1/2,-1/2,1/2]),
-  vec3.clone([-1/2,-1/2,1/2]),
-];
-let orangeVerticies: vec3[] = [
-  vec3.clone([-1/2,1/2,-1/2]),
-  vec3.clone([1/2,1/2,-1/2]),
-  vec3.clone([1/2,-1/2,-1/2]),
-  vec3.clone([-1/2,-1/2,-1/2]),
-];
-let greenVerticies: vec3[] = [
-  vec3.clone([-1/2,1/2,1/2]),
-  vec3.clone([-1/2,1/2,-1/2]),
-  vec3.clone([1/2,1/2,-1/2]),
-  vec3.clone([1/2,1/2,1/2]),
-];
-let yellowVerticies: vec3[] = [
-  vec3.clone([-1/2,-1/2,1/2]),
-  vec3.clone([-1/2,-1/2,-1/2]),
-  vec3.clone([1/2,-1/2,-1/2]),
-  vec3.clone([1/2,-1/2,1/2]),
-];
-let blueVerticies: vec3[] = [
-  vec3.fromValues(-1/2,1/2,1/2),
-  vec3.fromValues(-1/2,-1/2,1/2),
-  vec3.fromValues(-1/2,-1/2,-1/2),
-  vec3.fromValues(-1/2,1/2,-1/2),
-];
-let whiteVerticies: vec3[] = [
-  vec3.fromValues(1/2,1/2,1/2),
-  vec3.fromValues(1/2,-1/2,1/2),
-  vec3.fromValues(1/2,-1/2,-1/2),
-  vec3.fromValues(1/2,1/2,-1/2),
-];
-
-let faces = function(color: string): Face4[] {
-  return [
-    new Face4(0,1,2,3,null,{value: color})
-  ]
-}
 
 function setInputs() {
   if (camera && camera.matrix) {
@@ -125,16 +71,18 @@ export function getInputs() {
 
 }
 
-export function dothething() {
+export function renderDemo() {
 
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
   rubiksCube = new RubiksCube(3);
+  cubeNet = new RubiksCubeNet(3);
   skewb = new Skewb();
 
   // scene.add(rubiksCube.group);
   scene.add(skewb.group);
+  // scene.add(cubeNet.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -143,64 +91,13 @@ export function dothething() {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-  dothething();
-  // threejs();
+  renderDemo();
 });
 
 export function svgStep() {
-  rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
+  // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   skewb.group.rotate(Math.PI/32, [1,1,0]);
+  // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
 }
-
-// function threejs() {
-//   var scene = new THREE.Scene();
-//   var camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
-
-//   var renderer = new THREE.WebGLRenderer();
-//   renderer.setSize(width, height);
-//   document.getElementById('threejs').appendChild(renderer.domElement);
-
-//   var origin = new THREE.Object3D();
-
-//   var redGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-//   var redMaterial = new THREE.MeshBasicMaterial({ color: 0xFF0000, side: THREE.DoubleSide });
-//   // redGeo.translate(planewidth/2, 0, 0);
-//   var redMesh = new THREE.Mesh(redGeo, redMaterial);
-//   redMesh.translateZ(planewidth/2);
-
-//   var greenGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-//   greenGeo.rotateX(Math.PI/2);
-//   var greenMaterial = new THREE.MeshBasicMaterial({ color: 0x00FF00, side: THREE.DoubleSide });
-//   var greenMesh = new THREE.Mesh(greenGeo, greenMaterial);
-//   greenMesh.translateY(planewidth/2);
-//   // greenGeo.translate(planewidth/2, 0, 0);
-
-//   var blueGeo = new THREE.PlaneGeometry(planewidth, planewidth);
-//   blueGeo.rotateY(Math.PI/2);
-//   var blueMaterial = new THREE.MeshBasicMaterial({color: 0x0000FF, side: THREE.DoubleSide})
-//   var blueMesh = new THREE.Mesh(blueGeo, blueMaterial);
-//   blueMesh.translateX(-planewidth/2);
-
-//   origin.add(redMesh);
-//   origin.add(greenMesh);
-//   origin.add(blueMesh);
-
-//   scene.add(origin);
-
-//   camera.position.z = 5;
-//   console.log(camera.projectionMatrix);
-
-//   var animate = function () {
-//     requestAnimationFrame(animate);
-
-//     origin.rotateX(Math.PI/124);
-
-//     // plane.rotation.y += 0.01;
-
-//     renderer.render(scene, camera);
-//   };
-
-//   animate();
-// }
