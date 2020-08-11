@@ -50,11 +50,12 @@ export class CustomSVGRenderer {
         .forEach(vertex => {
           let objectToScreen = [object.matrix, ...transformations, camera.matrix];
           let v: vec3 = this.applyTransformations(vertex, objectToScreen);
-          
+
           // Need to flip y to look correct on svg viewbox
           let screenPoint = vec3.multiply(v, v, [1, -1, 1])
           points.push(screenPoint);
         });
+
       const polygon = createPolygonElement(points, face.color || object.color);
       this.svgElement.appendChild(polygon);
     });

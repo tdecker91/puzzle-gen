@@ -22,6 +22,10 @@ export class Object3D {
     mat4.rotate(this.matrix, this.matrix, rad, axis);
   }
 
+  scale(v: vec3) {
+    mat4.scale(this.matrix, this.matrix, v);
+  }
+
   setColor(color: IColor) {
     this.color = color;
   }

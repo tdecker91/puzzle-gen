@@ -5,12 +5,14 @@ import { RubiksCube } from './puzzles/rubiksCube';
 import { CustomSVGRenderer } from './rendering/customSvgRenderer';
 import { Skewb } from './puzzles/skewb';
 import { RubiksCubeNet } from './puzzles/rubiksCubeNet';
+import { SkewbNet } from './puzzles/skewbNet';
 
 
 let camera: Camera = new Camera();
 let rubiksCube: RubiksCube;
 let cubeNet: RubiksCubeNet;
 let skewb: Skewb;
+let skewbNet: SkewbNet;
 
 let renderer;
 let scene;
@@ -76,12 +78,14 @@ export function renderDemo() {
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  rubiksCube = new RubiksCube(3);
-  cubeNet = new RubiksCubeNet(3);
+  // rubiksCube = new RubiksCube(3);
+  skewbNet = new SkewbNet();
+  // cubeNet = new RubiksCubeNet(3);
   skewb = new Skewb();
 
+  scene.add(skewbNet.group);
   // scene.add(rubiksCube.group);
-  scene.add(skewb.group);
+  // scene.add(skewb.group);
   // scene.add(cubeNet.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
@@ -96,8 +100,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 export function svgStep() {
   // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
-  skewb.group.rotate(Math.PI/32, [1,1,0]);
+  // skewb.group.rotate(Math.PI/32, [1,1,0]);
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
+  mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
 
   renderer.render(scene, camera);
 }
