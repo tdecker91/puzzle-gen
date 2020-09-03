@@ -78,15 +78,15 @@ export function renderDemo() {
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  // rubiksCube = new RubiksCube(3);
-  skewbNet = new SkewbNet();
-  // cubeNet = new RubiksCubeNet(3);
-  skewb = new Skewb();
+  rubiksCube = new RubiksCube(3);
+  // skewbNet = new SkewbNet();
+  cubeNet = new RubiksCubeNet(3);
+  // skewb = new Skewb();
 
-  scene.add(skewbNet.group);
-  // scene.add(rubiksCube.group);
+  // scene.add(skewbNet.group);
   // scene.add(skewb.group);
-  // scene.add(cubeNet.group);
+  scene.add(cubeNet.group);
+  scene.add(rubiksCube.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -99,10 +99,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export function svgStep() {
-  // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   // skewb.group.rotate(Math.PI/32, [1,1,0]);
+  rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
-  mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
+  // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
 
   renderer.render(scene, camera);
 }

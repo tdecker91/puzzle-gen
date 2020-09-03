@@ -1,12 +1,11 @@
 import { Plane } from "../geometry/plane";
 import { IColor } from "../geometry/color";
-import { vec3 } from "gl-matrix";
 import { Group } from "../geometry/group";
-import { Cube } from "../geometry/cube";
+import { Object3D } from "../geometry/object3d";
 
 export class RubiksCube {
 
-  stickers: Plane[];
+  stickers: Object3D[];
   group: Group;
 
   constructor(size: number) {
@@ -15,21 +14,39 @@ export class RubiksCube {
     const cubeWidth = (width * size) + (spacing * (size + 1));
     const halfWidth = cubeWidth/2;
 
-    const red = this.makeStickers(size, {value: '#FF0000A0'}, width, spacing);
-    const orange = this.makeStickers(size, {value: '#FFA500A0'}, width, spacing);
-    const blue = this.makeStickers(size, {value: '#0000FFA0'}, width, spacing, [0,1,0]);
-    const green = this.makeStickers(size, {value: '#00FF00A0'}, width, spacing, [0,1,0]);
-    const yellow = this.makeStickers(size, {value: '#FFFF00A0'}, width, spacing, [1,0,0]);
-    const white = this.makeStickers(size, {value: '#FFFFFFA0'}, width, spacing, [1,0,0]);
+    const U = this.makeStickers(size, {value: '#FFFF00A0'}, width, spacing);
+    const R = this.makeStickers(size, {value: '#FF0000A0'}, width, spacing);
+    const F = this.makeStickers(size, {value: '#0000FFA0'}, width, spacing);
+    const D = this.makeStickers(size, {value: '#FFFFFFA0'}, width, spacing);
+    const L = this.makeStickers(size, {value: '#FFA500A0'}, width, spacing);
+    const B = this.makeStickers(size, {value: '#00FF00A0'}, width, spacing);
 
-    red.forEach(sticker => sticker.translate([0,0,halfWidth]));
-    orange.forEach(sticker => sticker.translate([0,0,-halfWidth]));
-    blue.forEach(sticker => sticker.translate([0,0,-halfWidth]));
-    green.forEach(sticker => sticker.translate([0,0,halfWidth]));
-    yellow.forEach(sticker => sticker.translate([0,0,-halfWidth]));
-    white.forEach(sticker => sticker.translate([0,0,halfWidth]));
+    const uGroup = new Group(U);
+    uGroup.rotate(-Math.PI/2, [0,1,0]);
+    uGroup.rotate(-Math.PI/2, [1,0,0]);
+    uGroup.translate([0,0,halfWidth]);
 
-    this.stickers = [...red, ...orange, ...blue, ...green, ...yellow, ...white];
+    const rGroup = new Group(R);
+    rGroup.translate([0,0,halfWidth]);
+
+    const fGroup = new Group(F);
+    fGroup.rotate(-Math.PI/2, [0,1,0]);
+    fGroup.translate([0, 0, halfWidth]);
+
+    const dGroup = new Group(D);
+    dGroup.rotate(-Math.PI/2, [0,1,0]);
+    dGroup.rotate(Math.PI/2, [1,0,0]);
+    dGroup.translate([0,0,halfWidth]);
+    
+    const lGroup = new Group(L);
+    lGroup.rotate(-Math.PI, [0,1,0]);
+    lGroup.translate([0,0,halfWidth]);
+    
+    const bGroup = new Group(B);
+    bGroup.rotate(Math.PI/2, [0,1,0]);
+    bGroup.translate([0,0,halfWidth]);
+
+    this.stickers = [uGroup, rGroup, fGroup, dGroup, lGroup, bGroup];
 
     this.group = new Group(this.stickers);
 
@@ -41,8 +58,7 @@ export class RubiksCube {
     size: number,
     color: IColor,
     width: number,
-    spacing: number,
-    axis?: vec3
+    spacing: number
   ): Plane[] {
     let stickers = [];
     const cubeWidth = (width * size) + (spacing * (size + 1));
@@ -51,15 +67,12 @@ export class RubiksCube {
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         let sticker = new Plane(width, width, color);
-        if (axis) {
-          sticker.rotate(Math.PI/2, axis);
-        }
         sticker.translate([
-          spacing + (i * (width + spacing)) - halfWidth,
-          0 - spacing - (j * (width + spacing)) + halfWidth,
+          spacing + (j * (width + spacing)) - halfWidth,
+          0 - spacing - (i * (width + spacing)) + halfWidth,
           0
         ]);
-        stickers.push(sticker)
+        stickers.push(sticker);
       }
     }
     return stickers;

@@ -4,18 +4,18 @@ import { vec3 } from "gl-matrix";
 
 export class Group extends Object3D {
   
-  objects: Geometry[];
+  objects: Object3D[];
 
-  constructor(objects: Geometry[]) {
+  constructor(objects: Object3D[]) {
     super();
     this.setObjects(objects);
   }
 
-  setObjects(objects: Geometry[]) {
+  setObjects(objects: Object3D[]) {
     this.objects = objects;
   }
 
-  addObject(object: Geometry) {
+  addObject(object: Object3D) {
     this.objects.push(object);
   }
 
