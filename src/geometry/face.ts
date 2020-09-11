@@ -50,3 +50,28 @@ export class Face4 implements IFace {
     this.normal = normal;
   }
 }
+
+export class Face5 implements IFace {
+  a: number;
+  b: number;
+  c: number;
+  d: number;
+  e: number;
+  verticies: number[];
+  normal: vec3;
+  color: IColor;
+
+  constructor(a: number, b: number, c: number, d: number, e: number, normal?: vec3, color?: IColor) {
+    this.a = a;
+    this.b = b;
+    this.c = c;
+    this.d = d;
+    this.e = e;
+    this.verticies = [a, b, c, d, e];
+    this.color = color;
+
+    console.warn('need to calculate or set normal');
+
+    this.normal = normal;
+  }
+}

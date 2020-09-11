@@ -1,3 +1,4 @@
+import { Megaminx } from './puzzles/megaminx';
 import { mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
 import { Scene } from './rendering/scene';
@@ -13,6 +14,7 @@ let rubiksCube: RubiksCube;
 let cubeNet: RubiksCubeNet;
 let skewb: Skewb;
 let skewbNet: SkewbNet;
+let megaminx: Megaminx;
 
 let renderer;
 let scene;
@@ -82,11 +84,13 @@ export function renderDemo() {
   // skewbNet = new SkewbNet();
   cubeNet = new RubiksCubeNet(3);
   // skewb = new Skewb();
+  megaminx = new Megaminx();
 
   // scene.add(skewbNet.group);
   // scene.add(skewb.group);
-  scene.add(cubeNet.group);
-  scene.add(rubiksCube.group);
+  // scene.add(cubeNet.group);
+  // scene.add(rubiksCube.group);
+  scene.add(megaminx.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -100,9 +104,10 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 export function svgStep() {
   // skewb.group.rotate(Math.PI/32, [1,1,0]);
-  rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
+  // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
   // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
+  megaminx.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
 }
