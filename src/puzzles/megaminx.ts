@@ -10,28 +10,31 @@ export class Megaminx {
 
   constructor() {
     const length = 1;
+    const layers = 2;
     const megaminxRadius = dodecahedronInRadius(length);
-    const inr = pentagonInRadius(length);
+    
     console.log('mega radius', megaminxRadius)
 
-    const U = new DividedPentagon({value: '#FF0000'}, 2, length);
-    const D = new DividedPentagon({value: '#00FF00'}, 2, length);
-    const B = new DividedPentagon({value: '#0000FF'}, 2, length);
-
-    const A = new DividedPentagon({value: '#FFFFFF'}, 2, length);
-    const C = new DividedPentagon({value: '#FF00FF'}, 2, length);
-    const E = new DividedPentagon({value: '#FFFF00'}, 2, length);
-    const F = new DividedPentagon({value: '#00FFFF'}, 2, length);
-    const G = new DividedPentagon({value: '#FFA000'}, 2, length);
-    const H = new DividedPentagon({value: '#FF00A0'}, 2, length);
-    const I = new DividedPentagon({value: '#A8A8A8'}, 2, length);
-    const J = new DividedPentagon({value: '#005FF0'}, 2, length);
-    const K = new DividedPentagon({value: '#FF7881'}, 2, length);
+    // Top
+    const U = new DividedPentagon({value: 'white'}, layers, length);
+    const B = new DividedPentagon({value: 'red'}, layers, length);
+    const C = new DividedPentagon({value: 'green'}, layers, length);
+    const E = new DividedPentagon({value: 'purple'}, layers, length);
+    const F = new DividedPentagon({value: 'yellow'}, layers, length);
+    const A = new DividedPentagon({value: '#0000FF'}, layers, length);
+    
+    // Bottom
+    const D = new DividedPentagon({value: 'grey'}, layers, length);
+    const K = new DividedPentagon({value: 'darkblue'}, layers, length);
+    const H = new DividedPentagon({value: 'lightyellow'}, layers, length);
+    const G = new DividedPentagon({value: 'hotpink'}, layers, length);
+    const I = new DividedPentagon({value: 'limegreen'}, layers, length);
+    const J = new DividedPentagon({value: 'orange'}, layers, length);
 
     U.translate([0,0,megaminxRadius])
     D.rotate(Math.PI, [0,0,1])
     D.translate([0,0,-megaminxRadius])
-    // F.translate([0,0,megaminxRadius])
+
     B.rotate(Math.PI,[0,0,1])
     B.rotate((180 - 116.57) * Math.PI/180, [1,0,0])
     B.translate([0,0,megaminxRadius])
@@ -56,7 +59,6 @@ export class Megaminx {
     F.rotate((180 - 116.57) * Math.PI/180, [1,0,0])
     F.translate([0,0,megaminxRadius]);
 
-    // G.rotate(Math.PI, [0,0,1])
     G.rotate(Math.PI/5, [0,0,1])
     G.rotate(-116.57 * Math.PI/180, [1,0,0])
     G.translate([0,0,megaminxRadius]);

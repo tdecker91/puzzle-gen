@@ -1,3 +1,6 @@
+import { MegaminxNet } from './puzzles/megaminxNet';
+import { PyraminxNet } from './puzzles/pyraminxNet';
+import { Pyraminx } from './puzzles/pyraminx';
 import { Megaminx } from './puzzles/megaminx';
 import { mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
@@ -15,6 +18,9 @@ let cubeNet: RubiksCubeNet;
 let skewb: Skewb;
 let skewbNet: SkewbNet;
 let megaminx: Megaminx;
+let pyraminx: Pyraminx;
+let pyraminxNet: PyraminxNet;
+let megaminxNet: MegaminxNet;
 
 let renderer;
 let scene;
@@ -80,17 +86,24 @@ export function renderDemo() {
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  rubiksCube = new RubiksCube(3);
+  // rubiksCube = new RubiksCube(3);
   // skewbNet = new SkewbNet();
-  cubeNet = new RubiksCubeNet(3);
+  // cubeNet = new RubiksCubeNet(3);
   // skewb = new Skewb();
   megaminx = new Megaminx();
+
+  // pyraminx = new Pyraminx(3);
+  // pyraminxNet = new PyraminxNet(3);
+
+  megaminxNet = new MegaminxNet(1.1, 2);
 
   // scene.add(skewbNet.group);
   // scene.add(skewb.group);
   // scene.add(cubeNet.group);
   // scene.add(rubiksCube.group);
+  scene.add(megaminxNet.group);
   scene.add(megaminx.group);
+  // scene.add(pyraminx.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -108,6 +121,8 @@ export function svgStep() {
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
   // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
   megaminx.group.rotate(Math.PI/32, [1,1,0]);
+  // pyraminx.group.rotate(Math.PI/32, [1,1,0]);
+  // megaminxNet.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
 }
