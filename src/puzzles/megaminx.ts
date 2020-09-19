@@ -8,9 +8,7 @@ export class Megaminx {
   stickers: Object3D[];
   group: Group;
 
-  constructor() {
-    const length = 1;
-    const layers = 2;
+  constructor(length: number = 1, layers: number = 2) {
     const megaminxRadius = dodecahedronInRadius(length);
     
     console.log('mega radius', megaminxRadius)

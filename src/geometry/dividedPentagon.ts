@@ -1,6 +1,6 @@
 import { IColor } from './color';
 import { vec2, vec3 } from 'gl-matrix';
-import { IFace, Face5, Face4 } from './../geometry/face';
+import { IFace, Face } from './../geometry/face';
 import { Geometry } from '../geometry/geometry';
 import { polarToCartesian, lineSegmentLength, pentagonInRadius, pentagonOutRadius } from '../math/utils';
 
@@ -22,9 +22,11 @@ export class DividedPentagon extends Geometry {
     const radiusDiff = layerWidthToRadiusDiff(layerWidth);
     const centerOutRadius = outRadius - (radiusDiff * (layers - 1))
     
+    const vertices = faceVerticies(layers, centerOutRadius, radiusDiff, layerWidth);
+
     super(
-      faceVerticies(layers, centerOutRadius, radiusDiff, layerWidth),
-      makeFaces(layers, color)
+      vertices,
+      makeFaces(layers, color, vertices)
     );
   }
 }
@@ -81,10 +83,10 @@ function layerVertexNumbers(layer) {
   return vertexNumbers;
 }
 
-function makeFaces(layers: number, color: IColor): IFace[] {
+function makeFaces(layers: number, color: IColor, vertices: vec3[]): IFace[] {
   let faces: IFace[] = [];
   
-  const firstLayerFace = new Face5(0, 1, 2, 3, 4, null, color);
+  const firstLayerFace = new Face([0, 1, 2, 3, 4], vertices, color);
   faces.push(firstLayerFace);
   
   let totalPoints = 5;
@@ -116,7 +118,7 @@ function makeFaces(layers: number, color: IColor): IFace[] {
         : prevLayer[(prevLayer.indexOf(f3) - 1 + prevLayer.length) % prevLayer.length];
       currentPoint++;
 
-      faces.push(new Face4(f1, f2, f3, f4, null, color))
+      faces.push(new Face([f1, f2, f3, f4], vertices, color))
     }
   }
 

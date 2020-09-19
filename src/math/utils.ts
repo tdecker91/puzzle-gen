@@ -1,4 +1,8 @@
-import { vec2 } from "gl-matrix";
+import { vec2, vec3 } from "gl-matrix";
+
+export function degreesToRadians(degrees: number): number {
+  return (Math.PI * degrees) / 180;
+}
 
 export function polarToCartesian(radius: number, theta: number): vec2 {
   const x = radius * Math.cos(theta);
@@ -33,4 +37,19 @@ export function pentagonOutRadius(length: number): number {
  */
 export function dodecahedronInRadius(length: number): number {
   return (length/2) * Math.sqrt((5/2) + ((11/10) * Math.sqrt(5)));
+}
+
+export function calculateCentroid(vertices: vec3[]): vec3 {
+  let cx = 0, cy = 0, cz = 0
+  vertices.forEach(vertex => {
+    cx += vertex[0];
+    cy += vertex[1];
+    cz += vertex[2];
+  });
+
+  cx /= vertices.length;
+  cy /= vertices.length;
+  cz /= vertices.length;
+
+  return vec3.clone([cx, cy, cz]);
 }

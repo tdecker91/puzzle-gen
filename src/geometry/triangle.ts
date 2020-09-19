@@ -1,7 +1,7 @@
 import { Geometry } from './geometry';
 import { vec3 } from 'gl-matrix';
 import { IColor } from './color';
-import { Face3, IFace } from './face';
+import { Face, IFace } from './face';
 import { SQRT_3 } from '../math/constants';
 
 export class Triangle extends Geometry {
@@ -10,7 +10,7 @@ export class Triangle extends Geometry {
       a, b, c
     ];
     let faces: IFace[] = [
-      new Face3(0, 1, 2, null, color)
+      new Face([0, 1, 2], verticies, color)
     ];
     super(verticies, faces);
   }

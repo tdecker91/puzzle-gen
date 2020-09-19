@@ -1,5 +1,5 @@
 import { IColor } from './color';
-import { IFace, Face3 } from './face';
+import { IFace, Face } from './face';
 import { vec3 } from 'gl-matrix';
 import { Geometry } from "./geometry";
 import { SQRT_3 } from "../math/constants";
@@ -38,11 +38,11 @@ export class TriangleLattice extends Geometry {
 
         if (vertex < count && layer < size) {
           // up triangle
-          faces.push(new Face3(index,index+1,index+count+1, null, color))
+          faces.push(new Face([index,index+1,index+count+1], null, color))
           // console.log('face', index, index+1, index+count+1);
           // down triangle
           if (layer > 0) {
-            faces.push(new Face3(index, index+1, index-count-1, null, color));
+            faces.push(new Face([index, index+1, index-count-1], null, color));
           }
         }
 

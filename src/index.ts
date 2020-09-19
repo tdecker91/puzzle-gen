@@ -1,3 +1,4 @@
+import { Square1 } from './puzzles/square-1';
 import { MegaminxNet } from './puzzles/megaminxNet';
 import { PyraminxNet } from './puzzles/pyraminxNet';
 import { Pyraminx } from './puzzles/pyraminx';
@@ -21,6 +22,7 @@ let megaminx: Megaminx;
 let pyraminx: Pyraminx;
 let pyraminxNet: PyraminxNet;
 let megaminxNet: MegaminxNet;
+let square1: Square1;
 
 let renderer;
 let scene;
@@ -87,23 +89,31 @@ export function renderDemo() {
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
   // rubiksCube = new RubiksCube(3);
-  // skewbNet = new SkewbNet();
+  // scene.add(rubiksCube.group);
+  
   // cubeNet = new RubiksCubeNet(3);
+  // scene.add(cubeNet.group);
+  
+    // skewbNet = new SkewbNet();
+    // scene.add(skewbNet.group);
+
   // skewb = new Skewb();
-  megaminx = new Megaminx();
+  // scene.add(skewb.group);
 
   // pyraminx = new Pyraminx(3);
-  // pyraminxNet = new PyraminxNet(3);
-
-  megaminxNet = new MegaminxNet(1.1, 2);
-
-  // scene.add(skewbNet.group);
-  // scene.add(skewb.group);
-  // scene.add(cubeNet.group);
-  // scene.add(rubiksCube.group);
-  scene.add(megaminxNet.group);
-  scene.add(megaminx.group);
   // scene.add(pyraminx.group);
+
+  // pyraminxNet = new PyraminxNet(3);
+  // scene.add(pyraminxNet.group);
+
+  // megaminx = new Megaminx(1, 2);
+  // scene.add(megaminx.group);
+
+  // megaminxNet = new MegaminxNet(2.4 , 4);
+  // scene.add(megaminxNet.group);
+
+  square1 = new Square1(1.5);
+  scene.add(square1.group);
 
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
@@ -120,9 +130,10 @@ export function svgStep() {
   // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
   // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
-  megaminx.group.rotate(Math.PI/32, [1,1,0]);
+  // megaminx.group.rotate(Math.PI/32, [1,1,0]);
   // pyraminx.group.rotate(Math.PI/32, [1,1,0]);
   // megaminxNet.group.rotate(Math.PI/32, [1,1,0]);
+  square1.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
 }

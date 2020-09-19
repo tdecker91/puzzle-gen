@@ -1,3 +1,4 @@
+import { Face } from './../geometry/face';
 import { Camera } from './camera';
 import { Scene } from './scene';
 import { mat4, vec3 } from 'gl-matrix';
@@ -41,11 +42,11 @@ export class CustomSVGRenderer {
   } 
 
   private renderGeometry(object: Geometry, camera: Camera, transformations: mat4[]) {
-    // TODO: Sort faces by distance to camera
+    this.sortFaces(object.faces, object, transformations);
 
     object.faces.forEach(face => {
       let points: vec3[] = [];
-      face.verticies
+      face.indices
         .map(index => object.vertices[index])
         .forEach(vertex => {
           let objectToScreen = [object.matrix, ...transformations, camera.matrix];
@@ -59,6 +60,19 @@ export class CustomSVGRenderer {
       const polygon = createPolygonElement(points, face.color || object.color);
       this.svgElement.appendChild(polygon);
     });
+  }
+
+  private sortFaces(faces: Face[], object: Object3D, transformations: mat4[]) {
+    faces.sort((a, b) => {
+      let aToWorld = [object.matrix, ...transformations];
+      let bToWorld = [object.matrix, ...transformations];
+
+      let aCentroid: vec3 = this.applyTransformations(a.centroid, aToWorld);
+      let bCentroid: vec3 = this.applyTransformations(b.centroid, bToWorld);
+
+      // TODO actually use camera, currently only sorting by Z
+      return aCentroid[2] - bCentroid[2]
+    })
   }
 
   private sortObjects(objects: Object3D[], camera: Camera, transformations: mat4[]) {
