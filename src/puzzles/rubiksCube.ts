@@ -10,16 +10,15 @@ export class RubiksCube {
 
   constructor(size: number) {
     const width = 1/2;
-    const spacing = .02;
-    const cubeWidth = (width * size) + (spacing * (size + 1));
+    const cubeWidth = (width * size);
     const halfWidth = cubeWidth/2;
 
-    const U = this.makeStickers(size, {value: '#FFFF00A0'}, width, spacing);
-    const R = this.makeStickers(size, {value: '#FF0000A0'}, width, spacing);
-    const F = this.makeStickers(size, {value: '#0000FFA0'}, width, spacing);
-    const D = this.makeStickers(size, {value: '#FFFFFFA0'}, width, spacing);
-    const L = this.makeStickers(size, {value: '#FFA500A0'}, width, spacing);
-    const B = this.makeStickers(size, {value: '#00FF00A0'}, width, spacing);
+    const U = this.makeStickers(size, {value: '#FFFF00'}, width);
+    const R = this.makeStickers(size, {value: '#FF0000'}, width);
+    const F = this.makeStickers(size, {value: '#0000FF'}, width);
+    const D = this.makeStickers(size, {value: '#FFFFFF'}, width);
+    const L = this.makeStickers(size, {value: '#FFA500'}, width);
+    const B = this.makeStickers(size, {value: '#00FF00'}, width);
 
     const uGroup = new Group(U);
     uGroup.rotate(-Math.PI/2, [0,1,0]);
@@ -50,6 +49,7 @@ export class RubiksCube {
 
     this.group = new Group(this.stickers);
 
+    this.group.translate([0,0,-1])
     this.group.rotate(0.593411946, [1,0,0]);
     this.group.rotate(0.785398, [0,1,0]);
   }
@@ -57,19 +57,18 @@ export class RubiksCube {
   private makeStickers(
     size: number,
     color: IColor,
-    width: number,
-    spacing: number
+    width: number
   ): Plane[] {
     let stickers = [];
-    const cubeWidth = (width * size) + (spacing * (size + 1));
+    const cubeWidth = (width * size);
     const halfWidth = cubeWidth/2;
 
     for (let i = 0; i < size; i++) {
       for (let j = 0; j < size; j++) {
         let sticker = new Plane(width, width, color);
         sticker.translate([
-          spacing + (j * (width + spacing)) - halfWidth,
-          0 - spacing - (i * (width + spacing)) + halfWidth,
+          (j * (width)) - halfWidth,
+          0 - (i * (width)) + halfWidth,
           0
         ]);
         stickers.push(sticker);
