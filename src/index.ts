@@ -1,5 +1,4 @@
 import { Square1Net } from './puzzles/square1/square1Net';
-import { Square1 } from './puzzles/square1/square1';
 import { MegaminxNet } from './puzzles/megaminxNet';
 import { PyraminxNet } from './puzzles/pyraminxNet';
 import { Pyraminx } from './puzzles/pyraminx';
@@ -12,6 +11,7 @@ import { CustomSVGRenderer } from './rendering/customSvgRenderer';
 import { Skewb } from './puzzles/skewb';
 import { RubiksCubeNet } from './puzzles/rubiksCubeNet';
 import { SkewbNet } from './puzzles/skewbNet';
+import { Square1 } from './puzzles/square1/square1';
 
 
 let camera: Camera = new Camera();
