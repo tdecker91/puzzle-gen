@@ -12,6 +12,8 @@ export class CustomSVGRenderer {
   domElement: HTMLElement;
   svgElement: SVGSVGElement;
 
+  protected polygons = [];
+
   constructor(width: number, height: number, minx: number, miny: number, svgWidth: number, svgHeight: number) {
     this.domElement = document.createElement('div');
     this.domElement.className = 'svg-renderer';
@@ -20,13 +22,28 @@ export class CustomSVGRenderer {
   }
 
   render(scene: Scene, camera: Camera) {
+    this.polygons = [];
     clearSVG(this.svgElement);
 
-    this.sortObjects(scene.objects, camera, []);
+    // this.sortObjects(scene.objects, camera, []);
     
     scene.objects.forEach(object => {
       this.renderObject3D(object, camera, []);
     });
+
+    this.renderPolygons();
+  }
+
+  protected renderPolygons() {
+    this.polygons.sort((a, b) => {
+      return a.centroid[2] - b.centroid[2];
+    });
+
+    this.polygons.forEach(p => this.svgElement.appendChild(p.polygon));
+  }
+
+  protected addPolygon(polygon) {
+    this.polygons.push(polygon);
   }
 
   private renderObject3D(object: Object3D, camera: Camera, transformations: mat4[]) {
@@ -42,7 +59,7 @@ export class CustomSVGRenderer {
   } 
 
   private renderGeometry(object: Geometry, camera: Camera, transformations: mat4[]) {
-    this.sortFaces(object.faces, object, transformations);
+    // this.sortFaces(object.faces, object, transformations);
 
     object.faces.forEach(face => {
       let points: vec3[] = [];
@@ -58,7 +75,11 @@ export class CustomSVGRenderer {
         });
 
       const polygon = createPolygonElement(points, face.color || object.color);
-      this.svgElement.appendChild(polygon);
+
+      this.addPolygon({
+        polygon,
+        centroid: this.applyTransformations(face.centroid, [object.matrix, ...transformations])
+      });
     });
   }
 
