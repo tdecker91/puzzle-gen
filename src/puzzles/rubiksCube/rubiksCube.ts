@@ -1,7 +1,7 @@
-import { Plane } from "../geometry/plane";
-import { IColor } from "../geometry/color";
-import { Group } from "../geometry/group";
-import { Object3D } from "../geometry/object3d";
+import { Plane } from "../../geometry/plane";
+import { IColor } from "../../geometry/color";
+import { Group } from "../../geometry/group";
+import { Object3D } from "../../geometry/object3d";
 
 export class RubiksCube {
 

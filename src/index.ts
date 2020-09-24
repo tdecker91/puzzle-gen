@@ -1,3 +1,5 @@
+import { RubiksCubeTopLayer } from './puzzles/rubiksCube/rubiksCubeTop';
+import { RubiksCubeNet } from './puzzles/rubiksCube/rubiksCubeNet';
 import { Square1Net } from './puzzles/square1/square1Net';
 import { MegaminxNet } from './puzzles/megaminxNet';
 import { PyraminxNet } from './puzzles/pyraminxNet';
@@ -6,10 +8,9 @@ import { Megaminx } from './puzzles/megaminx';
 import { mat4 } from 'gl-matrix';
 import { Camera } from './rendering/camera';
 import { Scene } from './rendering/scene';
-import { RubiksCube } from './puzzles/rubiksCube';
+import { RubiksCube } from './puzzles/rubiksCube/rubiksCube';
 import { CustomSVGRenderer } from './rendering/customSvgRenderer';
 import { Skewb } from './puzzles/skewb';
-import { RubiksCubeNet } from './puzzles/rubiksCubeNet';
 import { SkewbNet } from './puzzles/skewbNet';
 import { Square1 } from './puzzles/square1/square1';
 
@@ -17,6 +18,7 @@ import { Square1 } from './puzzles/square1/square1';
 let camera: Camera = new Camera();
 let rubiksCube: RubiksCube;
 let cubeNet: RubiksCubeNet;
+let cubeTop: RubiksCubeTopLayer;
 let skewb: Skewb;
 let skewbNet: SkewbNet;
 let megaminx: Megaminx;
@@ -90,8 +92,11 @@ export function renderDemo() {
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  rubiksCube = new RubiksCube(5);
-  scene.add(rubiksCube.group);
+  // rubiksCube = new RubiksCube(5);
+  // scene.add(rubiksCube.group);
+
+  cubeTop = new RubiksCubeTopLayer(3);
+  scene.add(cubeTop.group);
   
   // cubeNet = new RubiksCubeNet(3);
   // scene.add(cubeNet.group);
@@ -132,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 export function svgStep() {
   // skewb.group.rotate(Math.PI/32, [1,1,0]);
-  rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
+  // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
   // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
   // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
   // megaminx.group.rotate(Math.PI/32, [1,1,0]);
@@ -140,6 +145,7 @@ export function svgStep() {
   // megaminxNet.group.rotate(Math.PI/32, [1,1,0]);
   // square1.group.rotate(Math.PI/32, [1,1,0]);
   // square1Net.group.rotate(Math.PI/32, [1,1,0]);
+  cubeTop.group.rotate(Math.PI/32, [1,1,0]);
 
   renderer.render(scene, camera);
 }

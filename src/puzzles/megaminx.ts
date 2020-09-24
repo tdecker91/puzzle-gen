@@ -10,8 +10,6 @@ export class Megaminx {
 
   constructor(length: number = 1, layers: number = 2) {
     const megaminxRadius = dodecahedronInRadius(length);
-    
-    console.log('mega radius', megaminxRadius)
 
     // Top
     const U = new DividedPentagon({value: 'white'}, layers, length);
