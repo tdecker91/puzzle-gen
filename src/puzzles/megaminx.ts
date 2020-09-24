@@ -4,28 +4,45 @@ import { Object3D } from './../geometry/object3d';
 import { DividedPentagon } from '../geometry/dividedPentagon';
 import { dodecahedronInRadius, pentagonInRadius } from '../math/utils';
 
+/**
+ * for a megaminx with side length 1,
+ * layer widths that look good.
+ */
+const OPTIMAL_LAYER_WIDTH = {
+  2: .4,
+  3: .225,
+  4: .16
+}
+
+function getLayerWidth(length: number, layers: number): number {
+  return OPTIMAL_LAYER_WIDTH[layers] || (length / (layers * 1.9));
+}
+
 export class Megaminx {
   stickers: Object3D[];
   group: Group;
 
-  constructor(length: number = 1, layers: number = 2) {
+  constructor(layers: number = 2) {
+    const length = 1;
     const megaminxRadius = dodecahedronInRadius(length);
+    const layerWidth = getLayerWidth(length, layers);
+    console.log(layerWidth);
 
     // Top
-    const U = new DividedPentagon({value: 'white'}, layers, length);
-    const B = new DividedPentagon({value: 'red'}, layers, length);
-    const C = new DividedPentagon({value: 'green'}, layers, length);
-    const E = new DividedPentagon({value: 'purple'}, layers, length);
-    const F = new DividedPentagon({value: 'yellow'}, layers, length);
-    const A = new DividedPentagon({value: '#0000FF'}, layers, length);
+    const U = new DividedPentagon({value: 'white'}, layers, length, layerWidth);
+    const B = new DividedPentagon({value: 'red'}, layers, length, layerWidth);
+    const C = new DividedPentagon({value: 'green'}, layers, length, layerWidth);
+    const E = new DividedPentagon({value: 'purple'}, layers, length, layerWidth);
+    const F = new DividedPentagon({value: 'yellow'}, layers, length, layerWidth);
+    const A = new DividedPentagon({value: '#0000FF'}, layers, length, layerWidth);
     
     // Bottom
-    const D = new DividedPentagon({value: 'grey'}, layers, length);
-    const K = new DividedPentagon({value: 'darkblue'}, layers, length);
-    const H = new DividedPentagon({value: 'lightyellow'}, layers, length);
-    const G = new DividedPentagon({value: 'hotpink'}, layers, length);
-    const I = new DividedPentagon({value: 'limegreen'}, layers, length);
-    const J = new DividedPentagon({value: 'orange'}, layers, length);
+    const D = new DividedPentagon({value: 'grey'}, layers, length, layerWidth);
+    const K = new DividedPentagon({value: 'darkblue'}, layers, length, layerWidth);
+    const H = new DividedPentagon({value: 'lightyellow'}, layers, length, layerWidth);
+    const G = new DividedPentagon({value: 'hotpink'}, layers, length, layerWidth);
+    const I = new DividedPentagon({value: 'limegreen'}, layers, length, layerWidth);
+    const J = new DividedPentagon({value: 'orange'}, layers, length, layerWidth);
 
     U.translate([0,0,megaminxRadius])
     D.rotate(Math.PI, [0,0,1])

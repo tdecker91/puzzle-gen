@@ -1,6 +1,4 @@
-import { DividedPentagon } from './../geometry/dividedPentagon';
-import { Pentagon } from './../geometry/pentagon';
-import { Plane } from './../geometry/plane';
+import { DEG_60_RADIANS } from './../math/constants';
 import { TriangleLattice } from './../geometry/triangleLattice';
 import { Group } from './../geometry/group';
 import { Object3D } from './../geometry/object3d';
@@ -43,5 +41,8 @@ export class Pyraminx {
     ];
 
     this.group = new Group(this.faces);
+
+    this.group.rotate(-Math.PI/3, [1,0,0]);
+    this.group.rotate(Math.PI/2.5, [0,0,1]);
   }
 }

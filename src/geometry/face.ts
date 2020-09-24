@@ -26,10 +26,17 @@ export class Face implements IFace {
     this.color = color;
 
     if (vertices) {
-      this.centroid = calculateCentroid(
-        // Calculate centroid from vertices included in the face
-        vertices.filter((v, i) => indices.includes(i))
-      );
+      this.calculateCentroid(vertices);
     }
+  }
+
+  /**
+   * recalculate the centroid of the face.
+   */
+  calculateCentroid(vertices: vec3[]) {
+    this.centroid = calculateCentroid(
+      // Calculate centroid from vertices included in the face
+      vertices.filter((v, i) => this.indices.includes(i))
+    );
   }
 }

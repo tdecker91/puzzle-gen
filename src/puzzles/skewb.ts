@@ -14,7 +14,7 @@ export class Skewb {
     const centerWidth = 1;
     const spacing = .02;
 
-    const cubeWidth = (centerWidth * 1.45);
+    const cubeWidth = 2 * Math.sqrt((centerWidth * centerWidth) / 2);
     const halfWidth = cubeWidth/2;
 
     const red = this.makeStickers({value: '#FF0000'}, centerWidth, spacing);

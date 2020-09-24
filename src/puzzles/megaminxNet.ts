@@ -81,7 +81,6 @@ export class MegaminxNet {
     bottom.translate([0,-ind,0]);
     
     this.group = new Group([top, bottom]);
-    this.group.scale([.5,.5,.5]);
     this.group.translate([-1.75*sideLength,0,0])
   }
 }

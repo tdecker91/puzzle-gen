@@ -92,11 +92,11 @@ export function renderDemo() {
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
 
-  // rubiksCube = new RubiksCube(5);
-  // scene.add(rubiksCube.group);
+  rubiksCube = new RubiksCube(3);
+  scene.add(rubiksCube.group);
 
-  cubeTop = new RubiksCubeTopLayer(3);
-  scene.add(cubeTop.group);
+  // cubeTop = new RubiksCubeTopLayer(3);
+  // scene.add(cubeTop.group);
   
   // cubeNet = new RubiksCubeNet(3);
   // scene.add(cubeNet.group);
@@ -113,10 +113,10 @@ export function renderDemo() {
   // pyraminxNet = new PyraminxNet(3);
   // scene.add(pyraminxNet.group);
 
-  // megaminx = new Megaminx(1, 2);
+  // megaminx = new Megaminx(2);
   // scene.add(megaminx.group);
 
-  // megaminxNet = new MegaminxNet(2.4 , 4);
+  // megaminxNet = new MegaminxNet(1, 2);
   // scene.add(megaminxNet.group);
 
   // square1 = new Square1(1.5);
@@ -136,16 +136,24 @@ document.addEventListener("DOMContentLoaded", function (event) {
 });
 
 export function svgStep() {
-  // skewb.group.rotate(Math.PI/32, [1,1,0]);
-  // rubiksCube.group.rotate(Math.PI/32, [1,1,0]);
-  // cubeNet.group.rotate(Math.PI/32, [1,1,0]);
   // mat4.translate(camera.matrix, camera.matrix, [0,0,-.5]);
-  // megaminx.group.rotate(Math.PI/32, [1,1,0]);
-  // pyraminx.group.rotate(Math.PI/32, [1,1,0]);
-  // megaminxNet.group.rotate(Math.PI/32, [1,1,0]);
-  // square1.group.rotate(Math.PI/32, [1,1,0]);
-  // square1Net.group.rotate(Math.PI/32, [1,1,0]);
-  cubeTop.group.rotate(Math.PI/32, [1,1,0]);
+  [
+    skewb,
+    skewbNet,
+    rubiksCube,
+    cubeNet,
+    megaminx,
+    pyraminx,
+    megaminxNet,
+    square1,
+    square1Net,
+    cubeTop
+  ].forEach(puzzle => {
+    if (puzzle && puzzle.group) {
+
+      puzzle.group.rotate(Math.PI/32, [1,1,0]);
+    } 
+  });
 
   renderer.render(scene, camera);
 }

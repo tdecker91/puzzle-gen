@@ -1,5 +1,5 @@
 import { Object3D } from './../../geometry/object3d';
-import { ROTATION_VECTOR, FRONT_COLOR, LEFT_COLOR, BACK_COLOR, RIGHT_COLOR } from './constants';
+import { ROTATION_VECTOR, FRONT_COLOR, LEFT_COLOR, BACK_COLOR, RIGHT_COLOR, SOLVED_TOP_PIECES, SOLVED_BOTTOM_PIECES } from './constants';
 import { Sqaure1Piece, Square1Builder } from './interface';
 import { DEG_30_RADIANS } from './../../math/constants';
 import { Geometry } from './../../geometry/geometry';
@@ -9,6 +9,19 @@ import { IColor } from './../../geometry/color';
 import { Group } from '../../geometry/group';
 
 export class Square1 extends Square1Builder {
+
+  constructor(
+    sideLength: number,
+    topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
+    bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
+    middleRotated: boolean = false
+  ) {
+    super(sideLength, topLayer, bottomLayer, middleRotated);
+    // this.group.translate([0,0,-1])
+    this.group.rotate(-0.985398, [1,0,0]);
+    this.group.rotate(-0.785398, [0,0,1]);
+  }
+
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
     const points: vec3[] = [
       // Top

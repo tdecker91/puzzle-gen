@@ -12,17 +12,15 @@ export class SkewbNet {
 
   constructor() {
     const centerWidth = 1;
-    const spacing = .02;
 
-    const cubeWidth = (centerWidth * 1.45);
-    const halfWidth = cubeWidth/2;
+    const cubeWidth = 2 * Math.sqrt((centerWidth * centerWidth) / 2);
 
-    const red = this.makeStickers({value: '#FF0000'}, centerWidth, spacing, [-cubeWidth,0,0]);
-    const yellow = this.makeStickers({value: '#FFFF00'}, centerWidth, spacing, [2*cubeWidth,0,0]);
-    const blue = this.makeStickers({value: '#0000FF'}, centerWidth, spacing, [0,-cubeWidth,0]);
-    const orange = this.makeStickers({value: '#FFA500'}, centerWidth, spacing, [cubeWidth,0,0]);
-    const green = this.makeStickers({value: '#00FF00'}, centerWidth, spacing, [0,cubeWidth,0]);
-    const white = this.makeStickers({value: '#FFFFFF'}, centerWidth, spacing, [0,0,0]);
+    const red = this.makeStickers({value: '#FF0000'}, centerWidth, [-cubeWidth,0,0]);
+    const yellow = this.makeStickers({value: '#FFFF00'}, centerWidth, [2*cubeWidth,0,0]);
+    const blue = this.makeStickers({value: '#0000FF'}, centerWidth, [0,-cubeWidth,0]);
+    const orange = this.makeStickers({value: '#FFA500'}, centerWidth, [cubeWidth,0,0]);
+    const green = this.makeStickers({value: '#00FF00'}, centerWidth, [0,cubeWidth,0]);
+    const white = this.makeStickers({value: '#FFFFFF'}, centerWidth, [0,0,0]);
 
     this.stickers = [...red, ...yellow, ...blue, ...orange, ...green, ...white];
     this.group = new Group(this.stickers);
@@ -31,7 +29,6 @@ export class SkewbNet {
   private makeStickers(
     color: IColor,
     width: number,
-    spacing: number,
     translate: vec3
   ): Geometry[] {
     const center = new Plane(width, width, color);

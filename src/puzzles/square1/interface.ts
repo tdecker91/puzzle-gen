@@ -5,7 +5,6 @@ import { Geometry } from './../../geometry/geometry';
 import { ATAN_15_DEG, DEG_30_RADIANS, DEG_60_RADIANS } from './../../math/constants';
 import { PIECE_TYPE } from './enum';
 import { IColor } from './../../geometry/color';
-import { degreesToRadians } from '../../math/utils';
 
 export interface Sqaure1Piece {
   type: PIECE_TYPE,

@@ -17,9 +17,13 @@ export class TriangleLattice extends Geometry {
     const inradius = fullHeight/3
 
     let vertices: vec3[] = [];
-    let faces: IFace[] = [];
+    let faces: Face[] = [];
 
     /**
+     * Builds one layer of verticies at a time
+     * for each layer after the first it constructs
+     * faces for the triangles (0,1,4), (1,2,5) etc...
+     * 
      *       9
      *     7   8
      *   4   5   6 
@@ -50,6 +54,7 @@ export class TriangleLattice extends Geometry {
       }
     }
 
+    faces.forEach(face => face.calculateCentroid(vertices));
     super(vertices, faces);
   }
 }

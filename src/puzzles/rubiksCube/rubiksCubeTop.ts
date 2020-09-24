@@ -1,4 +1,3 @@
-import { Plane } from './../../geometry/plane';
 import { vec3 } from 'gl-matrix';
 import { IColor } from './../../geometry/color';
 import { Face } from './../../geometry/face';
