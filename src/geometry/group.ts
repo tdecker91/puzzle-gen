@@ -6,7 +6,7 @@ export class Group extends Object3D {
   
   objects: Object3D[];
 
-  constructor(objects: Object3D[]) {
+  constructor(objects: Object3D[] = []) {
     super();
     this.setObjects(objects);
   }

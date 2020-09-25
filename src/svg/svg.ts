@@ -10,14 +10,16 @@ export function createSVGElement(width: number, height: number, minx: number, mi
   return svgElement;
 }
 
-export function createPolygonElement(points: vec3[], color?: IColor): SVGPolygonElement {
+export function createPolygonElement(points: vec3[], color?: IColor, strokeWidth?: string): SVGPolygonElement {
   const polygon = document.createElementNS("http://www.w3.org/2000/svg", "polygon");
   const pointsAttribute = makePointsAttributeValue(points);
   const colorValue = color ? color.value : 'black';
   polygon.setAttributeNS(null, 'points', pointsAttribute);
   polygon.setAttributeNS(null, 'fill', colorValue);
-  polygon.setAttributeNS(null, 'stroke', 'black');
-  polygon.setAttributeNS(null, 'stroke-width', '0.035');
+  if (strokeWidth) {
+    polygon.setAttributeNS(null, 'stroke', '#000000');
+    polygon.setAttributeNS(null, 'stroke-width', strokeWidth);
+  }
   polygon.setAttributeNS(null, 'stroke-linejoin', 'round');
   return polygon;
 }

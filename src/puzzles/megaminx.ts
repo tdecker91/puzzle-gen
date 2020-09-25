@@ -4,14 +4,10 @@ import { Object3D } from './../geometry/object3d';
 import { DividedPentagon } from '../geometry/dividedPentagon';
 import { dodecahedronInRadius, pentagonInRadius } from '../math/utils';
 
-/**
- * for a megaminx with side length 1,
- * layer widths that look good.
- */
 const OPTIMAL_LAYER_WIDTH = {
-  2: .4,
-  3: .225,
-  4: .16
+  2: .3,
+  3: .17,
+  4: .121
 }
 
 function getLayerWidth(length: number, layers: number): number {
@@ -23,10 +19,9 @@ export class Megaminx {
   group: Group;
 
   constructor(layers: number = 2) {
-    const length = 1;
+    const length = .75;
     const megaminxRadius = dodecahedronInRadius(length);
     const layerWidth = getLayerWidth(length, layers);
-    console.log(layerWidth);
 
     // Top
     const U = new DividedPentagon({value: 'white'}, layers, length, layerWidth);

@@ -1,3 +1,4 @@
+import { Group } from './geometry/group';
 import { RubiksCubeTopLayer } from './puzzles/rubiksCube/rubiksCubeTop';
 import { RubiksCubeNet } from './puzzles/rubiksCube/rubiksCubeNet';
 import { Square1Net } from './puzzles/square1/square1Net';
@@ -16,6 +17,7 @@ import { Square1 } from './puzzles/square1/square1';
 
 
 let camera: Camera = new Camera();
+let g: Group;
 let rubiksCube: RubiksCube;
 let cubeNet: RubiksCubeNet;
 let cubeTop: RubiksCubeTopLayer;
@@ -28,16 +30,17 @@ let megaminxNet: MegaminxNet;
 let square1: Square1;
 let square1Net: Square1Net;
 
-let renderer;
+let renderer: CustomSVGRenderer;
 let scene;
 
 let width: number = 500;
 let height: number = 500;
-let minx: number = -2;
-let miny: number = -2;
-let svgwidth: number = 4;
-let svgheight: number = 4;
+let minx: number = -.9;
+let miny: number = -.9;
+let svgwidth: number = 1.8;
+let svgheight: number = 1.8;
 let planewidth: number = 1;
+let strokeWidth: number = .02;
 
 function setInputs() {
   if (camera && camera.matrix) {
@@ -53,6 +56,7 @@ function setInputs() {
   (<any>document.getElementById(`svgw`)).value = svgwidth;
   (<any>document.getElementById(`svgh`)).value = svgheight;
   (<any>document.getElementById(`pw`)).value = planewidth;
+  (<any>document.getElementById(`sw`)).value = strokeWidth;
 
 }
 
@@ -84,6 +88,7 @@ export function getInputs() {
   svgwidth = parseFloat((<any>document.getElementById(`svgw`)).value);
   svgheight = parseFloat((<any>document.getElementById(`svgh`)).value);
   planewidth = parseFloat((<any>document.getElementById(`pw`)).value);
+  strokeWidth = parseFloat((<any>document.getElementById(`sw`)).value);
 
 }
 
@@ -91,13 +96,14 @@ export function renderDemo() {
 
   scene = new Scene();
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
+  renderer.strokeWidth = "" + strokeWidth;
 
   rubiksCube = new RubiksCube(3);
   scene.add(rubiksCube.group);
 
   // cubeTop = new RubiksCubeTopLayer(3);
   // scene.add(cubeTop.group);
-  
+
   // cubeNet = new RubiksCubeNet(3);
   // scene.add(cubeNet.group);
   
@@ -113,18 +119,19 @@ export function renderDemo() {
   // pyraminxNet = new PyraminxNet(3);
   // scene.add(pyraminxNet.group);
 
-  // megaminx = new Megaminx(2);
+  // megaminx = new Megaminx(3);
   // scene.add(megaminx.group);
 
-  // megaminxNet = new MegaminxNet(1, 2);
+  // megaminxNet = new MegaminxNet(2);
   // scene.add(megaminxNet.group);
 
-  // square1 = new Square1(1.5);
+  // square1 = new Square1();
   // scene.add(square1.group);
 
-  // square1Net = new Square1Net(1.5);
+  // square1Net = new Square1Net();
   // scene.add(square1Net.group);
 
+  scene.add(g);
   document.getElementById('idsomething').appendChild(renderer.domElement);
   renderer.render(scene, camera);
 
@@ -143,17 +150,21 @@ export function svgStep() {
     rubiksCube,
     cubeNet,
     megaminx,
-    pyraminx,
     megaminxNet,
+    pyraminx,
+    pyraminxNet,
     square1,
     square1Net,
     cubeTop
   ].forEach(puzzle => {
     if (puzzle && puzzle.group) {
 
-      puzzle.group.rotate(Math.PI/32, [1,1,0]);
+      // puzzle.group.rotate(Math.PI/32, [1,1,0]);
     } 
   });
 
+  // g.rotate(Math.PI/32, [1,1,0]);
+
+  renderer.strokeWidth = '' + strokeWidth;
   renderer.render(scene, camera);
 }

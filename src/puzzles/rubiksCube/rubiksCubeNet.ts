@@ -8,15 +8,15 @@ export class RubiksCubeNet {
   group: Group; 
 
   constructor(size: number) {
-    const width = 1/2;
-    const cubeWidth = (width * size);
+    const cubeWidth = 1;
+    const stickerWidth = cubeWidth/size;
 
-    const U = this.makeStickers(size, {value: '#FFFF00'}, width);
-    const R = this.makeStickers(size, {value: '#FF0000'}, width);
-    const F = this.makeStickers(size, {value: '#0000FF'}, width);
-    const D = this.makeStickers(size, {value: '#FFFFFF'}, width);
-    const L = this.makeStickers(size, {value: '#FFA500'}, width);
-    const B = this.makeStickers(size, {value: '#00FF00'}, width);
+    const U = this.makeStickers(size, {value: '#FFFF00'}, stickerWidth);
+    const R = this.makeStickers(size, {value: '#FF0000'}, stickerWidth);
+    const F = this.makeStickers(size, {value: '#0000FF'}, stickerWidth);
+    const D = this.makeStickers(size, {value: '#FFFFFF'}, stickerWidth);
+    const L = this.makeStickers(size, {value: '#FFA500'}, stickerWidth);
+    const B = this.makeStickers(size, {value: '#00FF00'}, stickerWidth);
 
     const uGroup = new Group(U);
     uGroup.translate([0, cubeWidth, 0]);
@@ -41,6 +41,8 @@ export class RubiksCubeNet {
     this.stickers = [uGroup, rGroup, fGroup, dGroup, lGroup, bGroup];
 
     this.group = new Group(this.stickers);
+    this.group.translate([-cubeWidth/4,0,0]);
+    this.group.scale([.5,.5,.5])
   }
 
   private makeStickers(

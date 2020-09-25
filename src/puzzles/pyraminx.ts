@@ -11,7 +11,7 @@ export class Pyraminx {
   faces: Object3D[];
   group: Group;
 
-  constructor(size: number, sideLength: number = 3) {
+  constructor(size: number, sideLength: number = 1.75) {
     const insphereRadius = sideLength / SQRT_24;
 
     const U = new TriangleLattice(sideLength, size, { value: '#FF0000'});

@@ -9,7 +9,7 @@ export class PyraminxNet {
   faces: Object3D[];
   group: Group;
 
-  constructor(size: number, sideLength: number = 2) {
+  constructor(size: number, sideLength: number = .925) {
     const fullHeight = sideLength * (SQRT_3 / 2);
     const inDiameter = fullHeight/1.5
 

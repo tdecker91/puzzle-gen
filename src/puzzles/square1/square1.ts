@@ -11,15 +11,15 @@ import { Group } from '../../geometry/group';
 export class Square1 extends Square1Builder {
 
   constructor(
-    sideLength: number,
+    sideLength: number = 1.25,
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
     bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
     middleRotated: boolean = false
   ) {
     super(sideLength, topLayer, bottomLayer, middleRotated);
-    // this.group.translate([0,0,-1])
+    
     this.group.rotate(-0.985398, [1,0,0]);
-    this.group.rotate(-0.785398, [0,0,1]);
+    this.group.rotate(-0.59, [0,0,1]);
   }
 
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
@@ -101,6 +101,10 @@ export class Square1 extends Square1Builder {
   buildSquare1(top: Sqaure1Piece[], bottom: Sqaure1Piece[], middleRotated: boolean): Object3D[] {
     const topLayer = new Group(this.makeLayer(top));
     const bottomLayer = new Group(this.makeLayer(bottom));
+
+    // Prevent overlapping faces
+    topLayer.translate([0,0,.005]);
+    bottomLayer.translate([0,0,-.005]);
 
     bottomLayer.rotate(Math.PI, [1, 0, 0]);
     bottomLayer.rotate(DEG_30_RADIANS, [0, 0, 1]);

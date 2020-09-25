@@ -11,6 +11,7 @@ export class CustomSVGRenderer {
 
   domElement: HTMLElement;
   svgElement: SVGSVGElement;
+  strokeWidth: string = '0.035';
 
   protected polygons = [];
 
@@ -74,7 +75,7 @@ export class CustomSVGRenderer {
           points.push(screenPoint);
         });
 
-      const polygon = createPolygonElement(points, face.color || object.color);
+      const polygon = createPolygonElement(points, face.color || object.color, this.strokeWidth);
 
       this.addPolygon({
         polygon,

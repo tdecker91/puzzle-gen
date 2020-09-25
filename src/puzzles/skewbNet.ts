@@ -11,9 +11,8 @@ export class SkewbNet {
   group: Group;
 
   constructor() {
-    const centerWidth = 1;
-
-    const cubeWidth = 2 * Math.sqrt((centerWidth * centerWidth) / 2);
+    const cubeWidth = 1;
+    const centerWidth = Math.sqrt(Math.pow(cubeWidth/2, 2) * 2);
 
     const red = this.makeStickers({value: '#FF0000'}, centerWidth, [-cubeWidth,0,0]);
     const yellow = this.makeStickers({value: '#FFFF00'}, centerWidth, [2*cubeWidth,0,0]);
@@ -24,6 +23,9 @@ export class SkewbNet {
 
     this.stickers = [...red, ...yellow, ...blue, ...orange, ...green, ...white];
     this.group = new Group(this.stickers);
+
+    this.group.translate([-cubeWidth/4,0,0]);
+    this.group.scale([.5,.5,.5]);
   }
 
   private makeStickers(

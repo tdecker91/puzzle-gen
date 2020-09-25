@@ -7,26 +7,42 @@ import { mat3, mat4 } from 'gl-matrix';
 const DEG_36_RADIANS = 36 * Math.PI / 180;
 const DEG_72_RADIANS = 72 * Math.PI / 180;
 
+/**
+ * for a megaminx with side length 1,
+ * layer widths that look good.
+ */
+const OPTIMAL_LAYER_WIDTH = {
+  2: .3,
+  3: .17,
+  4: .121
+}
+
+function getLayerWidth(length: number, layers: number): number {
+  return OPTIMAL_LAYER_WIDTH[layers] || (length / (layers * 1.9));
+}
+
 export class MegaminxNet {
   faces: Object3D[];
   group: Group;
 
-  constructor(sideLength: number, layers: number) {
+  constructor(layers: number) {
+    const sideLength = .75;
+    const layerWidth = getLayerWidth(length, layers);
     // Top
-    const U = new DividedPentagon({value: 'white'}, layers, sideLength);
-    const B = new DividedPentagon({value: 'red'}, layers, sideLength);
-    const C = new DividedPentagon({value: 'green'}, layers, sideLength);
-    const E = new DividedPentagon({value: 'purple'}, layers, sideLength);
-    const F = new DividedPentagon({value: 'yellow'}, layers, sideLength);
-    const A = new DividedPentagon({value: '#0000FF'}, layers, sideLength);
+    const U = new DividedPentagon({value: 'white'}, layers, sideLength, layerWidth);
+    const B = new DividedPentagon({value: 'red'}, layers, sideLength, layerWidth);
+    const C = new DividedPentagon({value: 'green'}, layers, sideLength, layerWidth);
+    const E = new DividedPentagon({value: 'purple'}, layers, sideLength, layerWidth);
+    const F = new DividedPentagon({value: 'yellow'}, layers, sideLength, layerWidth);
+    const A = new DividedPentagon({value: '#0000FF'}, layers, sideLength, layerWidth);
     
     // Bottom
-    const D = new DividedPentagon({value: 'grey'}, layers, sideLength);
-    const K = new DividedPentagon({value: 'darkblue'}, layers, sideLength);
-    const H = new DividedPentagon({value: '#FDFD96'}, layers, sideLength);
-    const G = new DividedPentagon({value: 'hotpink'}, layers, sideLength);
-    const I = new DividedPentagon({value: 'limegreen'}, layers, sideLength);
-    const J = new DividedPentagon({value: 'orange'}, layers, sideLength);
+    const D = new DividedPentagon({value: 'grey'}, layers, sideLength, layerWidth);
+    const K = new DividedPentagon({value: 'darkblue'}, layers, sideLength, layerWidth);
+    const H = new DividedPentagon({value: '#FDFD96'}, layers, sideLength, layerWidth);
+    const G = new DividedPentagon({value: 'hotpink'}, layers, sideLength, layerWidth);
+    const I = new DividedPentagon({value: 'limegreen'}, layers, sideLength, layerWidth);
+    const J = new DividedPentagon({value: 'orange'}, layers, sideLength, layerWidth);
 
     const ind = 2 * pentagonInRadius(sideLength);
 
@@ -81,6 +97,7 @@ export class MegaminxNet {
     bottom.translate([0,-ind,0]);
     
     this.group = new Group([top, bottom]);
-    this.group.translate([-1.75*sideLength,0,0])
+    this.group.scale([.33,.33,.33]);
+    this.group.translate([-1.75*sideLength,0,0]);
   }
 }
