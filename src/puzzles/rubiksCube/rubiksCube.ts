@@ -1,56 +1,90 @@
+import { Geometry } from './../../geometry/geometry';
+import { IColor } from './../../geometry/color';
 import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN } from './../colors';
 import { Group } from "../../geometry/group";
 import { Object3D } from "../../geometry/object3d";
 import { makeGrid } from '../../geometry/grid';
+import { chunkArray } from '../../utils/arrays';
 
 export class RubiksCube {
 
   stickers: Object3D[];
   group: Group;
 
+  private size: number;
+
+  private U: Group;
+  private R: Group;
+  private F: Group;
+  private D: Group;
+  private L: Group;
+  private B: Group;
+
   constructor(size: number) {
+    this.size = size;
     const width = 1/2;
     const cubeWidth = (width * size);
     const halfWidth = cubeWidth/2;
 
-    const U = makeGrid(cubeWidth, size, YELLOW);
-    const R = makeGrid(cubeWidth, size, RED);
-    const F = makeGrid(cubeWidth, size, BLUE);
-    const D = makeGrid(cubeWidth, size, WHITE);
-    const L = makeGrid(cubeWidth, size, ORANGE);
-    const B = makeGrid(cubeWidth, size, GREEN);
+    this.U = new Group(makeGrid(cubeWidth, size, YELLOW));
+    this.R = new Group(makeGrid(cubeWidth, size, RED));
+    this.F = new Group(makeGrid(cubeWidth, size, BLUE));
+    this.D = new Group(makeGrid(cubeWidth, size, WHITE));
+    this.L = new Group(makeGrid(cubeWidth, size, ORANGE));
+    this.B = new Group(makeGrid(cubeWidth, size, GREEN));
 
-    const uGroup = new Group(U);
-    uGroup.rotate(-Math.PI/2, [0,1,0]);
-    uGroup.rotate(-Math.PI/2, [1,0,0]);
-    uGroup.translate([0,0,halfWidth]);
+    this.U.rotate(-Math.PI/2, [0,1,0]);
+    this.U.rotate(-Math.PI/2, [1,0,0]);
+    this.U.translate([0,0,halfWidth]);
 
-    const rGroup = new Group(R);
-    rGroup.translate([0,0,halfWidth]);
+    this.R.translate([0,0,halfWidth]);
 
-    const fGroup = new Group(F);
-    fGroup.rotate(-Math.PI/2, [0,1,0]);
-    fGroup.translate([0, 0, halfWidth]);
+    this.F.rotate(-Math.PI/2, [0,1,0]);
+    this.F.translate([0, 0, halfWidth]);
 
-    const dGroup = new Group(D);
-    dGroup.rotate(-Math.PI/2, [0,1,0]);
-    dGroup.rotate(Math.PI/2, [1,0,0]);
-    dGroup.translate([0,0,halfWidth]);
+    this.D.rotate(-Math.PI/2, [0,1,0]);
+    this.D.rotate(Math.PI/2, [1,0,0]);
+    this.D.translate([0,0,halfWidth]);
     
-    const lGroup = new Group(L);
-    lGroup.rotate(-Math.PI, [0,1,0]);
-    lGroup.translate([0,0,halfWidth]);
+    this.L.rotate(-Math.PI, [0,1,0]);
+    this.L.translate([0,0,halfWidth]);
     
-    const bGroup = new Group(B);
-    bGroup.rotate(Math.PI/2, [0,1,0]);
-    bGroup.translate([0,0,halfWidth]);
+    this.B.rotate(Math.PI/2, [0,1,0]);
+    this.B.translate([0,0,halfWidth]);
 
-    this.stickers = [uGroup, rGroup, fGroup, dGroup, lGroup, bGroup];
+    this.stickers = [
+      this.U,
+      this.R,
+      this.F,
+      this.D,
+      this.L,
+      this.B
+    ];
 
     this.group = new Group(this.stickers);
 
     this.group.translate([0,0,-1])
     this.group.rotate(0.593411946, [1,0,0]);
     this.group.rotate(0.785398, [0,1,0]);
+  }
+
+  private setFaceColors(faceStickers: Group, colors: IColor[]) {
+    faceStickers.objects.forEach((g: Geometry, i) => {
+      if (colors && colors[i]) {
+        g.faces[0].color = colors[i];
+      }
+    });
+  }
+
+  setColors(colors: IColor[]) {
+    const numStickers = this.size*this.size;
+    let [u,r,f,d,l,b] = chunkArray<IColor>(colors, numStickers);
+
+    this.setFaceColors(this.U, u);
+    this.setFaceColors(this.R, r);
+    this.setFaceColors(this.F, f);
+    this.setFaceColors(this.D, d);
+    this.setFaceColors(this.L, l);
+    this.setFaceColors(this.B, b);
   }
 }
