@@ -1,3 +1,4 @@
+import { GREEN, RED, BLUE, YELLOW } from './colors';
 import { TriangleLattice } from './../geometry/triangleLattice';
 import { Group } from './../geometry/group';
 import { Object3D } from './../geometry/object3d';
@@ -13,10 +14,10 @@ export class PyraminxNet {
     const fullHeight = sideLength * (SQRT_3 / 2);
     const inDiameter = fullHeight/1.5
 
-    const U = new TriangleLattice(sideLength, size, { value: '#FF0000'});
-    const L = new TriangleLattice(sideLength, size, { value: '#00FF00'});
-    const R = new TriangleLattice(sideLength, size, { value: '#0000FF'});
-    const B = new TriangleLattice(sideLength, size, { value: '#FFFF00'});
+    const U = new TriangleLattice(sideLength, size, RED);
+    const L = new TriangleLattice(sideLength, size, GREEN);
+    const R = new TriangleLattice(sideLength, size, BLUE);
+    const B = new TriangleLattice(sideLength, size, YELLOW);
 
     U.rotate(-DEG_60_RADIANS, [0,0,1]);
     U.translate([0,inDiameter,0]);

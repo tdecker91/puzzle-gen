@@ -1,4 +1,3 @@
-import { Square1Simualtor } from './simulator';
 import { SOLVED_BOTTOM_PIECES, SOLVED_TOP_PIECES } from './constants';
 import { Object3D } from './../../geometry/object3d';
 import { Group } from './../../geometry/group';

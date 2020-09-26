@@ -1,4 +1,4 @@
-import { DEG_60_RADIANS } from './../math/constants';
+import { GREEN, RED, BLUE, YELLOW } from './colors';
 import { TriangleLattice } from './../geometry/triangleLattice';
 import { Group } from './../geometry/group';
 import { Object3D } from './../geometry/object3d';
@@ -14,10 +14,10 @@ export class Pyraminx {
   constructor(size: number, sideLength: number = 1.75) {
     const insphereRadius = sideLength / SQRT_24;
 
-    const U = new TriangleLattice(sideLength, size, { value: '#FF0000'});
-    const L = new TriangleLattice(sideLength, size, { value: '#00FF00'});
-    const R = new TriangleLattice(sideLength, size, { value: '#0000FF'});
-    const B = new TriangleLattice(sideLength, size, { value: '#FFFF00'});
+    const U = new TriangleLattice(sideLength, size, RED);
+    const L = new TriangleLattice(sideLength, size, GREEN);
+    const R = new TriangleLattice(sideLength, size, BLUE);
+    const B = new TriangleLattice(sideLength, size, YELLOW);
 
     U.rotate(DEG_120_RADIANS, [0,0,1]);
     U.rotate(ARC_COS_THIRD, [1,0,0]);

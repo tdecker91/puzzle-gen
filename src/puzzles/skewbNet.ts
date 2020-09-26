@@ -1,3 +1,4 @@
+import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE } from './colors';
 import { Group } from "../geometry/group";
 import { IColor } from "../geometry/color";
 import { vec3 } from "gl-matrix";
@@ -14,12 +15,12 @@ export class SkewbNet {
     const cubeWidth = 1;
     const centerWidth = Math.sqrt(Math.pow(cubeWidth/2, 2) * 2);
 
-    const red = this.makeStickers({value: '#FF0000'}, centerWidth, [-cubeWidth,0,0]);
-    const yellow = this.makeStickers({value: '#FFFF00'}, centerWidth, [2*cubeWidth,0,0]);
-    const blue = this.makeStickers({value: '#0000FF'}, centerWidth, [0,-cubeWidth,0]);
-    const orange = this.makeStickers({value: '#FFA500'}, centerWidth, [cubeWidth,0,0]);
-    const green = this.makeStickers({value: '#00FF00'}, centerWidth, [0,cubeWidth,0]);
-    const white = this.makeStickers({value: '#FFFFFF'}, centerWidth, [0,0,0]);
+    const red = this.makeStickers(RED, centerWidth, [-cubeWidth,0,0]);
+    const yellow = this.makeStickers(YELLOW, centerWidth, [2*cubeWidth,0,0]);
+    const blue = this.makeStickers(BLUE, centerWidth, [0,-cubeWidth,0]);
+    const orange = this.makeStickers(ORANGE, centerWidth, [cubeWidth,0,0]);
+    const green = this.makeStickers(GREEN, centerWidth, [0,cubeWidth,0]);
+    const white = this.makeStickers(WHITE, centerWidth, [0,0,0]);
 
     this.stickers = [...red, ...yellow, ...blue, ...orange, ...green, ...white];
     this.group = new Group(this.stickers);
