@@ -25,7 +25,6 @@ export class Square1Simualtor {
 
   public alg(moves: Square1Move[]) {
     moves.forEach(move => {
-      console.log("applying move", move, this.topLayer);
       this.rotateTop(move.top);
       this.rotateBottom(move.bottom);
       this.slice();

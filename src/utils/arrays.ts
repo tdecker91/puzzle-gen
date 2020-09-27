@@ -17,3 +17,13 @@ export function chunkArray<T>(array: T[], chunkSize: number): T[][] {
     .fill(null)
     .map((_, index) => array.slice(index*chunkSize, (index+1)*chunkSize));
 }
+
+/**
+ * Generates an array of set size filled with a specific value
+ * 
+ * @param length length of the array
+ * @param value value to fill the array with
+ */
+export function fillArray<T>(length: number, value: T): T[] {
+  return new Array(length).fill(value);
+}

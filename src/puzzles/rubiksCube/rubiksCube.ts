@@ -22,8 +22,7 @@ export class RubiksCube {
 
   constructor(size: number) {
     this.size = size;
-    const width = 1/2;
-    const cubeWidth = (width * size);
+    const cubeWidth = 1.5;
     const halfWidth = cubeWidth/2;
 
     this.U = new Group(makeGrid(cubeWidth, size, YELLOW));
