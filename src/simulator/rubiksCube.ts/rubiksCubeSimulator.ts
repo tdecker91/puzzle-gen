@@ -1,6 +1,6 @@
-import { fillArray } from '../utils/arrays';
+import { fillArray } from '../../utils/arrays';
 import { CUBE_FACES, CUBE_AXIS, CUBE_AXIS_FACES, AXIS_ORIENTATION } from './constants';
-import { Simulator, TurnDefinitions } from './simulator';
+import { Simulator, TurnDefinitions } from '../simulator';
 
 export class RubiksCubeSimulator extends Simulator {
 
@@ -120,37 +120,41 @@ export class RubiksCubeSimulator extends Simulator {
     }
   }
 
-  uTurn() {
-    this.doTurn('U');
-    this.doTurn(`Y-${this.size-1}`);
+  uTurn(reverse?: boolean) {
+    this.doTurn('U', reverse);
+    this.doTurn(`Y-${this.size-1}`, reverse);
   }
 
-  rTurn() {
-    this.doTurn('R');
-    this.doTurn(`X-${this.size-1}`);
+  rTurn(reverse?: boolean) {
+    this.doTurn('R', reverse);
+    this.doTurn(`X-${this.size-1}`, reverse);
   }
 
-  fTurn() {
-    this.doTurn('F');
-    this.doTurn(`Z-0`);
+  fTurn(reverse?: boolean) {
+    this.doTurn('F', reverse);
+    this.doTurn(`Z-0`, reverse);
   }
 
-  dTurn() {
-    this.doTurn('D');
-    this.doTurn(`Y-0`, true);
+  dTurn(reverse?: boolean) {
+    this.doTurn('D', reverse);
+    this.doTurn(`Y-0`, !reverse);
   }
 
-  lTurn() {
-    this.doTurn('L');
-    this.doTurn(`X-0`, true);
+  lTurn(reverse?: boolean) {
+    this.doTurn('L', reverse);
+    this.doTurn(`X-0`, !reverse);
   }
 
-  bTurn() {
-    this.doTurn('B');
-    this.doTurn(`Z-${this.size-1}`, true);
+  bTurn(reverse?: boolean) {
+    this.doTurn('B', reverse);
+    this.doTurn(`Z-${this.size-1}`, !reverse);
   }
 
   reset(): void {
-
+    this.faces.forEach((stickerIds, faceName) => {
+      stickerIds.forEach(stickerId => {
+        this.stickers.set(stickerId, faceName);
+      });
+    });
   }
 }

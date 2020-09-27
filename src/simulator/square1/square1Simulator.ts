@@ -1,6 +1,7 @@
-import { PIECE_TYPE } from './enum';
-import { SOLVED_TOP_PIECES, SOLVED_BOTTOM_PIECES } from './constants';
-import { Sqaure1Piece } from './interface';
+import { SOLVED_BOTTOM_PIECES } from './../../puzzles/square1/constants';
+import { Sqaure1Piece } from './../../puzzles/square1/interface';
+import { PIECE_TYPE } from "../../puzzles/square1/enum";
+import { SOLVED_TOP_PIECES } from '../../puzzles/square1/constants';
 
 export interface Square1Move {
   top: number;
