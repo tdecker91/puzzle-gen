@@ -1,3 +1,6 @@
+import { Square1Simualtor } from './simulator/square1/square1Simulator';
+import { WHITE, BLUE, RED, PINK, LIGHT_GREEN, LIGHT_YELLOW, GREEN, GREY, PURPLE, DARK_BLUE, ORANGE, YELLOW } from './puzzles/colors';
+import { MegaminxSimulator } from './simulator/megaminx/megaminxSimulator';
 import { Group } from './geometry/group';
 import { RubiksCubeTopLayer } from './puzzles/rubiksCube/rubiksCubeTop';
 import { RubiksCubeNet } from './puzzles/rubiksCube/rubiksCubeNet';
@@ -32,6 +35,11 @@ let square1Net: Square1Net;
 
 let renderer: CustomSVGRenderer;
 let scene;
+
+let megaSim = new MegaminxSimulator();
+megaSim.doTurn('R');
+megaSim.doTurn('R-0');
+console.log(megaSim.getValues());
 
 let width: number = 500;
 let height: number = 500;
@@ -98,8 +106,8 @@ export function renderDemo() {
   renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
   renderer.strokeWidth = "" + strokeWidth;
 
-  rubiksCube = new RubiksCube(3);
-  scene.add(rubiksCube.group);
+  // rubiksCube = new RubiksCube(3);
+  // scene.add(rubiksCube.group);
 
   // cubeTop = new RubiksCubeTopLayer(3);
   // scene.add(cubeTop.group);
@@ -119,8 +127,24 @@ export function renderDemo() {
   // pyraminxNet = new PyraminxNet(3);
   // scene.add(pyraminxNet.group);
 
-  // megaminx = new Megaminx(3);
-  // scene.add(megaminx.group);
+  megaminx = new Megaminx(2);
+  let megaminxFaceColors = {
+    U: WHITE,
+    F: RED,
+    R: BLUE,
+    dr: PINK,
+    dl: LIGHT_YELLOW,
+    L: GREEN,
+    d: GREY,
+    br: LIGHT_GREEN,
+    BR: YELLOW,
+    BL: PURPLE,
+    bl: DARK_BLUE,
+    b: ORANGE
+  }
+  let {U, R, F, dr, dl, L, d, br, BR, BL, b} = megaSim.getValues();
+  megaminx.setColors([...U, ...R, ...F, ...dr, ...dl, ...L, ...d, ...br, ...BR, ...BL, ...b].map(face => megaminxFaceColors[face]));
+  scene.add(megaminx.group);
 
   // megaminxNet = new MegaminxNet(2);
   // scene.add(megaminxNet.group);
@@ -159,7 +183,7 @@ export function svgStep() {
   ].forEach(puzzle => {
     if (puzzle && puzzle.group) {
 
-      // puzzle.group.rotate(Math.PI/32, [1,1,0]);
+      puzzle.group.rotate(Math.PI/32, [1,1,0]);
     } 
   });
 

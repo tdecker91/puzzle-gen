@@ -138,7 +138,7 @@ export class Simulator {
     return true;
   }
 
-  getValues() {
+  getValues(): { [faceName: string]: string[]} {
     let values = {};
 
     this.faces.forEach((stickerIds, key) => {
