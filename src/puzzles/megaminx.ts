@@ -62,8 +62,9 @@ export class Megaminx {
     this.b = new DividedPentagon(ORANGE, layers, length, layerWidth);
 
     this.F.translate([0,0,megaminxRadius])
-    this.d.rotate(Math.PI, [0,0,1])
-    this.d.translate([0,0,-megaminxRadius])
+    this.b.rotate(Math.PI, [0,0,1])
+    this.b.rotate(Math.PI, [0,1,0])
+    this.b.translate([0,0,megaminxRadius])
 
     this.U.rotate(Math.PI,[0,0,1])
     this.U.rotate((180 - 116.57) * Math.PI/180, [1,0,0])
@@ -101,9 +102,9 @@ export class Megaminx {
     this.bl.rotate(-116.57 * Math.PI/180, [1,0,0])
     this.bl.translate([0,0,megaminxRadius]);
 
-    this.b.rotate(5 * Math.PI/5, [0,0,1])
-    this.b.rotate(-116.57 * Math.PI/180, [1,0,0])
-    this.b.translate([0,0,megaminxRadius]);
+    this.d.rotate(5 * Math.PI/5, [0,0,1])
+    this.d.rotate(-116.57 * Math.PI/180, [1,0,0])
+    this.d.translate([0,0,megaminxRadius]);
 
     this.br.rotate(7 * Math.PI/5, [0,0,1])
     this.br.rotate(-116.57 * Math.PI/180, [1,0,0])
