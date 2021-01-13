@@ -194,7 +194,7 @@ export class MegaminxSimulator extends Simulator {
       [L[2], F[8]],
 
       ...makeFaceTurnDefinitions(dl)
-    ], 'dl')
+    ], 'dl');
 
     // d
     this.addTurn([
@@ -236,7 +236,7 @@ export class MegaminxSimulator extends Simulator {
       [BR[2], b[2]],
 
       ...makeFaceTurnDefinitions(br)
-    ], 'br')
+    ], 'br');
 
     // bl
     this.addTurn([
@@ -257,7 +257,7 @@ export class MegaminxSimulator extends Simulator {
       [b[6], BL[6]],
 
       ...makeFaceTurnDefinitions(bl)
-    ], 'bl')
+    ], 'bl');
 
     // b
     this.addTurn([
@@ -278,7 +278,234 @@ export class MegaminxSimulator extends Simulator {
       [d[4], br[4]],
 
       ...makeFaceTurnDefinitions(b)
-    ], 'b')
+    ], 'b');
+
+    // "Pochmann notation"
+
+    // D++ / D--
+    this.addTurn([
+      // Top Layer
+      [F[0], R[0]],
+      [F[1], R[9]],
+      [F[5], R[3]],
+      [F[6], R[4]],
+      [F[7], R[5]],
+      [F[8], R[6]],
+      [F[9], R[7]],
+      [F[10], R[8]],
+      
+      [R[0], BR[0]],
+      [R[3], BR[9]],
+      [R[4], BR[10]],
+      [R[5], BR[1]],
+      [R[6], BR[2]],
+      [R[7], BR[3]],
+      [R[8], BR[4]],
+      [R[9], BR[5]],
+
+      [BR[0], BL[0]],
+      [BR[9], BL[1]],
+      [BR[10], BL[2]],
+      [BR[1], BL[3]],
+      [BR[2], BL[4]],
+      [BR[3], BL[5]],
+      [BR[4], BL[6]],
+      [BR[5], BL[7]],
+
+      [BL[0], L[0]],
+      [BL[1], L[7]],
+      [BL[2], L[8]],
+      [BL[3], L[9]],
+      [BL[4], L[10]],
+      [BL[5], L[1]],
+      [BL[6], L[2]],
+      [BL[7], L[3]],
+
+      [L[0], F[0]],
+      [L[7], F[5]],
+      [L[8], F[6]],
+      [L[9], F[7]],
+      [L[10], F[8]],
+      [L[1], F[9]],
+      [L[2], F[10]],
+      [L[3], F[1]],
+
+      // Bottom Layer
+      [dr[0], br[0]],
+      [dr[1], br[7]],
+      [dr[2], br[8]],
+      [dr[3], br[9]],
+      [dr[4], br[10]],
+      [dr[5], br[1]],
+      [dr[6], br[2]],
+      [dr[7], br[3]],
+      [dr[8], br[4]],
+      [dr[9], br[5]],
+      [dr[10], br[6]],
+
+      [br[0], b[0]],
+      [br[1], b[3]],
+      [br[2], b[4]],
+      [br[3], b[5]],
+      [br[4], b[6]],
+      [br[5], b[7]],
+      [br[6], b[8]],
+      [br[7], b[9]],
+      [br[8], b[10]],
+      [br[9], b[1]],
+      [br[10], b[2]],
+
+      [b[0], bl[0]],
+      [b[1], bl[3]],
+      [b[2], bl[4]],
+      [b[3], bl[5]],
+      [b[4], bl[6]],
+      [b[5], bl[7]],
+      [b[6], bl[8]],
+      [b[7], bl[9]],
+      [b[8], bl[10]],
+      [b[9], bl[1]],
+      [b[10], bl[2]],
+
+      [bl[0], dl[0]],
+      [bl[1], dl[5]],
+      [bl[2], dl[6]],
+      [bl[3], dl[7]],
+      [bl[4], dl[8]],
+      [bl[5], dl[9]],
+      [bl[6], dl[10]],
+      [bl[7], dl[1]],
+      [bl[8], dl[2]],
+      [bl[9], dl[3]],
+      [bl[10], dl[4]],
+
+      [dl[0], dr[0]],
+      [dl[1], dr[9]],
+      [dl[2], dr[10]],
+      [dl[3], dr[1]],
+      [dl[4], dr[2]],
+      [dl[5], dr[3]],
+      [dl[6], dr[4]],
+      [dl[7], dr[5]],
+      [dl[8], dr[6]],
+      [dl[9], dr[7]],
+      [dl[10], dr[8]],
+
+      ...makeFaceTurnDefinitions(d)
+    ], 'D++');
+
+    // R++ / R--
+    this.addTurn([
+      // Top Layer
+      [F[0], U[0]],
+      [F[7], U[3]],
+      [F[8], U[4]],
+      [F[9], U[5]],
+      [F[10], U[6]],
+      [F[1], U[7]],
+      [F[2], U[8]],
+      [F[3], U[9]],
+
+      [U[0], BL[0]],
+      [U[3], BL[9]],
+      [U[4], BL[10]],
+      [U[5], BL[1]],
+      [U[6], BL[2]],
+      [U[7], BL[3]],
+      [U[8], BL[4]],
+      [U[9], BL[5]],
+
+      [BL[0], bl[0]],
+      [BL[9], bl[1]],
+      [BL[10], bl[2]],
+      [BL[1], bl[3]],
+      [BL[2], bl[4]],
+      [BL[3], bl[5]],
+      [BL[4], bl[6]],
+      [BL[5], bl[7]],
+
+      [bl[0], dl[0]],
+      [bl[1], dl[7]],
+      [bl[2], dl[8]],
+      [bl[3], dl[9]],
+      [bl[4], dl[10]],
+      [bl[5], dl[1]],
+      [bl[6], dl[2]],
+      [bl[7], dl[3]],
+
+      [dl[0], F[0]],
+      [dl[7], F[7]],
+      [dl[8], F[8]],
+      [dl[9], F[9]],
+      [dl[10], F[10]],
+      [dl[1], F[1]],
+      [dl[2], F[2]],
+      [dl[3], F[3]],
+
+      // Bottom Layer
+      [dr[0], R[0]],
+      [dr[1], R[8]],
+      [dr[2], R[9]],
+      [dr[3], R[10]],
+      [dr[4], R[1]],
+      [dr[5], R[2]],
+      [dr[6], R[3]],
+      [dr[7], R[4]],
+      [dr[8], R[5]],
+      [dr[9], R[6]],
+      [dr[10], R[7]],
+
+
+      [R[0], BR[0]],
+      [R[1], BR[7]],
+      [R[2], BR[8]],
+      [R[3], BR[9]],
+      [R[4], BR[10]],
+      [R[5], BR[1]],
+      [R[6], BR[2]],
+      [R[7], BR[3]],
+      [R[8], BR[4]],
+      [R[9], BR[5]],
+      [R[10], BR[6]],
+
+      [BR[0], b[0]],
+      [BR[1], b[1]],
+      [BR[2], b[2]],
+      [BR[3], b[3]],
+      [BR[4], b[4]],
+      [BR[5], b[5]],
+      [BR[6], b[6]],
+      [BR[7], b[7]],
+      [BR[8], b[8]],
+      [BR[9], b[9]],
+      [BR[10], b[10]],
+
+      [b[0], d[0]],
+      [b[1], d[5]],
+      [b[2], d[6]],
+      [b[3], d[7]],
+      [b[4], d[8]],
+      [b[5], d[9]],
+      [b[6], d[10]],
+      [b[7], d[1]],
+      [b[8], d[2]],
+      [b[9], d[3]],
+      [b[10], d[4]],
+
+      [d[0], dr[0]],
+      [d[1], dr[7]],
+      [d[2], dr[8]],
+      [d[3], dr[9]],
+      [d[4], dr[10]],
+      [d[5], dr[1]],
+      [d[6], dr[2]],
+      [d[7], dr[3]],
+      [d[8], dr[4]],
+      [d[9], dr[5]],
+      [d[10], dr[6]],
+
+      ...makeFaceTurnDefinitions(br)
+    ], 'R++')
   }
 }
 

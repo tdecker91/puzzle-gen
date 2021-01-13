@@ -253,6 +253,54 @@ describe('Moves', () => {
     expect(megaSim.isSolved()).toBeTruthy();
   })
 
+  it('does D++ turn', () => {
+    let megaSim = new MegaminxSimulator();
+    megaSim.doTurn('R');
+    megaSim.doTurn('bl');
+
+    megaSim.doTurn('D++');
+    megaSim.doTurn('D++');
+    megaSim.doTurn('D++');
+    megaSim.doTurn('D++');
+    megaSim.doTurn('D++');
+
+
+    megaSim.doTurn('D++', true);
+    megaSim.doTurn('D++', true);
+    megaSim.doTurn('D++', true);
+    megaSim.doTurn('D++', true);
+    megaSim.doTurn('D++', true);
+
+    megaSim.doTurn('bl', true);
+    megaSim.doTurn('R', true);
+
+    expect(megaSim.isSolved()).toBeTruthy();
+  });
+
+  it('does R++ turn', () => {
+    let megaSim = new MegaminxSimulator();
+    megaSim.doTurn('R');
+    megaSim.doTurn('bl');
+
+    megaSim.doTurn('R++');
+    megaSim.doTurn('R++');
+    megaSim.doTurn('R++');
+    megaSim.doTurn('R++');
+    megaSim.doTurn('R++');
+
+
+    megaSim.doTurn('R++', true);
+    megaSim.doTurn('R++', true);
+    megaSim.doTurn('R++', true);
+    megaSim.doTurn('R++', true);
+    megaSim.doTurn('R++', true);
+
+    megaSim.doTurn('bl', true);
+    megaSim.doTurn('R', true);
+
+    expect(megaSim.isSolved()).toBeTruthy();
+  });
+
   it('can fully scramble', () => {
     let megaSim = new MegaminxSimulator();
     
