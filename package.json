@@ -4,20 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "dev": "webpack-dev-server --open"
+    "dev": "webpack-dev-server --open",
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/gl-matrix": "^2.4.5",
+    "@types/jest": "^26.0.20",
+    "@types/node": "^10.17.28",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
     "ts-loader": "^5.4.5",
     "typescript": "^3.9.7",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.0",
-    "@types/gl-matrix": "^2.4.5",
-    "@types/node": "^10.17.28"
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "gl-matrix": "^3.3.0"

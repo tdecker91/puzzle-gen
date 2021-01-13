@@ -24,7 +24,7 @@ export class MegaminxSimulator extends Simulator {
     const d = this.faces.get('d');    // Gray
     const br = this.faces.get('br');  // Light Green
     const BR = this.faces.get('BR');  // Yellow
-    const BL = this.faces.get('BL');  // Purle
+    const BL = this.faces.get('BL');  // Purple
     const bl = this.faces.get('bl');  // Dark Blue
     const b = this.faces.get('b');    // Orange
 
@@ -168,9 +168,9 @@ export class MegaminxSimulator extends Simulator {
       [d[6], dl[10]],
       [d[7], dl[1]],
       [d[8], dl[2]],
-      [dl[10], bl[8]],
-      [dl[1], bl[9]],
-      [dl[2], bl[10]],
+      [dl[10], F[8]],
+      [dl[1], F[9]],
+      [dl[2], F[10]],
 
       ...makeFaceTurnDefinitions(dr)
     ], 'dr');
