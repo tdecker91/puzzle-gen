@@ -1,5 +1,4 @@
 import { Face } from './../geometry/face';
-import { Geometry } from './../geometry/geometry';
 import { IColor } from './../geometry/color';
 import { WHITE, RED, GREEN, YELLOW, BLUE, ORANGE, LIGHT_GREEN, PINK, LIGHT_YELLOW, DARK_BLUE, GREY, PURPLE } from './colors';
 import { Group } from './../geometry/group';
