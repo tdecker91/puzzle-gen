@@ -507,6 +507,69 @@ export class MegaminxSimulator extends Simulator {
       ...makeFaceTurnDefinitions(br)
     ], 'R++')
   }
+
+  U(reverse?: boolean) {
+    this.doTurn('U', reverse);
+  }
+
+  R(reverse?: boolean) {
+    this.doTurn('R', reverse);
+  }
+
+  F(reverse?: boolean) {
+    this.doTurn('F', reverse);
+  }
+
+  dr(reverse?: boolean) {
+    this.doTurn('dr', reverse);
+  }
+
+  dl(reverse?: boolean) {
+    this.doTurn('dl', reverse);
+  }
+
+  L(reverse?: boolean) {
+    this.doTurn('L', reverse);
+  }
+
+  d(reverse?: boolean) {
+    this.doTurn('d', reverse);
+  }
+
+  br(reverse?: boolean) {
+    this.doTurn('br', reverse);
+  }
+
+  BR(reverse?: boolean) {
+    this.doTurn('BR', reverse);
+  }
+
+  BL(reverse?: boolean) {
+    this.doTurn('BL', reverse);
+  }
+
+  bl(reverse?: boolean) {
+    this.doTurn('bl', reverse);
+  }
+
+  b(reverse?: boolean) {
+    this.doTurn('b', reverse);
+  }
+
+  /**
+   * D++ for Pochmann notation. D-- if reverse = false
+   */
+  Dxx(reverse?: boolean) {
+    this.doTurn('D++', reverse);
+  }
+
+  /**
+   * R++ for Pochmann notation. R-- if reverse = false
+   */
+  Rxx(reverse?: boolean) {
+    this.doTurn('R++', reverse);
+  }
+
 }
 
 /**
