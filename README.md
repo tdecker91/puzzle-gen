@@ -13,3 +13,6 @@ Sure, something like three.js SVGRenderer would probably be much better.
 ...But it works!
 
 ![default cube](https://raw.githubusercontent.com/tdecker91/puzzle-visualizer/master/assets/svg-cube.gif)
+
+## Notes
+using webpack dev server 4 beta version due to issue described here with `webpack serve` https://github.com/webpack/webpack-dev-server/issues/2484

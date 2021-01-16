@@ -5,14 +5,11 @@ var config = {
   entry: __dirname + '/src/index.ts',
   devtool: 'source-map',
   output: {
-    library: "sr-visualizer",
-    libraryTarget: "umd", // exposes and know when to use module.exports or exports
+    path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
-  },
-  optimization: {
-    splitChunks: {
-      chunks: 'all',
-    },
+    library: 'srVisualizer',
+    libraryTarget: 'umd', // exposes and know when to use module.exports or exports
+    globalObject: 'this'
   },
   module: {
     rules: [
@@ -27,9 +24,10 @@ var config = {
     extensions: ['.ts', '.js', '.json']
   },
   devServer: {
-    contentBase: path.join(__dirname, 'dist'),
+    static: path.join(__dirname, 'dist'),
     compress: true,
-    port: 9000
+    port: 9000,
+    injectClient: false
   }
 };
 

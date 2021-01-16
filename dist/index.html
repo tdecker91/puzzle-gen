@@ -1,12 +1,11 @@
 <html>
   <head>
-    <script src="vendors~main.js"></script>
     <script src="main.js"></script>
     <script>
       var interval;
       function setValues() {
-        window['sr-visualizer'].getInputs();
-        window['sr-visualizer'].svgStep();
+        window.srVisualizer.getInputs();
+        window.srVisualizer.svgStep();
       }
       
       function svgStep() {
@@ -15,7 +14,7 @@
           interval = undefined;
         } else {
           interval = setInterval(function(){
-            window['sr-visualizer'].svgStep();
+            window.srVisualizer.svgStep();
           }, 100);
         }
 
