@@ -25,9 +25,9 @@ var config = {
   },
   devServer: {
     static: path.join(__dirname, 'dist'),
+    host: 'localhost',
     compress: true,
-    port: 9000,
-    injectClient: false
+    port: 9000
   }
 };
 
