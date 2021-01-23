@@ -46,7 +46,7 @@ export const AXIS_ORIENTATION = {
   Z: {
     [SIMULATOR_FACE.U]: -1,
     [SIMULATOR_FACE.D]: 1,
-    [SIMULATOR_FACE.L]: 0,
-    [SIMULATOR_FACE.R]: 2,
+    [SIMULATOR_FACE.L]: 2,
+    [SIMULATOR_FACE.R]: 0,
   },
 }

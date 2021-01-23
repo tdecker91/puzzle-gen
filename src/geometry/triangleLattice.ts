@@ -43,12 +43,10 @@ export class TriangleLattice extends Geometry {
         if (layer > 0) {
           // down triangle
           if (vertex > 0) {
-            console.log('down', index, index-1, index-count-1);
             faces.push(new Face([index, index-1, index-count-2], null, color));
           }
 
           // up triangle
-          console.log('up', index, index-count-2, index-count-1, vertex, layer);
           faces.push(new Face([index,index-count-2,index-count-1], null, color));
         }
 
