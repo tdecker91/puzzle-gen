@@ -127,6 +127,22 @@ export class SkewbSimulator extends Simulator {
     ], 'B');
 
   }
+
+  R(reverse?: boolean) {
+    this.doTurn('R', reverse);
+  }
+
+  U(reverse?: boolean) {
+    this.doTurn('U', reverse);
+  }
+
+  L(reverse?: boolean) {
+    this.doTurn('L', reverse);
+  }
+
+  B(reverse?: boolean) {
+    this.doTurn('B', reverse);
+  }
 }
 
 const center = (face): string => face[0];
