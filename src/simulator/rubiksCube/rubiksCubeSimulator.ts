@@ -1,6 +1,7 @@
 import { fillArray } from '../../utils/arrays';
-import { CUBE_FACES, CUBE_AXIS, CUBE_AXIS_FACES, AXIS_ORIENTATION } from './constants';
+import { CUBE_FACES, CUBE_AXIS, CUBE_AXIS_FACES, AXIS_ORIENTATION, SIMULATOR_FACE, AXIS_FACE_ORIENTATION } from './constants';
 import { Simulator, TurnDefinitions } from '../simulator';
+import { range } from '../../math/utils';
 
 export class RubiksCubeSimulator extends Simulator {
 
@@ -24,7 +25,7 @@ export class RubiksCubeSimulator extends Simulator {
 
     // Create rotations for stickers on each layer
     // around each turnable axis
-    CUBE_AXIS.forEach(axis => {
+    [CUBE_AXIS.X, CUBE_AXIS.Y, CUBE_AXIS.Z].forEach(axis => {
       for (let column = 0; column < this.size; column++) {
         let layerChanges: TurnDefinitions = [];
 
@@ -120,34 +121,156 @@ export class RubiksCubeSimulator extends Simulator {
     }
   }
 
-  uTurn(reverse?: boolean) {
-    this.doTurn('U', reverse);
-    this.doTurn(`Y-${this.size-1}`, reverse);
+  /**
+   * Performs a turn on a given face.
+   * 
+   * @param face the face to turn
+   * @param axis axis to perform inner layer turns on
+   * @param reverse true if you want to turn the face counter clockwise
+   * @param from inner layer to start turning from
+   * @param to last inner layer to stop turning
+   * @param to last inner layer to stop turning
+   */
+  private turnFace(
+    face: SIMULATOR_FACE,
+    axis: CUBE_AXIS,
+    reverse: boolean,
+    from: number,
+    to: number) {
+      if (Math.abs(to - from) >= this.size - 1) {
+        console.error(`Invalid number of layers to turn, skipping turn.; face=${face}, layers=${Math.abs(to - from) + 1}`);
+        return;
+      }
+
+      // Rotate face
+      this.doTurn(face, reverse);
+      // Turn inner layers
+      range(from, to).forEach(layer => {
+        this.doTurn(`${axis}-${layer}`, AXIS_FACE_ORIENTATION[face] ? !reverse : reverse);
+      });
   }
 
-  rTurn(reverse?: boolean) {
+  /**
+   * Performs a U turn
+   * @param reverse true if you want to turn the face counter clockwise (U')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  U(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.U, CUBE_AXIS.Y, reverse, this.size-1, this.size-layers);
+  }
+
+  /**
+   * Performs an R turn
+   * @param reverse true if you want to turn the face counter clockwise (R')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  R(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.R, CUBE_AXIS.X, reverse, this.size-1, this.size-layers);
+  }
+
+  /**
+   * Performs an F turn
+   * @param reverse true if you want to turn the face counter clockwise (F')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  F(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.F, CUBE_AXIS.Z, reverse, 0, layers-1);
+  }
+
+  /**
+   * Performs a D turn
+   * @param reverse true if you want to turn the face counter clockwise (D')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  D(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.D, CUBE_AXIS.Y, reverse, 0, layers-1);
+  }
+
+  /**
+   * Performs an L turn
+   * @param reverse true if you want to turn the face counter clockwise (L')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  L(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.L, CUBE_AXIS.X, reverse, 0, layers-1);
+  }
+
+  /**
+   * Performs a B turn
+   * @param reverse true if you want to turn the face counter clockwise (B')
+   * @param layers how many inner layers of the face to turn defaults to 1. Cannot be the cube size or greater
+   */
+  B(reverse: boolean = false, layers: number = 1) {
+    this.turnFace(SIMULATOR_FACE.B, CUBE_AXIS.Z, reverse, this.size-1, this.size-layers);
+  }
+
+  /**
+   * Rotates the middle slice in the direction of an L turn 
+   * https://ruwix.com/the-rubiks-cube/notation/advanced/
+   * 
+   * Will rotate all middle layers inbetween R and L for larger cubes
+   */
+  M(reverse: boolean = false) {
+    for (let layer = 1; layer < this.size - 1; layer++) {
+      this.doTurn(`${CUBE_AXIS.X}-${layer}`, !reverse);
+    }
+  }
+
+  /**
+   * Rotates the standing layers in the direction of an F turn 
+   * https://ruwix.com/the-rubiks-cube/notation/advanced/
+   * 
+   * Will rotate all middle layers inbetween F and B for larger cubes
+   */
+  S(reverse: boolean = false) {
+    for (let layer = 1; layer < this.size - 1; layer++) {
+      this.doTurn(`${CUBE_AXIS.Z}-${layer}`, reverse);
+    }
+  }
+
+  /**
+   * Rotates the equitorial layers in the direction of a D turn 
+   * https://ruwix.com/the-rubiks-cube/notation/advanced/
+   * 
+   * Will rotate all middle layers inbetween U and D for larger cubes
+   */
+  E(reverse: boolean = false) {
+    for (let layer = 1; layer < this.size - 1; layer++) {
+      this.doTurn(`${CUBE_AXIS.Y}-${layer}`, !reverse);
+    }
+  }
+
+  /**
+   * rotates the entire cube on R
+   */
+  X(reverse: boolean = false) {
     this.doTurn('R', reverse);
-    this.doTurn(`X-${this.size-1}`, reverse);
+    this.doTurn('L', !reverse);
+    for (let layer = 0; layer < this.size; layer++) {
+      this.doTurn(`${CUBE_AXIS.X}-${layer}`, reverse);
+    }
   }
 
-  fTurn(reverse?: boolean) {
+  /**
+   * rotates the entire cube on U
+   */
+  Y(reverse: boolean = false) {
+    this.doTurn('U', reverse);
+    this.doTurn('D', !reverse);
+    for (let layer = 0; layer < this.size; layer++) {
+      this.doTurn(`${CUBE_AXIS.Y}-${layer}`, reverse);
+    }
+  }
+  
+  /**
+   * rotates the entire cube on F
+   */
+  Z(reverse: boolean = false) {
     this.doTurn('F', reverse);
-    this.doTurn(`Z-0`, reverse);
-  }
-
-  dTurn(reverse?: boolean) {
-    this.doTurn('D', reverse);
-    this.doTurn(`Y-0`, !reverse);
-  }
-
-  lTurn(reverse?: boolean) {
-    this.doTurn('L', reverse);
-    this.doTurn(`X-0`, !reverse);
-  }
-
-  bTurn(reverse?: boolean) {
-    this.doTurn('B', reverse);
-    this.doTurn(`Z-${this.size-1}`, !reverse);
+    this.doTurn('B', !reverse);
+    for (let layer = 0; layer < this.size; layer++) {
+      this.doTurn(`${CUBE_AXIS.Z}-${layer}`, reverse);
+    }
   }
 
   reset(): void {

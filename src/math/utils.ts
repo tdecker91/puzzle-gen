@@ -53,3 +53,28 @@ export function calculateCentroid(vertices: vec3[]): vec3 {
 
   return vec3.clone([cx, cy, cz]);
 }
+
+/**
+ * generates an array with values in a given range by step
+ * 
+ * ex. range(1, 5) -> [1, 2, 3, 4, 5]
+ * ex. range(5, 2) -> [5, 4, 3, 2]
+ * 
+ * @param from start of range
+ * @param to end of range
+ */
+export function range(from: number, to: number): number[] {
+  if (from === to) {
+    return [from];
+  }
+
+  const increment: number = from < to ? 1 : -1;
+  let values = []
+
+  for (let current = from; current != to; current += increment) {
+    values.push(current);
+  }
+
+  values.push(to);
+  return values;
+}

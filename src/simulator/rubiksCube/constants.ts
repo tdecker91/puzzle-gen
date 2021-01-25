@@ -1,4 +1,4 @@
-export const enum SIMULATOR_FACE {
+export enum SIMULATOR_FACE {
   U = 'U',
   R = 'R',
   F = 'F',
@@ -16,9 +16,11 @@ export const CUBE_FACES = [
   SIMULATOR_FACE.B,
 ];
 
-export const CUBE_AXIS = [
-  'X', 'Y', 'Z'
-]
+export enum CUBE_AXIS {
+  X = 'X',
+  Y = 'Y',
+  Z = 'Z'
+}
 
 // Faces that wrap around a given axis
 export const CUBE_AXIS_FACES: {[axis: string] : SIMULATOR_FACE[]} = {
@@ -49,4 +51,18 @@ export const AXIS_ORIENTATION = {
     [SIMULATOR_FACE.L]: 2,
     [SIMULATOR_FACE.R]: 0,
   },
+}
+
+// True if faces are in reverse orientation
+// from the axis it's on (X, Y, Z).
+// For example D turns on the Y axis, but the
+// y axis layer turns clockwise based on the U
+// face, so D needs to be reversed
+export const AXIS_FACE_ORIENTATION = {
+  [SIMULATOR_FACE.U]: false,
+  [SIMULATOR_FACE.R]: false,
+  [SIMULATOR_FACE.F]: false,
+  [SIMULATOR_FACE.D]: true,
+  [SIMULATOR_FACE.L]: true,
+  [SIMULATOR_FACE.B]: true
 }

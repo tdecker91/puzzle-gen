@@ -101,8 +101,6 @@ export class Skewb {
     const numStickers =  5;
     let [u,r,f,d,l,b] = chunkArray<IColor>(colors, numStickers);
 
-    console.log(u,r,f,d,l,b);
-
     this.setFaceColors(this.U, u);
     this.setFaceColors(this.R, r);
     this.setFaceColors(this.F, f);
