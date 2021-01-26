@@ -14,5 +14,34 @@ Sure, something like three.js SVGRenderer would probably be much better.
 
 ![default cube](https://raw.githubusercontent.com/tdecker91/puzzle-visualizer/master/assets/svg-cube.gif)
 
+## Development
+
+> Requirements
+
+  * [Node.js](nodejs.org)
+
+Install dependencies
+
+```bash
+> npm install
+```
+
+Run development demos. This will automatically start a web server and open a browser to the index. For more info see [Demos](src/demos/README.md)
+
+```bash
+> npm run dev
+```
+
+Build library. This will save build assets to `dist/`
+
+```bash
+> npm run build
+```
+
+Publish to registry
+```bash
+> coming eventually
+```
+
 ## Notes
 using webpack dev server 4 beta version due to issue described here with `webpack serve` https://github.com/webpack/webpack-dev-server/issues/2484

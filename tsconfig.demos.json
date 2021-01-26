@@ -6,13 +6,12 @@
     "target": "es6",
     "allowJs": true,
     "moduleResolution": "node",
-    "isolatedModules": true,
     "esModuleInterop": true
   },
   "include": [
     "./src"
   ], 
   "exclude": [
-    "./tests", "./node_modules", "./src/demos"
+    "./tests", "./node_modules"
   ]
 }
