@@ -8,8 +8,8 @@ export const ROTATION_VECTOR: vec3 = [0.96875, -0.24803, 0];
 export const TOP_COLOR: IColor = { value: '#FFFF00' };
 export const BOTTOM_COLOR: IColor = { value: '#FFFFFF' };
 export const FRONT_COLOR: IColor = { value: '#FF0000' };
-export const LEFT_COLOR: IColor = { value: '#00FF00' };
-export const RIGHT_COLOR: IColor = { value: '#0000FF' };
+export const LEFT_COLOR: IColor = { value: '#0000FF' };
+export const RIGHT_COLOR: IColor = { value: '#00FF00' };
 export const BACK_COLOR: IColor = { value: '#FFA500' };
 
 export const SOLVED_TOP_PIECES: Sqaure1Piece[] = [
