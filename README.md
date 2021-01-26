@@ -32,6 +32,11 @@ Run development demos. This will automatically start a web server and open a bro
 > npm run dev
 ```
 
+Run tests cases (Yes we have some tests!)
+```bash
+> npm t
+```
+
 Build library. This will save build assets to `dist/`
 
 ```bash

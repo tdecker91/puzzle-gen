@@ -113,6 +113,7 @@ export class Megaminx {
       this.U, this.F, this.R, this.dr, this.dl, this.L,
       this.d, this.br, this.BR, this.BL, this.bl, this.b
     ];
+
     this.group = new Group(this.stickers);
   }
 

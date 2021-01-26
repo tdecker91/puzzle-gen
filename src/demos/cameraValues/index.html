@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <script>
+      var interval;
+      function setValues() {
+        window.cameraValuesDemo.getInputs();
+        window.cameraValuesDemo.svgStep();
+      }
+      
+      function svgStep() {
+        if (interval) {
+          clearInterval(interval);
+          interval = undefined;
+        } else {
+          interval = setInterval(function(){
+            window.cameraValuesDemo.svgStep();
+          }, 100);
+        }
+
+      }
+    </script>
+    <style>
+      .row {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+      <div id="idsomething"></div>
+      <div id="threejs"></div>
+    </div>
+    <!-- let width: number = 500;
+let height: number = 500;
+let minx: number = -50;
+let miny: number = -50;
+let svgwidth: number = 100;
+let svgheight: number = 100;
+
+let planewidth: number = 25; -->
+    Width: <input id='width' /><br />
+    Height: <input id='height' /><br />
+    minx: <input id='minx' /><br />
+    miny: <input id='miny' /><br />
+    svgheight: <input id='svgw' /><br />
+    svgwidth: <input id='svgh' /><br />
+    planewidth: <input id='pw' /><br />
+    strokeWidth: <input id='sw' /><br />
+    Camera<br /> 
+    <input id='c1' />
+    <input id='c2' />
+    <input id='c3' />
+    <input id='c4' /> <br />
+    <input id='c5' />
+    <input id='c6' />
+    <input id='c7' />
+    <input id='c8' /> <br />
+    <input id='c9' />
+    <input id='c10' />
+    <input id='c11' />
+    <input id='c12' /> <br />
+    <input id='c13' />
+    <input id='c14' />
+    <input id='c15' />
+    <input id='c16' /> <br />
+    <button onclick="setValues()">Set Values</button>
+    <button onclick="svgStep()">Step</button>
+  </body>
+</html>

@@ -7,6 +7,9 @@ import { Object3D } from '../geometry/object3d';
 import { Group } from '../geometry/group';
 import { createSVGElement, clearSVG, createPolygonElement } from '../svg/svg';
 
+/**
+ * A renderer that renders a scene viewed by a camera to an svg element.
+ */
 export class CustomSVGRenderer {
 
   domElement: HTMLElement;
@@ -15,6 +18,23 @@ export class CustomSVGRenderer {
 
   protected polygons = [];
 
+  /**
+   * Creates an SVG renderer. This will create it's own html `<svg>` element. it's 
+   * the user's job to add this element to the page.
+   * 
+   * @example
+   * ```
+   * const renderer = new CustomSVGRenderer(width, height, minx, miny, svgWidth, svgHeight)
+   * document.getElementById('my-element').appendChild(renderer.domElement);
+   * ```
+   * 
+   * @param width svg element width in pixels
+   * @param height svg element height in pixels 
+   * @param minx min x for the svg element viewbox
+   * @param miny min x for the svg element viewbox
+   * @param svgWidth svg viewbox width
+   * @param svgHeight svg viewbox height
+   */
   constructor(width: number, height: number, minx: number, miny: number, svgWidth: number, svgHeight: number) {
     this.domElement = document.createElement('div');
     this.domElement.className = 'svg-renderer';

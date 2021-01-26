@@ -39,11 +39,15 @@ export class Square1 extends Square1Builder {
 
     const faces: IFace[] = [
       new Face([0, 1, 2, 3], points, top),
-      new Face([4, 5, 6, 7], points, { value: '#333' }),
-      new Face([0, 1, 5, 4], points, { value: '#333' }),
+      // TODO: the faces commented out here are the underside of the pieces so
+      // they show gray when the cube is scrambled. But they are overlapping sometimes
+      // with outward sticker faces. removing them for now, but it'd be nice to
+      // fix this.
+      // new Face([4, 5, 6, 7], points, { value: '#333' }),
+      // new Face([0, 1, 5, 4], points, { value: '#333' }),
       new Face([2, 3, 7, 6], points, side1),
       new Face([1, 2, 6, 5], points, side2),
-      new Face([0, 3, 7, 4], points, { value: '#333' }),
+      // new Face([0, 3, 7, 4], points, { value: '#333' }),
     ]
 
     return new Geometry(points, faces);
@@ -64,10 +68,10 @@ export class Square1 extends Square1Builder {
 
     const faces: IFace[] = [
       new Face([0, 1, 2], points, top),
-      new Face([3, 4, 5], points, { value: '#333' }),
+      // new Face([3, 4, 5], points, { value: '#333' }),
       new Face([1, 2, 5, 4], points, side),
-      new Face([0, 1, 4, 3], points, { value: '#333' }),
-      new Face([0, 2, 5, 3], points, { value: '#333' }),
+      // new Face([0, 1, 4, 3], points, { value: '#333' }),
+      // new Face([0, 2, 5, 3], points, { value: '#333' }),
     ];
 
     return new Geometry(points, faces);
