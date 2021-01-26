@@ -6,7 +6,7 @@ This project aims to build on the idea of [visual cube](https://github.com/tdeck
 
 
 ## Prototype
-Really I just wanted an excuse to fiddle with very rudimentary 3d rendering. So I decided to make a basic "svg renderer" to take geometry and draw them on an svg using svg.js 
+Really I just wanted an excuse to fiddle with very rudimentary 3d rendering. So I decided to make a basic "svg renderer" to take geometry and render images in a browser context. But the renderer can also be replaced with something custom to fit needs. 
 
 Sure, something like three.js SVGRenderer would probably be much better. 
 
