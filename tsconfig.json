@@ -9,10 +9,6 @@
     "isolatedModules": true,
     "esModuleInterop": true
   },
-  "include": [
-    "./src"
-  ], 
-  "exclude": [
-    "./tests", "./node_modules", "./src/demos"
-  ]
+  "include": ["./src"],
+  "exclude": ["./tests", "./node_modules", "./src/demos"]
 }

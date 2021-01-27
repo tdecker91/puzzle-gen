@@ -1,15 +1,22 @@
-import { Object3D } from './../../geometry/object3d';
-import { ROTATION_VECTOR, FRONT_COLOR, LEFT_COLOR, BACK_COLOR, RIGHT_COLOR, SOLVED_TOP_PIECES, SOLVED_BOTTOM_PIECES } from './constants';
-import { Sqaure1Piece, Square1Builder } from './interface';
-import { DEG_30_RADIANS } from './../../math/constants';
-import { Geometry } from './../../geometry/geometry';
-import { IFace, Face } from './../../geometry/face';
-import { vec3 } from 'gl-matrix';
-import { IColor } from './../../geometry/color';
-import { Group } from '../../geometry/group';
+import { Object3D } from "./../../geometry/object3d";
+import {
+  ROTATION_VECTOR,
+  FRONT_COLOR,
+  LEFT_COLOR,
+  BACK_COLOR,
+  RIGHT_COLOR,
+  SOLVED_TOP_PIECES,
+  SOLVED_BOTTOM_PIECES,
+} from "./constants";
+import { Sqaure1Piece, Square1Builder } from "./interface";
+import { DEG_30_RADIANS } from "./../../math/constants";
+import { Geometry } from "./../../geometry/geometry";
+import { IFace, Face } from "./../../geometry/face";
+import { vec3 } from "gl-matrix";
+import { IColor } from "./../../geometry/color";
+import { Group } from "../../geometry/group";
 
 export class Square1 extends Square1Builder {
-
   constructor(
     sideLength: number = 1.25,
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
@@ -17,9 +24,9 @@ export class Square1 extends Square1Builder {
     middleRotated: boolean = false
   ) {
     super(sideLength, topLayer, bottomLayer, middleRotated);
-    
-    this.group.rotate(-0.985398, [1,0,0]);
-    this.group.rotate(-0.59, [0,0,1]);
+
+    this.group.rotate(-0.985398, [1, 0, 0]);
+    this.group.rotate(-0.59, [0, 0, 1]);
   }
 
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
@@ -48,7 +55,7 @@ export class Square1 extends Square1Builder {
       new Face([2, 3, 7, 6], points, side1),
       new Face([1, 2, 6, 5], points, side2),
       // new Face([0, 3, 7, 4], points, { value: '#333' }),
-    ]
+    ];
 
     return new Geometry(points, faces);
   }
@@ -56,14 +63,44 @@ export class Square1 extends Square1Builder {
   square1Edge(top: IColor, side: IColor): Geometry {
     const points: vec3[] = [
       // Top
-      vec3.rotateZ(vec3.create(), [0, 0, this.halfSide], [0, 0, 0], DEG_30_RADIANS),
-      vec3.rotateZ(vec3.create(), [this.halfEdgePiece, this.halfSide, this.halfSide], [0, 0, 0], DEG_30_RADIANS),
-      vec3.rotateZ(vec3.create(), [-this.halfEdgePiece, this.halfSide, this.halfSide], [0, 0, 0], DEG_30_RADIANS),
+      vec3.rotateZ(
+        vec3.create(),
+        [0, 0, this.halfSide],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
+      vec3.rotateZ(
+        vec3.create(),
+        [this.halfEdgePiece, this.halfSide, this.halfSide],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
+      vec3.rotateZ(
+        vec3.create(),
+        [-this.halfEdgePiece, this.halfSide, this.halfSide],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
 
       // Bottom
-      vec3.rotateZ(vec3.create(), [0, 0, this.halfSide - this.layerWidth], [0, 0, 0], DEG_30_RADIANS),
-      vec3.rotateZ(vec3.create(), [this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth], [0, 0, 0], DEG_30_RADIANS),
-      vec3.rotateZ(vec3.create(), [-this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth], [0, 0, 0], DEG_30_RADIANS),
+      vec3.rotateZ(
+        vec3.create(),
+        [0, 0, this.halfSide - this.layerWidth],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
+      vec3.rotateZ(
+        vec3.create(),
+        [this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
+      vec3.rotateZ(
+        vec3.create(),
+        [-this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth],
+        [0, 0, 0],
+        DEG_30_RADIANS
+      ),
     ];
 
     const faces: IFace[] = [
@@ -91,24 +128,28 @@ export class Square1 extends Square1Builder {
     ];
 
     const faces: IFace[] = [
-      new Face([0, 1, 2, 3], vertices, { value: '#333' }),
-      new Face([4, 5, 6, 7], vertices, { value: '#333' }),
+      new Face([0, 1, 2, 3], vertices, { value: "#333" }),
+      new Face([4, 5, 6, 7], vertices, { value: "#333" }),
       new Face([0, 1, 5, 4], vertices, side),
       new Face([1, 2, 6, 5], vertices, back),
-      new Face([2, 3, 7, 6], vertices, { value: '#333' }),
+      new Face([2, 3, 7, 6], vertices, { value: "#333" }),
       new Face([0, 3, 7, 4], vertices, front),
     ];
 
     return new Geometry(vertices, faces);
   }
 
-  buildSquare1(top: Sqaure1Piece[], bottom: Sqaure1Piece[], middleRotated: boolean): Object3D[] {
+  buildSquare1(
+    top: Sqaure1Piece[],
+    bottom: Sqaure1Piece[],
+    middleRotated: boolean
+  ): Object3D[] {
     const topLayer = new Group(this.makeLayer(top));
     const bottomLayer = new Group(this.makeLayer(bottom));
 
     // Prevent overlapping faces
-    topLayer.translate([0,0,.005]);
-    bottomLayer.translate([0,0,-.005]);
+    topLayer.translate([0, 0, 0.005]);
+    bottomLayer.translate([0, 0, -0.005]);
 
     bottomLayer.rotate(Math.PI, [1, 0, 0]);
     bottomLayer.rotate(DEG_30_RADIANS, [0, 0, 1]);

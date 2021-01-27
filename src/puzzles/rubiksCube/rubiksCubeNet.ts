@@ -1,14 +1,14 @@
-import { Geometry } from './../../geometry/geometry';
-import { IColor } from './../../geometry/color';
-import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN } from './../colors';
-import { Group } from './../../geometry/group';
-import { Object3D } from './../../geometry/object3d';
-import { makeGrid } from '../../geometry/grid';
-import { chunkArray } from '../../utils/arrays';
+import { Geometry } from "./../../geometry/geometry";
+import { IColor } from "./../../geometry/color";
+import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN } from "./../colors";
+import { Group } from "./../../geometry/group";
+import { Object3D } from "./../../geometry/object3d";
+import { makeGrid } from "../../geometry/grid";
+import { chunkArray } from "../../utils/arrays";
 
 export class RubiksCubeNet {
   stickers: Object3D[];
-  group: Group; 
+  group: Group;
 
   private size: number;
 
@@ -34,24 +34,24 @@ export class RubiksCubeNet {
     this.U.translate([0, cubeWidth, 0]);
 
     this.R = new Group(R);
-    this.R.translate([cubeWidth,0,0]);
-    
+    this.R.translate([cubeWidth, 0, 0]);
+
     this.F = new Group(F);
 
     this.D = new Group(D);
     this.D.translate([0, -cubeWidth, 0]);
-    
+
     this.L = new Group(L);
     this.L.translate([-cubeWidth, 0, 0]);
-    
+
     this.B = new Group(B);
-    this.B.translate([2*cubeWidth, 0, 0]);
+    this.B.translate([2 * cubeWidth, 0, 0]);
 
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
 
     this.group = new Group(this.stickers);
-    this.group.translate([-cubeWidth/4,0,0]);
-    this.group.scale([.5,.5,.5])
+    this.group.translate([-cubeWidth / 4, 0, 0]);
+    this.group.scale([0.5, 0.5, 0.5]);
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {
@@ -63,8 +63,8 @@ export class RubiksCubeNet {
   }
 
   setColors(colors: IColor[]) {
-    const numStickers = this.size*this.size;
-    let [u,r,f,d,l,b] = chunkArray<IColor>(colors, numStickers);
+    const numStickers = this.size * this.size;
+    let [u, r, f, d, l, b] = chunkArray<IColor>(colors, numStickers);
 
     this.setFaceColors(this.U, u);
     this.setFaceColors(this.R, r);

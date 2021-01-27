@@ -1,5 +1,5 @@
-import { Scene } from './scene';
-import { Camera } from './camera';
+import { Scene } from "./scene";
+import { Camera } from "./camera";
 
 /**
  * Interface the visualizer uses to render the scene

@@ -1,8 +1,8 @@
-import { vec3, mat4 } from 'gl-matrix';
-import { IFace } from './face';
-import { Object3D } from './object3d';
-import { IColor } from './color';
-import { calculateCentroid } from '../math/utils';
+import { vec3, mat4 } from "gl-matrix";
+import { IFace } from "./face";
+import { Object3D } from "./object3d";
+import { IColor } from "./color";
+import { calculateCentroid } from "../math/utils";
 
 export class Geometry extends Object3D {
   vertices: vec3[];

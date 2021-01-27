@@ -9,7 +9,7 @@ export class Object3D {
 
   constructor() {
     this.matrix = mat4.create();
-    this.centroid = [0,0,0];
+    this.centroid = [0, 0, 0];
   }
 
   translate(vector: ReadonlyVec3) {

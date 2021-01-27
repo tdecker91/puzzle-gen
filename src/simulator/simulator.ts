@@ -2,53 +2,52 @@ export type Pair<T> = [T, T];
 export type TurnDefinitions = Pair<string>[];
 
 /**
- * Class for simulating turns on symmetric twisty puzzles. This is acheived by 
+ * Class for simulating turns on symmetric twisty puzzles. This is acheived by
  * defining a set of faces with stickers, and a set of turns.
- * 
+ *
  * @see {@link SkewbSimulator}
- * 
- * @example 
+ *
+ * @example
  * ```typescript
  * // extend class to create a coin simulator
  * export class CoinSimulator extends Simulator {
  *   constructor() {
  *     super()
- * 
+ *
  *     // Add a head face with one "heads" sticker
  *     // Label this face "top"
  *      const { stickerIds: top } = this.addFace(['heads'], 'top');
- * 
+ *
  *     // Add a tail face with one "tails" sticker
  *     // Label this face "bottom"
  *      const { stickerIds: bottom } = this.addface(['tails'], 'bottom');
- * 
+ *
  *     // Define a turn by providing the
  *     // sticker id for the top and bottom stickers.
  *     // Label this "turnOver"
  *     this.addTurn([top[0], bottom[0]], "turnOver");
  *   }
- *   
+ *
  *   // Flip the coin over
  *   turnOver() {
  *     // Execute the "turnOver" turn we created
  *     this.doTurn("turnOver")
  *   }
- *  
+ *
  * }
  * ```
  */
 export class Simulator {
-
   /**
    * Map of sticker ID to its value
    */
   protected stickers: Map<string, string>;
-  
+
   /**
    * Map of faces to stickers on the face
    */
   protected faces: Map<string, string[]>;
-  
+
   /**
    * Map of turns to stickers to update
    */
@@ -62,7 +61,7 @@ export class Simulator {
 
   /**
    * Adds a face of stickers to the puzzle.
-   * 
+   *
    * @param stickers array of sticker values
    * @param label label to reference the face by
    * @returns object with the faceId and list of sticker ids.
@@ -71,12 +70,15 @@ export class Simulator {
    * @example
    * ```
    * const stickers = ['red', 'red', 'red', 'red'];
-   * 
+   *
    * // Add the F face
    * addFace(stickers, 'F')
    * ```
    */
-  addFace(stickers: string[], label?: string): { faceId: string, stickerIds: string[] } {
+  addFace(
+    stickers: string[],
+    label?: string
+  ): { faceId: string; stickerIds: string[] } {
     if (label && this.faces.has(label)) {
       throw `Face ${label} already exists`;
     } else if (!label) {
@@ -97,18 +99,18 @@ export class Simulator {
 
     return {
       faceId: label,
-      stickerIds
+      stickerIds,
     };
   }
 
   /**
    * Creates a turn definition that tells the simulator
    * what sticker values to change when turning.
-   * 
+   *
    * A change is an array with two sticker ids (ex. ['sticker1', 'sticker2'])
    * this means that when turning 'sticker1' will go to 'sticker2'.
    * Or when doing a reverse turn, `sticker2' will go to 'sticker1'
-   * 
+   *
    * @param changes list of turn definitions.
    * @param label label to reference the turn by
    * @returns label of the turn that was created
@@ -124,11 +126,10 @@ export class Simulator {
 
     return label;
   }
-  
 
   /**
    * Executes a turn on the puzzle
-   * 
+   *
    * @param label label of the turn to execute
    * @param prime true to do the turn in reverse
    */
@@ -139,18 +140,21 @@ export class Simulator {
       throw `Unknown turn ${label}`;
     }
 
-    let movingSticker =  reverse ? 1 : 0;
+    let movingSticker = reverse ? 1 : 0;
     let replacedSticker = reverse ? 0 : 1;
 
     let cached = {};
-    changes.forEach(change => {
+    changes.forEach((change) => {
       // Cache value we're replacing
-      cached[change[replacedSticker]] = this.stickers.get(change[replacedSticker]);
+      cached[change[replacedSticker]] = this.stickers.get(
+        change[replacedSticker]
+      );
 
       // Update sticker with new value
       this.stickers.set(
         change[replacedSticker],
-        cached[change[movingSticker]] || this.stickers.get(change[movingSticker])
+        cached[change[movingSticker]] ||
+          this.stickers.get(change[movingSticker])
       );
     });
   }
@@ -162,30 +166,28 @@ export class Simulator {
   isSolved(): boolean {
     const faces = this.faces.entries();
     let entry = faces.next();
-    
+
     do {
       const stickerIds = entry.value[1];
       let value = this.stickers.get(stickerIds[0]);
 
       for (let id of stickerIds) {
-        if (value != this.stickers.get(id))
-          return false;
+        if (value != this.stickers.get(id)) return false;
       }
 
       entry = faces.next();
-    } while (!entry.done)
+    } while (!entry.done);
 
     return true;
   }
 
-  getValues(): { [faceName: string]: string[]} {
+  getValues(): { [faceName: string]: string[] } {
     let values = {};
 
     this.faces.forEach((stickerIds, key) => {
-      values[key] = stickerIds.map(id => this.stickers.get(id));
+      values[key] = stickerIds.map((id) => this.stickers.get(id));
     });
 
     return values;
   }
-
 }

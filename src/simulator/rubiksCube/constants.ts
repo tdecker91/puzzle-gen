@@ -1,11 +1,11 @@
 export enum SIMULATOR_FACE {
-  U = 'U',
-  R = 'R',
-  F = 'F',
-  D = 'D',
-  L = 'L',
-  B = 'B',
-};
+  U = "U",
+  R = "R",
+  F = "F",
+  D = "D",
+  L = "L",
+  B = "B",
+}
 
 export const CUBE_FACES = [
   SIMULATOR_FACE.U,
@@ -17,17 +17,17 @@ export const CUBE_FACES = [
 ];
 
 export enum CUBE_AXIS {
-  X = 'X',
-  Y = 'Y',
-  Z = 'Z'
+  X = "X",
+  Y = "Y",
+  Z = "Z",
 }
 
 // Faces that wrap around a given axis
-export const CUBE_AXIS_FACES: {[axis: string] : SIMULATOR_FACE[]} = {
+export const CUBE_AXIS_FACES: { [axis: string]: SIMULATOR_FACE[] } = {
   X: [SIMULATOR_FACE.U, SIMULATOR_FACE.B, SIMULATOR_FACE.D, SIMULATOR_FACE.F],
   Y: [SIMULATOR_FACE.L, SIMULATOR_FACE.B, SIMULATOR_FACE.R, SIMULATOR_FACE.F],
   Z: [SIMULATOR_FACE.L, SIMULATOR_FACE.U, SIMULATOR_FACE.R, SIMULATOR_FACE.D],
-}
+};
 
 // Face's orientation related to other faces on a given axis
 // the number represents the number of turns necessary
@@ -51,7 +51,7 @@ export const AXIS_ORIENTATION = {
     [SIMULATOR_FACE.L]: 2,
     [SIMULATOR_FACE.R]: 0,
   },
-}
+};
 
 // True if faces are in reverse orientation
 // from the axis it's on (X, Y, Z).
@@ -64,5 +64,5 @@ export const AXIS_FACE_ORIENTATION = {
   [SIMULATOR_FACE.F]: false,
   [SIMULATOR_FACE.D]: true,
   [SIMULATOR_FACE.L]: true,
-  [SIMULATOR_FACE.B]: true
-}
+  [SIMULATOR_FACE.B]: true,
+};

@@ -1,12 +1,12 @@
-import { Face } from './../geometry/face';
-import { IColor } from './../geometry/color';
-import { GREEN, RED, BLUE, YELLOW } from './colors';
-import { TriangleLattice } from './../geometry/triangleLattice';
-import { Group } from './../geometry/group';
-import { Object3D } from './../geometry/object3d';
-import { chunkArray } from '../utils/arrays';
+import { Face } from "./../geometry/face";
+import { IColor } from "./../geometry/color";
+import { GREEN, RED, BLUE, YELLOW } from "./colors";
+import { TriangleLattice } from "./../geometry/triangleLattice";
+import { Group } from "./../geometry/group";
+import { Object3D } from "./../geometry/object3d";
+import { chunkArray } from "../utils/arrays";
 
-const ARC_COS_THIRD = Math.acos(1/3);
+const ARC_COS_THIRD = Math.acos(1 / 3);
 const DEG_120_RADIANS = (120 * Math.PI) / 180;
 const SQRT_24 = Math.sqrt(24);
 
@@ -36,35 +36,30 @@ export class Pyraminx {
     this.U = U;
     this.B = B;
 
-    U.rotate(DEG_120_RADIANS, [0,0,1]);
-    U.rotate(ARC_COS_THIRD, [1,0,0]);
-    U.translate([0,0,insphereRadius]);
+    U.rotate(DEG_120_RADIANS, [0, 0, 1]);
+    U.rotate(ARC_COS_THIRD, [1, 0, 0]);
+    U.translate([0, 0, insphereRadius]);
 
-    R.rotate(ARC_COS_THIRD, [1,0,0]);
-    R.translate([0,0,insphereRadius]);
+    R.rotate(ARC_COS_THIRD, [1, 0, 0]);
+    R.translate([0, 0, insphereRadius]);
 
-    L.rotate(-DEG_120_RADIANS, [0,0,1]);
-    L.rotate(ARC_COS_THIRD, [1,0,0]);
-    L.translate([0,0,insphereRadius]);
+    L.rotate(-DEG_120_RADIANS, [0, 0, 1]);
+    L.rotate(ARC_COS_THIRD, [1, 0, 0]);
+    L.translate([0, 0, insphereRadius]);
 
-    B.rotate(Math.PI, [0,1,0]);
-    B.translate([0,0,insphereRadius]);
+    B.rotate(Math.PI, [0, 1, 0]);
+    B.translate([0, 0, insphereRadius]);
 
-    this.faces = [
-      U,
-      L,
-      R,
-      B
-    ];
+    this.faces = [U, L, R, B];
 
     this.group = new Group(this.faces);
 
-    this.group.rotate(-Math.PI/3, [1,0,0]);
-    this.group.rotate(Math.PI/2.5, [0,0,1]);
+    this.group.rotate(-Math.PI / 3, [1, 0, 0]);
+    this.group.rotate(Math.PI / 2.5, [0, 0, 1]);
   }
 
   setColors(colors: IColor[]) {
-    const numStickers =  this.size * this.size;
+    const numStickers = this.size * this.size;
     let [l, r, u, b] = chunkArray<IColor>(colors, numStickers);
 
     this.setFaceColors(this.L, l);

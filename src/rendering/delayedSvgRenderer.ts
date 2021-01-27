@@ -1,9 +1,8 @@
-import { Camera } from './camera';
-import { Scene } from './scene';
-import { CustomSVGRenderer } from './customSvgRenderer';
+import { Camera } from "./camera";
+import { Scene } from "./scene";
+import { CustomSVGRenderer } from "./customSvgRenderer";
 
 export class DelayedSvgRenderer extends CustomSVGRenderer {
-
   private renderQueue = [];
   private renderInterval;
 
@@ -19,7 +18,7 @@ export class DelayedSvgRenderer extends CustomSVGRenderer {
       return a.centroid[2] - b.centroid[2];
     });
 
-    this.polygons.forEach(p => {
+    this.polygons.forEach((p) => {
       this.renderQueue.push(p.polygon);
     });
 
@@ -37,5 +36,4 @@ export class DelayedSvgRenderer extends CustomSVGRenderer {
       this.svgElement.append(polygon);
     }
   }
-
 }

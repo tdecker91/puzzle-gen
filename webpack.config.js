@@ -1,34 +1,34 @@
-var path = require('path');
+var path = require("path");
 
 var config = {
-  mode: 'production',
-  entry: __dirname + '/src/index.ts',
-  devtool: 'source-map',
+  mode: "production",
+  entry: __dirname + "/src/index.ts",
+  devtool: "source-map",
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
-    library: 'srVisualizer',
-    libraryTarget: 'umd', // exposes and know when to use module.exports or exports
-    globalObject: 'this'
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    library: "srVisualizer",
+    libraryTarget: "umd", // exposes and know when to use module.exports or exports
+    globalObject: "this",
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      }
-    ]
+        use: "ts-loader",
+        exclude: /node_modules/,
+      },
+    ],
   },
   resolve: {
-    extensions: ['.ts', '.js', '.json']
+    extensions: [".ts", ".js", ".json"],
   },
   devServer: {
-    static: path.join(__dirname, 'dist'),
-    host: 'localhost',
+    static: path.join(__dirname, "dist"),
+    host: "localhost",
     compress: true,
-    port: 9000
-  }
+    port: 9000,
+  },
 };
 
 module.exports = config;

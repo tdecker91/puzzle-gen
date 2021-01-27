@@ -3,7 +3,6 @@ import { Geometry } from "./geometry";
 import { vec3 } from "gl-matrix";
 
 export class Group extends Object3D {
-  
   objects: Object3D[];
 
   constructor(objects: Object3D[] = []) {
@@ -22,5 +21,4 @@ export class Group extends Object3D {
   setCentroid(vector: vec3) {
     this.centroid = vector;
   }
-
 }

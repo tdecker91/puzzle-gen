@@ -1,7 +1,6 @@
 import { Object3D } from "../geometry/object3d";
 
 export class Scene {
-
   objects: Object3D[];
 
   constructor() {
@@ -11,5 +10,4 @@ export class Scene {
   add(geometry: Object3D) {
     this.objects.push(geometry);
   }
-
 }
