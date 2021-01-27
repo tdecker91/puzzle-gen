@@ -1,9 +1,21 @@
+import { Renderer } from './../rendering/renderer';
 import { RubiksCube } from './../puzzles/rubiksCube/rubiksCube';
 import { CustomSVGRenderer } from './../rendering/customSvgRenderer';
 import { Scene } from '../rendering/scene';
 import { Camera } from './../rendering/camera';
+import { VisualizerType } from './enum';
+
+/**
+ * 
+ */
 export interface VisualizerOptions {
-  test: string
+  width: number;
+  height: number;
+  minx: number;
+  miny: number;
+  svgWidth: number;
+  svgHeight: number;
+  strokeWidth: number;
 }
 
 export function renderCube(elementId: string) {
@@ -27,4 +39,19 @@ export function renderCube(elementId: string) {
   renderer.strokeWidth = '' + strokeWidth;
   document.getElementById(elementId).appendChild(renderer.domElement);
   renderer.render(scene, camera);
+}
+
+/**
+ * Main visualizer library class. Uses {@link CustomSVGRenderer} to render
+ * images to a DOM element
+ */
+export class Visualizer {
+
+  private camera: Camera;
+  private scene: Scene;
+  private renderer: CustomSVGRenderer;
+
+  constructor(type: VisualizerType, options?: VisualizerOptions) {
+
+  }
 }

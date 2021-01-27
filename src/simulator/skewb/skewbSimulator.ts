@@ -5,21 +5,25 @@ import { Simulator } from './../simulator';
  * Simulates a standard skewb
  * 
  * Imagine the faces like this
+ * ```
  *      U
  *    L F R B
  *      D
+ * ```
  * 
  * each face has 5 sickers (1 center, 4 corners), stored as
  * an array. Each index of the array maps to stickers like
  * so, 0 being the center, 1-4 being the corners from top left
  * to bottom right
+ * ```
  *      1   2
  *        0  
  *      3   4
+ * ```
  * 
  * So all together the simulator stores information like
  * this
- * 
+ * ```
  *          U1    U2
  *             U0
  *          U3    U4
@@ -29,6 +33,7 @@ import { Simulator } from './../simulator';
  *          D1    D2
  *             D0
  *          D3    D4
+ * ```
  */
 export class SkewbSimulator extends Simulator {
   constructor() {

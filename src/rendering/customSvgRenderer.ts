@@ -6,11 +6,12 @@ import { Geometry } from '../geometry/geometry';
 import { Object3D } from '../geometry/object3d';
 import { Group } from '../geometry/group';
 import { createSVGElement, clearSVG, createPolygonElement } from '../svg/svg';
+import { Renderer } from './renderer';
 
 /**
  * A renderer that renders a scene viewed by a camera to an svg element.
  */
-export class CustomSVGRenderer {
+export class CustomSVGRenderer implements Renderer {
 
   domElement: HTMLElement;
   svgElement: SVGSVGElement;

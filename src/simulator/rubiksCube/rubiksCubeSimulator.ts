@@ -84,11 +84,13 @@ export class RubiksCubeSimulator extends Simulator {
    * ex. stickers are stored in an array but represent a grid
    * so, for a 3x3 sticker index 0 will rotate to 2, 1 to 5, etc...
    * 
+   * ```
    *  0 | 1 | 2
    *  ----------
    *  3 | 4 | 5
    *  ----------
    *  6 | 7 | 8
+   * ```
    */
   private clockwiseSticker(stickerIndex): number {
     return (((stickerIndex + 1) * this.size) % (this.gridSize + 1)) - 1;
