@@ -26,7 +26,7 @@ export class Square1Simualtor extends Simulator {
     this.middleRotated = false;
   }
 
-  public alg(moves: Square1Move[]) {
+  public algorithm(moves: Square1Move[]) {
     moves.forEach((move) => {
       this.rotateTop(move.top);
       this.rotateBottom(move.bottom);

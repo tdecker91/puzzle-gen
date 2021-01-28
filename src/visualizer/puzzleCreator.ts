@@ -1,3 +1,4 @@
+import { BLUE, RED, WHITE, ORANGE, GREEN } from './../puzzles/colors';
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
 import { Square1 } from "./../puzzles/square1/square1";
@@ -20,27 +21,11 @@ import {
   Square1Options,
 } from "./interface";
 import { Pyraminx } from "../puzzles/pyraminx";
-
-const defaultCubeOptions: CubeOptions = {
-  size: 3,
-};
-
-const defaultMegaminxOptions: MegaminxOptions = {
-  size: 2,
-};
-
-const defaultPyraminxOptions: PyraminxOptions = {
-  size: 3,
-};
-
-const defaultSkewbOptions: SkewbOptions = {};
-
-const defaultSquare1Options: Square1Options = {};
+import { YELLOW } from "../puzzles/colors";
 
 export function createCube(
-  cubeOptions: CubeOptions = {}
+  options: CubeOptions = {}
 ): [RubiksCube, RubiksCubeSimulator] {
-  const options = { ...defaultCubeOptions, ...cubeOptions };
   const geometry = new RubiksCube(options.size);
   const simulator = new RubiksCubeSimulator(options.size);
 
@@ -48,9 +33,8 @@ export function createCube(
 }
 
 export function createCubeNet(
-  cubeOptions: CubeOptions = {}
+  options: CubeOptions = {}
 ): [RubiksCubeNet, RubiksCubeSimulator] {
-  const options = { ...defaultCubeOptions, ...cubeOptions };
   const geometry = new RubiksCubeNet(options.size);
   const simulator = new RubiksCubeSimulator(options.size);
 
@@ -58,9 +42,8 @@ export function createCubeNet(
 }
 
 export function createMegaminx(
-  megaminxOptions: MegaminxOptions = {}
+  options: MegaminxOptions = {}
 ): [Megaminx, MegaminxSimulator] {
-  const options = { ...defaultMegaminxOptions, ...megaminxOptions };
   const geometry = new Megaminx(options.size);
   const simulator = new MegaminxSimulator();
 
@@ -68,9 +51,8 @@ export function createMegaminx(
 }
 
 export function createMegaminxNet(
-  megaminxOptions: MegaminxOptions = {}
+  options: MegaminxOptions = {}
 ): [MegaminxNet, MegaminxSimulator] {
-  const options = { ...defaultMegaminxOptions, ...megaminxOptions };
   const geometry = new MegaminxNet(options.size);
   const simulator = new MegaminxSimulator();
 
@@ -78,9 +60,8 @@ export function createMegaminxNet(
 }
 
 export function createPyraminx(
-  pyraminxOptions: PyraminxOptions = {}
+  options: PyraminxOptions = {}
 ): [Pyraminx, PyraminxSimulator] {
-  const options = { ...defaultPyraminxOptions, ...pyraminxOptions };
   const geometry = new Pyraminx(options.size);
   const simulator = new PyraminxSimulator();
 
@@ -88,9 +69,8 @@ export function createPyraminx(
 }
 
 export function createPyraminxNet(
-  pyraminxOptions: PyraminxOptions = {}
+  options: PyraminxOptions = {}
 ): [PyraminxNet, PyraminxSimulator] {
-  const options = { ...defaultPyraminxOptions, ...pyraminxOptions };
   const geometry = new PyraminxNet(options.size);
   const simulator = new PyraminxSimulator();
 
@@ -98,9 +78,8 @@ export function createPyraminxNet(
 }
 
 export function createSkewb(
-  skewbOptions: SkewbOptions = {}
+  options: SkewbOptions = {}
 ): [Skewb, SkewbSimulator] {
-  const options = { ...defaultSkewbOptions, ...skewbOptions };
   const geometry = new Skewb();
   const simulator = new PyraminxSimulator();
 
@@ -108,9 +87,8 @@ export function createSkewb(
 }
 
 export function createSkewbNet(
-  skewbOptions: SkewbOptions = {}
+  options: SkewbOptions = {}
 ): [SkewbNet, SkewbSimulator] {
-  const options = { ...defaultSkewbOptions, ...skewbOptions };
   const geometry = new SkewbNet();
   const simulator = new PyraminxSimulator();
 
@@ -118,9 +96,8 @@ export function createSkewbNet(
 }
 
 export function createSquare1(
-  sq1Options: Square1Options = {}
+  options: Square1Options = {}
 ): [Square1, Square1Simualtor] {
-  const options = { ...defaultSquare1Options, ...sq1Options };
   const geometry = new Square1();
   const simulator = new Square1Simualtor();
 
@@ -128,9 +105,8 @@ export function createSquare1(
 }
 
 export function createSquare1Net(
-  sq1Options: Square1Options = {}
+  options: Square1Options = {}
 ): [Square1Net, Square1Simualtor] {
-  const options = { ...defaultSquare1Options, ...sq1Options };
   const geometry = new Square1Net();
   const simulator = new Square1Simualtor();
 

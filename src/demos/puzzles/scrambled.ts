@@ -1,8 +1,7 @@
 import { Square1Net } from './../../puzzles/square1/square1Net';
 import { SkewbNet } from './../../puzzles/skewbNet';
 import { MegaminxNet } from './../../puzzles/megaminxNet';
-import { RubiksCubeNet } from './../../puzzles/rubiksCube/rubiksCubeNet';
-import { Square1Simualtor, Square1Move } from './../../simulator/square1/square1Simulator';
+import { Square1Simualtor } from './../../simulator/square1/square1Simulator';
 import { Square1 } from './../../puzzles/square1/square1';
 import { SkewbSimulator } from './../../simulator/skewb/skewbSimulator';
 import { PyraminxSimulator } from './../../simulator/pyraminx/pyraminxSimulator';
@@ -10,58 +9,9 @@ import { Pyraminx } from './../../puzzles/pyraminx';
 import { MegaminxSimulator } from './../../simulator/megaminx/megaminxSimulator';
 import { Megaminx } from './../../puzzles/megaminx';
 import { RED, BLUE, WHITE, ORANGE, GREEN, PINK, LIGHT_YELLOW, GREY, LIGHT_GREEN, PURPLE, DARK_BLUE } from './../../puzzles/colors';
-import { RubiksCubeSimulator } from './../../simulator/rubiksCube/rubiksCubeSimulator';
-import { RubiksCube } from './../../puzzles/rubiksCube/rubiksCube';
 import { YELLOW } from '../../puzzles/colors';
 import { Skewb } from '../../puzzles/skewb';
 import { PyraminxNet } from '../../puzzles/pyraminxNet';
-
-export function scrambledCube(): [RubiksCube, RubiksCubeNet] {
-  let cubeSim = new RubiksCubeSimulator(3);
-  const scramble = [
-    "F'", "D", "U", "F", "F", "L", "L",
-    "D", "D", "B", "F", "L'", "U'", "F",
-    "F", "R", "R", "F'", "D'", "B", "F'",
-    "D", "D", "U", "R", "R", "F", "F", "U",
-    "U", "B", "R'", "B", "B"
-  ];
-
-  scramble.forEach(move => {
-    switch (move) {
-      case "U": cubeSim.U(); break;
-      case "R": cubeSim.R(); break;
-      case "F": cubeSim.F(); break;
-      case "D": cubeSim.D(); break;
-      case "L": cubeSim.L(); break;
-      case "B": cubeSim.B(); break;
-      case "U'": cubeSim.U(true); break;
-      case "R'": cubeSim.R(true); break;
-      case "F'": cubeSim.F(true); break;
-      case "D'": cubeSim.D(true); break;
-      case "L'": cubeSim.L(true); break;
-      case "B'": cubeSim.B(true); break;
-    }
-  });
-
-  let cubeFaceColors = {
-    U: YELLOW,
-    R: RED,
-    F: BLUE,
-    D: WHITE,
-    L: ORANGE,
-    B: GREEN,
-  }
-
-  let cube = new RubiksCube(3);
-  let cubeNet = new RubiksCubeNet(3);
-
-  const {U, R, F, D, L, B} = cubeSim.getValues();
-  const colors = [...U, ...R, ...F, ...D, ...L, ...B].map(face => cubeFaceColors[face]);
-  cube.setColors(colors);
-  cubeNet.setColors(colors);
-
-  return [cube, cubeNet];
-}
 
 export function scrambledMegaminx(): [Megaminx, MegaminxNet] {
   let megaSim = new MegaminxSimulator();
@@ -236,7 +186,7 @@ export function scrambledSquare1(): [Square1, Square1Net] {
     }
   });
 
-  square1Sim.alg(alg);
+  square1Sim.algorithm(alg);
 
   return [
     new Square1(1.25, square1Sim.topLayer, square1Sim.bottomLayer, square1Sim.middleRotated),

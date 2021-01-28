@@ -1,21 +1,10 @@
 import { SVGVisualizerOptions } from './../../visualizer/svg';
 import { VisualizerType } from './../../visualizer/enum';
-import { Visualizer } from './../../visualizer/visualizer';
-import { Square1Net } from './../../puzzles/square1/square1Net';
-import { SkewbNet } from './../../puzzles/skewbNet';
-import { PyraminxNet } from './../../puzzles/pyraminxNet';
-import { MegaminxNet } from './../../puzzles/megaminxNet';
-import { RubiksCubeNet } from './../../puzzles/rubiksCube/rubiksCubeNet';
-import { Square1 } from './../../puzzles/square1/square1';
-import { Skewb } from './../../puzzles/skewb';
-import { Pyraminx } from './../../puzzles/pyraminx';
-import { Megaminx } from './../../puzzles/megaminx';
-import { RubiksCube } from './../../puzzles/rubiksCube/rubiksCube';
 import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
 import { Camera } from './../../rendering/camera';
 import { Scene } from '../../rendering/scene';
 import { Group } from '../../geometry/group';
-import { scrambledCube, scrambledMegaminx, scrambledPyraminx, scrambledSkewb, scrambledSquare1 } from './scrambled';
+import { scrambledMegaminx, scrambledPyraminx, scrambledSkewb, scrambledSquare1 } from './scrambled';
 import { SVG } from '../../visualizer/svg';
 
 const width: number = 250;
@@ -61,18 +50,23 @@ document.addEventListener('DOMContentLoaded', function (event) {
   console.timeEnd('Default Renders');
 
   console.time('Scrambled Renders');
-  const [cube, cubeNet] = scrambledCube();
   const [megaminx, megaminxNet] = scrambledMegaminx();
   const [pyraminx, pyraminxNet] = scrambledPyraminx();
   const [skewb, skewbNet] = scrambledSkewb();
   const [square1, square1Net] = scrambledSquare1();
 
-  renderGroup('cube-scrambled', cube.group);
+  const options: SVGVisualizerOptions<any> = {
+    width: 250,
+    height: 250
+  }
+  let alg = "F' D U F F L L D D B F L' U' F F R R F' D' B F' D D U R R F F U U B R' B B"
+  SVG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg }});
+  SVG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg }});
+
   renderGroup('megaminx-scrambled', megaminx.group);
   renderGroup('pyraminx-scrambled', pyraminx.group);
   renderGroup('skewb-scrambled', skewb.group);
   renderGroup('square1-scrambled', square1.group);
-  renderGroup('cube-net-scrambled', cubeNet.group);
   renderGroup('megaminx-net-scrambled', megaminxNet.group);
   renderGroup('pyraminx-net-scrambled', pyraminxNet.group);
   renderGroup('skewb-net-scrambled', skewbNet.group);

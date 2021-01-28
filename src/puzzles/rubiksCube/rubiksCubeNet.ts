@@ -62,15 +62,14 @@ export class RubiksCubeNet {
     });
   }
 
-  setColors(colors: IColor[]) {
-    const numStickers = this.size * this.size;
-    let [u, r, f, d, l, b] = chunkArray<IColor>(colors, numStickers);
+  setColors(colors: { [face: string]: IColor[] }) {
+    let {U, R, F, D, L, B} = colors;
 
-    this.setFaceColors(this.U, u);
-    this.setFaceColors(this.R, r);
-    this.setFaceColors(this.F, f);
-    this.setFaceColors(this.D, d);
-    this.setFaceColors(this.L, l);
-    this.setFaceColors(this.B, b);
+    this.setFaceColors(this.U, U);
+    this.setFaceColors(this.R, R);
+    this.setFaceColors(this.F, F);
+    this.setFaceColors(this.D, D);
+    this.setFaceColors(this.L, L);
+    this.setFaceColors(this.B, B);
   }
 }

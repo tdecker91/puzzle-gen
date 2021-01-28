@@ -190,4 +190,23 @@ export class Simulator {
 
     return values;
   }
+
+  /**
+   * parse and execute a sequence of moves
+   * 
+   * @example
+   * ```typescript
+   * // assuming U, R, and F are turn labels
+   * simulator.alg("U R F")
+   * ```
+   * 
+   * @param moves moves to execute
+   */
+  alg(alg: string) {
+    // Default implementation
+    if (!alg) {
+      return
+    }
+    alg.split(" ").forEach(turn => this.doTurn(turn))
+  }
 }
