@@ -10,4 +10,8 @@ export class Scene {
   add(geometry: Object3D) {
     this.objects.push(geometry);
   }
+
+  clear() {
+    this.objects = [];
+  }
 }

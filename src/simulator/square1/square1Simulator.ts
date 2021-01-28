@@ -1,3 +1,4 @@
+import { Simulator } from "./../simulator";
 import { SOLVED_BOTTOM_PIECES } from "./../../puzzles/square1/constants";
 import { Sqaure1Piece } from "./../../puzzles/square1/interface";
 import { PIECE_TYPE } from "../../puzzles/square1/enum";
@@ -13,12 +14,13 @@ const pieceValue = {
   [PIECE_TYPE.EDGE]: 1,
 };
 
-export class Square1Simualtor {
+export class Square1Simualtor extends Simulator {
   public topLayer: Sqaure1Piece[];
   public bottomLayer: Sqaure1Piece[];
   public middleRotated: boolean;
 
   constructor() {
+    super();
     this.topLayer = JSON.parse(JSON.stringify(SOLVED_TOP_PIECES));
     this.bottomLayer = JSON.parse(JSON.stringify(SOLVED_BOTTOM_PIECES));
     this.middleRotated = false;

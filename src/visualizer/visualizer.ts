@@ -1,61 +1,95 @@
+import { VisualizerType } from "./enum";
+import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
+import {
+  CubeOptions,
+  SkewbOptions,
+  MegaminxOptions,
+  PyraminxOptions,
+  Square1Options,
+  PuzzleOptions,
+} from "./interface";
 import { Renderer } from "./../rendering/renderer";
-import { RubiksCube } from "./../puzzles/rubiksCube/rubiksCube";
-import { CustomSVGRenderer } from "./../rendering/customSvgRenderer";
 import { Scene } from "../rendering/scene";
 import { Camera } from "./../rendering/camera";
-import { VisualizerType } from "./enum";
+import { Simulator } from "../simulator/simulator";
+import {
+  createCube,
+  createCubeNet,
+  createMegaminx,
+  createMegaminxNet,
+  createPyraminx,
+  createPyraminxNet,
+  createSkewb,
+  createSkewbNet,
+  createSquare1,
+  createSquare1Net,
+} from "./puzzleCreator";
 
 /**
+ * Creates puzzle geometry and and simulator for a given puzzle type.
+ * Will initialize the geometry and simulator based on puzzle options
+ * passed in
  *
+ * @param type Type of the puzzle {@link VisualizerType} (cube, skewb, etc...)
+ * @param options  Puzzle options {@link PuzzleOptions}
  */
-export interface VisualizerOptions {
-  width: number;
-  height: number;
-  minx: number;
-  miny: number;
-  svgWidth: number;
-  svgHeight: number;
-  strokeWidth: number;
-}
-
-export function renderCube(elementId: string) {
-  let width: number = 500;
-  let height: number = 500;
-  let minx: number = -0.9;
-  let miny: number = -0.9;
-  let svgwidth: number = 1.8;
-  let svgheight: number = 1.8;
-  let planewidth: number = 1;
-  let strokeWidth: number = 0.02;
-
-  let camera: Camera = new Camera();
-  let scene = new Scene();
-  let renderer = new CustomSVGRenderer(
-    width,
-    height,
-    minx,
-    miny,
-    svgwidth,
-    svgheight
-  );
-  renderer.strokeWidth = "" + strokeWidth;
-
-  let rubiksCube = new RubiksCube(5);
-  scene.add(rubiksCube.group);
-
-  renderer.strokeWidth = "" + strokeWidth;
-  document.getElementById(elementId).appendChild(renderer.domElement);
-  renderer.render(scene, camera);
+function puzzleFactory<T extends PuzzleOptions>(
+  type: VisualizerType,
+  options: T
+): [PuzzleGeometry, Simulator] {
+  switch (type) {
+    case VisualizerType.CUBE:
+      return createCube(options as CubeOptions);
+    case VisualizerType.CUBE_NET:
+      return createCubeNet(options as CubeOptions);
+    case VisualizerType.MEGAMINX:
+      return createMegaminx(options as MegaminxOptions);
+    case VisualizerType.MEGAMINX_NET:
+      return createMegaminxNet(options as MegaminxOptions);
+    case VisualizerType.PYRAMINX:
+      return createPyraminx(options as PyraminxOptions);
+    case VisualizerType.PYRAMINX_NET:
+      return createPyraminxNet(options as PyraminxOptions);
+    case VisualizerType.SKEWB:
+      return createSkewb(options as SkewbOptions);
+    case VisualizerType.SKEWB_NET:
+      return createSkewbNet(options as SkewbOptions);
+    case VisualizerType.SQUARE1:
+      return createSquare1(options as Square1Options);
+    case VisualizerType.SQUARE1_NET:
+      return createSquare1Net(options as Square1Options);
+  }
 }
 
 /**
- * Main visualizer library class. Uses {@link CustomSVGRenderer} to render
- * images to a DOM element
+ * Encapsulates logic for setting up a puzzle environment for rendering
+ * images. Sets up puzzle geometry, applies any algorithm or masking
+ * if necessary, and renders the puzzle
  */
 export class Visualizer {
-  private camera: Camera;
-  private scene: Scene;
-  private renderer: CustomSVGRenderer;
+  protected camera: Camera;
+  protected scene: Scene;
+  protected renderer: Renderer;
 
-  constructor(type: VisualizerType, options?: VisualizerOptions) {}
+  protected puzzleGeometry: PuzzleGeometry;
+  public simulator: Simulator;
+
+  constructor(
+    renderer: Renderer,
+    type: VisualizerType,
+    options: PuzzleOptions
+  ) {
+    this.camera = new Camera();
+    this.scene = new Scene();
+    this.renderer = renderer;
+
+    [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
+    this.scene.add(this.puzzleGeometry.group);
+
+    this.render();
+  }
+
+  render() {
+    this.renderer.render(this.scene, this.camera);
+  }
 }

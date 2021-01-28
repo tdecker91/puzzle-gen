@@ -1,3 +1,6 @@
+import { SVGVisualizerOptions } from './../../visualizer/svg';
+import { VisualizerType } from './../../visualizer/enum';
+import { Visualizer } from './../../visualizer/visualizer';
 import { Square1Net } from './../../puzzles/square1/square1Net';
 import { SkewbNet } from './../../puzzles/skewbNet';
 import { PyraminxNet } from './../../puzzles/pyraminxNet';
@@ -13,6 +16,7 @@ import { Camera } from './../../rendering/camera';
 import { Scene } from '../../rendering/scene';
 import { Group } from '../../geometry/group';
 import { scrambledCube, scrambledMegaminx, scrambledPyraminx, scrambledSkewb, scrambledSquare1 } from './scrambled';
+import { SVG } from '../../visualizer/svg';
 
 const width: number = 250;
 const height: number = 250;
@@ -35,35 +39,20 @@ function renderGroup(elementId: string, group: Group) {
 }
 
 function renderDefault() {
-  let cube = new RubiksCube(3);
-  renderGroup('cube', cube.group);
-
-  let megaminx = new Megaminx(2);
-  renderGroup('megaminx', megaminx.group);
-
-  let pyraminx = new Pyraminx(3);
-  renderGroup('pyraminx', pyraminx.group);
-
-  let skewb = new Skewb();
-  renderGroup('skewb', skewb.group);
-
-  let square1 = new Square1();
-  renderGroup('square1', square1.group);
-
-  let cubeNet = new RubiksCubeNet(3);
-  renderGroup('cube-net', cubeNet.group);
-
-  let megaminxNet = new MegaminxNet(2);
-  renderGroup('megaminx-net', megaminxNet.group);
-
-  let pyraminxNet = new PyraminxNet(3);
-  renderGroup('pyraminx-net', pyraminxNet.group);
-
-  let skewbNet = new SkewbNet();
-  renderGroup('skewb-net', skewbNet.group);
-  
-  let square1Net = new Square1Net();
-  renderGroup('square1-net', square1Net.group);
+  const options: SVGVisualizerOptions<any> = {
+    width: 250,
+    height: 250
+  }
+  SVG("#cube", VisualizerType.CUBE, options);
+  SVG("#megaminx", VisualizerType.MEGAMINX, options);
+  SVG("#pyraminx", VisualizerType.PYRAMINX, options);
+  SVG("#skewb", VisualizerType.SKEWB, options);
+  SVG("#square1", VisualizerType.SQUARE1, options);
+  SVG("#cube-net", VisualizerType.CUBE_NET, options);
+  SVG("#megaminx-net", VisualizerType.MEGAMINX_NET, options);
+  SVG("#pyraminx-net", VisualizerType.PYRAMINX_NET, options);
+  SVG("#skewb-net", VisualizerType.SKEWB_NET, options);
+  SVG("#square1-net", VisualizerType.SQUARE1_NET, options);
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
