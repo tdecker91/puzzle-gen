@@ -1,3 +1,4 @@
+import { RubiksCubeTopLayer } from './../puzzles/rubiksCube/rubiksCubeTop';
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
 import { Square1 } from "./../puzzles/square1/square1";
@@ -34,6 +35,15 @@ export function createCubeNet(
   options: CubeOptions = {}
 ): [RubiksCubeNet, RubiksCubeSimulator] {
   const geometry = new RubiksCubeNet(options.size);
+  const simulator = new RubiksCubeSimulator(options.size);
+
+  return [geometry, simulator];
+}
+
+export function createCubeTop(
+  options: CubeOptions = {}
+): [RubiksCubeTopLayer, RubiksCubeSimulator] {
+  const geometry = new RubiksCubeTopLayer(options.size);
   const simulator = new RubiksCubeSimulator(options.size);
 
   return [geometry, simulator];

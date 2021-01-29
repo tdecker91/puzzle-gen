@@ -42,6 +42,7 @@ function renderDefault() {
   SVG("#pyraminx-net", VisualizerType.PYRAMINX_NET, options);
   SVG("#skewb-net", VisualizerType.SKEWB_NET, options);
   SVG("#square1-net", VisualizerType.SQUARE1_NET, options);
+  SVG("#cube-top", VisualizerType.CUBE_TOP, options);
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
@@ -59,6 +60,7 @@ document.addEventListener('DOMContentLoaded', function (event) {
   let alg: string = "F' D U F F L L D D B F L' U' F F R R F' D' B F' D D U R R F F U U B R' B B"
   SVG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg }});
   SVG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg }});
+  SVG("#cube-top-scrambled", VisualizerType.CUBE_TOP, {...options, puzzle: { alg }});
 
   alg = [
     'R++','D++','R++','D--','R--','D++','R--','D++', 'R--','D++','U',
@@ -83,8 +85,8 @@ document.addEventListener('DOMContentLoaded', function (event) {
     "L","U","L'","U'","L'",
     "U'","B'","R","U'","R"
   ].join(' ')
-  SVG("#skewb-scrambled2", VisualizerType.SKEWB, {...options, puzzle: { alg }})
-  SVG("#skewb-net-scrambled2", VisualizerType.SKEWB_NET, {...options, puzzle: { alg }})
+  SVG("#skewb-scrambled", VisualizerType.SKEWB, {...options, puzzle: { alg }})
+  SVG("#skewb-net-scrambled", VisualizerType.SKEWB_NET, {...options, puzzle: { alg }})
   
   renderGroup('square1-scrambled', square1.group);
   renderGroup('square1-net-scrambled', square1Net.group);

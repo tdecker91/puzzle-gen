@@ -30,6 +30,7 @@ import { Simulator, SimulatorValues } from "../simulator/simulator";
 import {
   createCube,
   createCubeNet,
+  createCubeTop,
   createMegaminx,
   createMegaminxNet,
   createPyraminx,
@@ -99,6 +100,7 @@ function getDefaultOptions(type: VisualizerType): PuzzleOptions {
   switch (type) {
     case VisualizerType.CUBE:
     case VisualizerType.CUBE_NET:
+    case VisualizerType.CUBE_TOP:
       return defaultCubeOptions;
     case VisualizerType.MEGAMINX:
     case VisualizerType.MEGAMINX_NET:
@@ -112,6 +114,8 @@ function getDefaultOptions(type: VisualizerType): PuzzleOptions {
     case VisualizerType.SQUARE1:
     case VisualizerType.SQUARE1_NET:
       return defaultSquare1Options;
+    default:
+      throw new Error(`Could not get default options for puzzle ${type}`);
   }
 }
 
@@ -148,6 +152,8 @@ function puzzleFactory<T extends PuzzleOptions>(
       return createCube(options as CubeOptions);
     case VisualizerType.CUBE_NET:
       return createCubeNet(options as CubeOptions);
+    case VisualizerType.CUBE_TOP:
+      return createCubeTop(options as CubeOptions);
     case VisualizerType.MEGAMINX:
       return createMegaminx(options as MegaminxOptions);
     case VisualizerType.MEGAMINX_NET:
