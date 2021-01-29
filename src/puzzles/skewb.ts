@@ -92,16 +92,15 @@ export class Skewb {
     return [center, ...triangles];
   }
 
-  setColors(colors: IColor[]) {
-    const numStickers = 5;
-    let [u, r, f, d, l, b] = chunkArray<IColor>(colors, numStickers);
+  setColors(colors: { [face: string]: IColor[] }) {
+    let { top, right, front, bottom, left, back } = colors;
 
-    this.setFaceColors(this.U, u);
-    this.setFaceColors(this.R, r);
-    this.setFaceColors(this.F, f);
-    this.setFaceColors(this.D, d);
-    this.setFaceColors(this.L, l);
-    this.setFaceColors(this.B, b);
+    this.setFaceColors(this.U, top);
+    this.setFaceColors(this.R, right);
+    this.setFaceColors(this.F, front);
+    this.setFaceColors(this.D, bottom);
+    this.setFaceColors(this.L, left);
+    this.setFaceColors(this.B, back);
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {

@@ -68,7 +68,7 @@ export class RubiksCube {
   }
 
   setColors(colors: { [face: string]: IColor[] }) {
-    let {U, R, F, D, L, B} = colors;
+    let { U, R, F, D, L, B } = colors;
 
     this.setFaceColors(this.U, U);
     this.setFaceColors(this.R, R);

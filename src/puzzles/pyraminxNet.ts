@@ -53,14 +53,13 @@ export class PyraminxNet {
     this.group = new Group(this.faces);
   }
 
-  setColors(colors: IColor[]) {
-    const numStickers = this.size * this.size;
-    let [l, r, u, b] = chunkArray<IColor>(colors, numStickers);
+  setColors(colors: { [face: string]: IColor[] }) {
+    let { left, right, top, back } = colors;
 
-    this.setFaceColors(this.L, l);
-    this.setFaceColors(this.R, r);
-    this.setFaceColors(this.U, u);
-    this.setFaceColors(this.B, b);
+    this.setFaceColors(this.L, left);
+    this.setFaceColors(this.R, right);
+    this.setFaceColors(this.U, top);
+    this.setFaceColors(this.B, back);
   }
 
   private setFaceColors(lattice: TriangleLattice, colors: IColor[]) {

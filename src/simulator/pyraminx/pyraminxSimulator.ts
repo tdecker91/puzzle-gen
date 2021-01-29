@@ -1,3 +1,5 @@
+import { TurnType } from "../../algorithms/algorithm";
+import { parsePyraminxAlgorithm } from "../../algorithms/pyraminx";
 import { fillArray } from "../../utils/arrays";
 import { Simulator } from "./../simulator";
 
@@ -159,5 +161,42 @@ export class PyraminxSimulator extends Simulator {
 
   b(reverse?: boolean) {
     this.doTurn("b", reverse);
+  }
+
+  alg(alg: string) {
+    if (!alg) {
+      return;
+    }
+
+    parsePyraminxAlgorithm(alg).forEach((turn) => {
+      let reverse = turn.turnType === TurnType.CounterClockwise;
+
+      switch (turn.unit) {
+        case "R":
+          this.R(reverse);
+          break;
+        case "r":
+          this.r(reverse);
+          break;
+        case "U":
+          this.U(reverse);
+          break;
+        case "u":
+          this.u(reverse);
+          break;
+        case "L":
+          this.L(reverse);
+          break;
+        case "l":
+          this.l(reverse);
+          break;
+        case "B":
+          this.B(reverse);
+          break;
+        case "b":
+          this.b(reverse);
+          break;
+      }
+    });
   }
 }

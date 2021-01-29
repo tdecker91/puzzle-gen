@@ -101,26 +101,27 @@ export class MegaminxNet {
 
     // Bottom
     this.d.rotate(Math.PI, [0, 0, 1]);
+    this.d.rotate(-2 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.bl.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.b.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.b.translate([0, ind, 0]);
+    this.b.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+
+    this.bl.rotate(DEG_36_RADIANS, [0, 0, 1]);
     this.bl.translate([0, ind, 0]);
     this.bl.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.dl.rotate(DEG_36_RADIANS, [0, 0, 1]);
+    this.dl.rotate(-DEG_36_RADIANS, [0, 0, 1]);
     this.dl.translate([0, ind, 0]);
     this.dl.rotate(-DEG_36_RADIANS, [0, 0, 1]);
 
-    this.dr.rotate(-DEG_36_RADIANS, [0, 0, 1]);
+    this.dr.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
     this.dr.translate([0, ind, 0]);
     this.dr.rotate(DEG_36_RADIANS, [0, 0, 1]);
 
-    this.br.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.br.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
     this.br.translate([0, ind, 0]);
     this.br.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
-
-    this.b.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
-    this.b.translate([0, ind, 0]);
-    this.b.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
 
     const top = new Group([this.U, this.F, this.L, this.BL, this.BR, this.R]);
     const bottom = new Group([
@@ -142,7 +143,24 @@ export class MegaminxNet {
     this.group.translate([-1.75 * sideLength, 0, 0]);
   }
 
-  setColors(colors: IColor[]) {
+  setColors(colors: { [face: string]: IColor[] }) {
+    let { U, R, F, d, L, b, dr, dl, br, BR, BL, bl } = colors;
+
+    this.setFaceColors(this.U, U);
+    this.setFaceColors(this.R, R);
+    this.setFaceColors(this.F, F);
+    this.setFaceColors(this.d, d);
+    this.setFaceColors(this.L, L);
+    this.setFaceColors(this.b, b);
+    this.setFaceColors(this.dr, dr);
+    this.setFaceColors(this.dl, dl);
+    this.setFaceColors(this.BR, BR);
+    this.setFaceColors(this.BL, BL);
+    this.setFaceColors(this.bl, bl);
+    this.setFaceColors(this.br, br);
+  }
+
+  oldSetColors(colors: IColor[]) {
     const n = this.layers;
     const numStickers = 5 * n * n - 5 * n + 1;
     let [U, R, F, dr, dl, L, d, br, BR, BL, bl, b] = chunkArray<IColor>(

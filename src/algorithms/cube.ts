@@ -1,34 +1,24 @@
-export enum CubeTurnType {
-  Clockwise,
-  CounterClockwise,
-  Double
-}
-
-interface Turn {
-  unit: string
-  turnType: CubeTurnType
-  slices: number
-}
+import { Turn, TurnType } from "./algorithm";
 
 enum TurnAbbreviation {
-  Clockwise = '',
+  Clockwise = "",
   CounterClockwise = "'",
-  Double = '2',
+  Double = "2",
 }
 
 export enum CubeAlgorithmUnit {
-  F = 'F',
-  U = 'U',
-  R = 'R',
-  L = 'L',
-  D = 'D',
-  B = 'B',
-  M = 'M',
-  E = 'E',
-  S = 'S',
-  X = 'x',
-  Y = 'y',
-  Z = 'z',
+  F = "F",
+  U = "U",
+  R = "R",
+  L = "L",
+  D = "D",
+  B = "B",
+  M = "M",
+  E = "E",
+  S = "S",
+  X = "x",
+  Y = "y",
+  Z = "z",
 }
 
 export const possibleMoves: string[] = [
@@ -44,11 +34,15 @@ export const possibleMoves: string[] = [
   CubeAlgorithmUnit.X,
   CubeAlgorithmUnit.Y,
   CubeAlgorithmUnit.Z,
-]
+];
 
-const cubeRotations: string[] = [CubeAlgorithmUnit.X, CubeAlgorithmUnit.Y, CubeAlgorithmUnit.Z]
+const cubeRotations: string[] = [
+  CubeAlgorithmUnit.X,
+  CubeAlgorithmUnit.Y,
+  CubeAlgorithmUnit.Z,
+];
 
-const cubeTurnRegex = /([2-9]+)?([UuFfRrDdLlBbMESxyz])(w)?([2\'])?/g
+const cubeTurnRegex = /([2-9]+)?([UuFfRrDdLlBbMESxyz])(w)?([2\'])?/g;
 
 /**
  * Takes in an algorithm string and parses the turns from it
@@ -59,63 +53,67 @@ const cubeTurnRegex = /([2-9]+)?([UuFfRrDdLlBbMESxyz])(w)?([2\'])?/g
  */
 export function parseCubeAlgorithm(algorithm: string): Turn[] {
   if (!algorithm) {
-    return []
+    return [];
   }
-  let turns: Turn[] = []
-  let match
-  do {
-    match = cubeTurnRegex.exec(algorithm)
-    if (match) {
-      let rawSlices: string = match[1]
-      let rawFace: string = match[2]
-      let outerBlockIndicator = match[3]
-      let rawType = match[4] || TurnAbbreviation.Clockwise // Default to clockwise
-      let isLowerCaseMove = rawFace === rawFace.toLowerCase() && cubeRotations.indexOf(rawFace) === -1
+  let turns: Turn[] = [];
+  let match;
 
-      if (isLowerCaseMove) {
-        rawFace = rawFace.toUpperCase()
-      }
+  while ((match = cubeTurnRegex.exec(algorithm))) {
+    let rawSlices: string = match[1];
+    let rawFace: string = match[2];
+    let outerBlockIndicator = match[3];
+    let rawType = match[4] || TurnAbbreviation.Clockwise; // Default to clockwise
+    let isLowerCaseMove =
+      rawFace === rawFace.toLowerCase() &&
+      cubeRotations.indexOf(rawFace) === -1;
 
-      let turn: Turn = {
-        unit: getMove(rawFace),
-        turnType: getTurnType(rawType),
-        slices: isLowerCaseMove ? 2 : getSlices(rawSlices, outerBlockIndicator),
-      }
-
-      turns.push(turn)
+    if (isLowerCaseMove) {
+      rawFace = rawFace.toUpperCase();
     }
-  } while (match)
 
-  return turns
+    let turn: Turn = {
+      unit: getMove(rawFace),
+      turnType: getTurnType(rawType),
+      slices: isLowerCaseMove ? 2 : getSlices(rawSlices, outerBlockIndicator),
+    };
+
+    turns.push(turn);
+  }
+
+  return turns;
 }
 
 function getSlices(rawSlices, outerBlockIndicator): number {
   if (outerBlockIndicator && !rawSlices) {
-    return 2
+    return 2;
   } else if (!outerBlockIndicator && rawSlices) {
-    throw new Error(`Invalid move: Cannot specify num slices if outer block move indicator 'w' is not present`)
+    throw new Error(
+      `Invalid move: Cannot specify num slices if outer block move indicator 'w' is not present`
+    );
   } else if (!outerBlockIndicator && !rawSlices) {
-    return 1
+    return 1;
   } else {
-    return parseInt(rawSlices)
+    return parseInt(rawSlices);
   }
 }
 
 function getMove(rawFace: string): CubeAlgorithmUnit {
   if (possibleMoves.indexOf(rawFace) < 0) {
-    throw new Error(`Invalid move (${rawFace}): Possible turn faces are [U R F L D B M E S x y z]`)
-  } else return rawFace as CubeAlgorithmUnit
+    throw new Error(
+      `Invalid move (${rawFace}): Possible turn faces are [U R F L D B M E S x y z]`
+    );
+  } else return rawFace as CubeAlgorithmUnit;
 }
 
-function getTurnType(rawType: string): CubeTurnType {
+function getTurnType(rawType: string): TurnType {
   switch (rawType) {
     case TurnAbbreviation.Clockwise:
-      return CubeTurnType.Clockwise
+      return TurnType.Clockwise;
     case TurnAbbreviation.CounterClockwise:
-      return CubeTurnType.CounterClockwise
+      return TurnType.CounterClockwise;
     case TurnAbbreviation.Double:
-      return CubeTurnType.Double
+      return TurnType.Double;
     default:
-      throw new Error(`Invalid move modifier (${rawType})`)
+      throw new Error(`Invalid move modifier (${rawType})`);
   }
 }

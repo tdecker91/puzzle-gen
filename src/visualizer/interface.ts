@@ -1,5 +1,7 @@
 import { IColor } from "../geometry/color";
 
+export type ColorScheme = { [face: string]: IColor };
+
 export interface PuzzleOptions {
   /**
    * algorithm to perform on the initial state of the puzzle
@@ -16,7 +18,7 @@ export interface PuzzleOptions {
   /**
    * color scheme for the puzzle. Maps a puzzle face
    * to a color
-   * 
+   *
    * @example
    * ```typescript
    * {

@@ -1,3 +1,5 @@
+import { MegaminxSimulator } from './../../simulator/megaminx/megaminxSimulator';
+import { PINK, LIGHT_YELLOW, GREY, LIGHT_GREEN, PURPLE, DARK_BLUE } from './../../puzzles/colors';
 import { PyraminxSimulator } from '../../simulator/pyraminx/pyraminxSimulator';
 import { RED, BLUE, WHITE, ORANGE, GREEN } from '../../puzzles/colors';
 import { RubiksCubeSimulator } from '../../simulator/rubiksCube/rubiksCubeSimulator';
@@ -151,35 +153,101 @@ export function renderDemo() {
   // scene.add(pyraminxNet.group);
 
   megaminx = new Megaminx(2);
-  // let megaminxFaceColors = {
-  //   U: WHITE,
-  //   F: RED,
-  //   R: BLUE,
-  //   dr: PINK,
-  //   dl: LIGHT_YELLOW,
-  //   L: GREEN,
-  //   d: GREY,
-  //   br: LIGHT_GREEN,
-  //   BR: YELLOW,
-  //   BL: PURPLE,
-  //   bl: DARK_BLUE,
-  //   b: ORANGE
-  // }
+  let megaminxFaceColors = {
+    U: WHITE,
+    F: RED,
+    R: BLUE,
+    dr: PINK,
+    dl: LIGHT_YELLOW,
+    L: GREEN,
+    d: GREY,
+    br: LIGHT_GREEN,
+    BR: YELLOW,
+    BL: PURPLE,
+    bl: DARK_BLUE,
+    b: ORANGE
+  }
+  const megaSim = new MegaminxSimulator();
+  // megaSim.d();
+  // megaSim.BR();
+  // megaSim.Rxx();
+  // megaSim.Dxx();
+  // megaSim.Rxx();
   // let {U, R, F, dr, dl, L, d, br, BR, BL, b, bl} = megaSim.getValues();
-  // megaminx.setColors([...U, ...R, ...F, ...dr, ...dl, ...L, ...d, ...br, ...BR, ...BL, ...bl, ...b].map(face => megaminxFaceColors[face]));
-  // scene.add(megaminx.group);
+  // megaminx.oldSetColors([...U, ...R, ...F, ...dr, ...dl, ...L, ...d, ...br, ...BR, ...BL, ...bl, ...b].map(face => megaminxFaceColors[face]));
+  scene.add(megaminx.group);
 
   // megaminxNet = new MegaminxNet(2);
   // scene.add(megaminxNet.group);
 
-  square1 = new Square1();
-  scene.add(square1.group);
+  // square1 = new Square1();
+  // scene.add(square1.group);
 
   // square1Net = new Square1Net();
   // scene.add(square1Net.group);
 
   scene.add(g);
   document.getElementById('idsomething').appendChild(renderer.domElement);
+
+
+  let down = false;
+  let downX = 0;
+  let downY = 0;
+
+  renderer.domElement.addEventListener('mousedown', e => {
+    down = true;
+    downX = e.x;
+    downY = e.y;
+    console.log(e);
+  });
+
+  function throttle(callback, interval) {
+    let enableCall = true;
+  
+    return function(...args) {
+      if (!enableCall) return;
+  
+      enableCall = false;
+      callback.apply(this, args);
+      setTimeout(() => enableCall = true, interval);
+    }
+  }
+
+  const funz = throttle(e => {
+    if (down) {
+      const [diffX, diffY] = [downX - e.x, downY - e.y];
+      [downX, downY] = [e.x, e.y];
+
+      [
+        skewb,
+        skewbNet,
+        rubiksCube,
+        cubeNet,
+        megaminx,
+        megaminxNet,
+        pyraminx,
+        pyraminxNet,
+        square1,
+        square1Net,
+        cubeTop
+      ].forEach(puzzle => {
+        if (puzzle && puzzle.group) {
+    
+          puzzle.group.rotate(diffX/128, [0, -1, 0]);
+          puzzle.group.rotate(diffY/128, [0, 0, 1]);
+        } 
+      });
+      renderer.render(scene, camera);
+    }
+  }, 50)
+
+  renderer.domElement.addEventListener('mousemove', funz);
+
+  renderer.domElement.addEventListener('mouseup', e => {
+    down = false;
+    console.log(e);
+  });
+
   renderer.render(scene, camera);
 
   setInputs();
@@ -206,7 +274,7 @@ export function svgStep() {
   ].forEach(puzzle => {
     if (puzzle && puzzle.group) {
 
-      puzzle.group.rotate(Math.PI/32, [0,1,1 ]);
+      puzzle.group.rotate(Math.PI/32, [1,1, 0]);
     } 
   });
 

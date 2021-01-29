@@ -139,13 +139,8 @@ export class Megaminx {
     this.group = new Group(this.stickers);
   }
 
-  setColors(colors: IColor[]) {
-    const n = this.layers;
-    const numStickers = 5 * n * n - 5 * n + 1;
-    let [U, R, F, dr, dl, L, d, br, BR, BL, bl, b] = chunkArray<IColor>(
-      colors,
-      numStickers
-    );
+  setColors(colors: { [face: string]: IColor[] }) {
+    let { U, R, F, d, L, b, dr, dl, br, BR, BL, bl } = colors;
 
     this.setFaceColors(this.U, U);
     this.setFaceColors(this.R, R);
@@ -155,10 +150,10 @@ export class Megaminx {
     this.setFaceColors(this.b, b);
     this.setFaceColors(this.dr, dr);
     this.setFaceColors(this.dl, dl);
-    this.setFaceColors(this.br, br);
     this.setFaceColors(this.BR, BR);
     this.setFaceColors(this.BL, BL);
     this.setFaceColors(this.bl, bl);
+    this.setFaceColors(this.br, br);
   }
 
   private setFaceColors(faceStickers: DividedPentagon, colors: IColor[]) {

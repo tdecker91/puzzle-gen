@@ -1,5 +1,6 @@
 export type Pair<T> = [T, T];
 export type TurnDefinitions = Pair<string>[];
+export type SimulatorValues = { [faceName: string]: string[] };
 
 /**
  * Class for simulating turns on symmetric twisty puzzles. This is acheived by
@@ -181,7 +182,7 @@ export class Simulator {
     return true;
   }
 
-  getValues(): { [faceName: string]: string[] } {
+  getValues(): SimulatorValues {
     let values = {};
 
     this.faces.forEach((stickerIds, key) => {
@@ -193,20 +194,20 @@ export class Simulator {
 
   /**
    * parse and execute a sequence of moves
-   * 
+   *
    * @example
    * ```typescript
    * // assuming U, R, and F are turn labels
    * simulator.alg("U R F")
    * ```
-   * 
+   *
    * @param moves moves to execute
    */
   alg(alg: string) {
     // Default implementation
     if (!alg) {
-      return
+      return;
     }
-    alg.split(" ").forEach(turn => this.doTurn(turn))
+    alg.split(" ").forEach((turn) => this.doTurn(turn));
   }
 }

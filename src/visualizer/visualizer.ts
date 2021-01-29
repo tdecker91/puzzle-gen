@@ -1,5 +1,17 @@
-import { RED, BLUE, WHITE, ORANGE, GREEN } from './../puzzles/colors';
-import { PyraminxNet } from './../puzzles/pyraminxNet';
+import {
+  RED,
+  BLUE,
+  WHITE,
+  ORANGE,
+  GREEN,
+  PINK,
+  LIGHT_YELLOW,
+  LIGHT_GREEN,
+  PURPLE,
+  DARK_BLUE,
+  GREY,
+} from "./../puzzles/colors";
+import { PyraminxNet } from "./../puzzles/pyraminxNet";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
 import {
@@ -9,11 +21,12 @@ import {
   PyraminxOptions,
   Square1Options,
   PuzzleOptions,
+  ColorScheme,
 } from "./interface";
 import { Renderer } from "./../rendering/renderer";
 import { Scene } from "../rendering/scene";
 import { Camera } from "./../rendering/camera";
-import { Simulator } from "../simulator/simulator";
+import { Simulator, SimulatorValues } from "../simulator/simulator";
 import {
   createCube,
   createCubeNet,
@@ -26,7 +39,8 @@ import {
   createSquare1,
   createSquare1Net,
 } from "./puzzleCreator";
-import { YELLOW } from '../puzzles/colors';
+import { YELLOW } from "../puzzles/colors";
+import { IColor } from "../geometry/color";
 
 const defaultCubeOptions: CubeOptions = {
   size: 3,
@@ -36,19 +50,48 @@ const defaultCubeOptions: CubeOptions = {
     F: BLUE,
     D: WHITE,
     L: ORANGE,
-    B: GREEN
-  }
+    B: GREEN,
+  },
 };
 
 const defaultMegaminxOptions: MegaminxOptions = {
   size: 2,
+  scheme: {
+    U: WHITE,
+    F: RED,
+    R: BLUE,
+    dr: PINK,
+    dl: LIGHT_YELLOW,
+    L: GREEN,
+    d: GREY,
+    br: LIGHT_GREEN,
+    BR: YELLOW,
+    BL: PURPLE,
+    bl: DARK_BLUE,
+    b: ORANGE,
+  },
 };
 
 const defaultPyraminxOptions: PyraminxOptions = {
   size: 3,
+  scheme: {
+    left: BLUE,
+    right: GREEN,
+    top: YELLOW,
+    back: RED,
+  },
 };
 
-const defaultSkewbOptions: SkewbOptions = {};
+const defaultSkewbOptions: SkewbOptions = {
+  scheme: {
+    top: YELLOW,
+    front: BLUE,
+    right: RED,
+    back: GREEN,
+    left: ORANGE,
+    bottom: WHITE,
+  },
+};
 
 const defaultSquare1Options: Square1Options = {};
 
@@ -73,6 +116,22 @@ function getDefaultOptions(type: VisualizerType): PuzzleOptions {
 }
 
 /**
+ * Applies a color scheme to simulator values
+ *
+ * @param faceValues face values from the simulator
+ * @param scheme color scheme to
+ */
+function applyColorScheme(
+  faceValues: SimulatorValues,
+  scheme: ColorScheme
+): { [face: string]: IColor[] } {
+  return Object.keys(faceValues).reduce((colors, face) => {
+    colors[face] = faceValues[face].map((value) => scheme[value]);
+    return colors;
+  }, {});
+}
+
+/**
  * Creates puzzle geometry and and simulator for a given puzzle type.
  * Will initialize the geometry and simulator based on puzzle options
  * passed in
@@ -90,17 +149,17 @@ function puzzleFactory<T extends PuzzleOptions>(
     case VisualizerType.CUBE_NET:
       return createCubeNet(options as CubeOptions);
     case VisualizerType.MEGAMINX:
-      return createMegaminx(options as MegaminxOptions) as any;
+      return createMegaminx(options as MegaminxOptions);
     case VisualizerType.MEGAMINX_NET:
-      return createMegaminxNet(options as MegaminxOptions) as any;
+      return createMegaminxNet(options as MegaminxOptions);
     case VisualizerType.PYRAMINX:
-      return createPyraminx(options as PyraminxOptions) as any;
+      return createPyraminx(options as PyraminxOptions);
     case VisualizerType.PYRAMINX_NET:
-      return createPyraminxNet(options as PyraminxOptions) as any;
+      return createPyraminxNet(options as PyraminxOptions);
     case VisualizerType.SKEWB:
-      return createSkewb(options as SkewbOptions) as any;
+      return createSkewb(options as SkewbOptions);
     case VisualizerType.SKEWB_NET:
-      return createSkewbNet(options as SkewbOptions) as any;
+      return createSkewbNet(options as SkewbOptions);
     case VisualizerType.SQUARE1:
       return createSquare1(options as Square1Options) as any;
     case VisualizerType.SQUARE1_NET:
@@ -131,30 +190,23 @@ export class Visualizer {
     this.camera = new Camera();
     this.scene = new Scene();
     this.renderer = renderer;
-    options = {...getDefaultOptions(type), ...options};
+    options = { ...getDefaultOptions(type), ...options };
 
     [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
     this.scene.add(this.puzzleGeometry.group);
 
-    this.applyAlgorithm(options);
+    if (options.alg) this.applyAlgorithm(options);
 
     this.render();
   }
 
   private applyAlgorithm(options: PuzzleOptions) {
-    if (!options.alg) return;
-
     this.simulator.alg(options.alg);
 
     const faceValues = this.simulator.getValues();
+    const faceColors = applyColorScheme(faceValues, options.scheme);
 
-    // Get sticker colors from simulator values
-    const colors = Object.keys(faceValues).reduce((colors, face) => {
-      colors[face] = faceValues[face].map(value => options.scheme[value])
-      return colors;
-    }, {});
-
-    this.puzzleGeometry.setColors(colors)
+    this.puzzleGeometry.setColors(faceColors);
   }
 
   render() {

@@ -4,7 +4,7 @@ import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
 import { Camera } from './../../rendering/camera';
 import { Scene } from '../../rendering/scene';
 import { Group } from '../../geometry/group';
-import { scrambledMegaminx, scrambledPyraminx, scrambledSkewb, scrambledSquare1 } from './scrambled';
+import { scrambledSquare1 } from './scrambled';
 import { SVG } from '../../visualizer/svg';
 
 const width: number = 250;
@@ -50,26 +50,43 @@ document.addEventListener('DOMContentLoaded', function (event) {
   console.timeEnd('Default Renders');
 
   console.time('Scrambled Renders');
-  const [megaminx, megaminxNet] = scrambledMegaminx();
-  const [pyraminx, pyraminxNet] = scrambledPyraminx();
-  const [skewb, skewbNet] = scrambledSkewb();
   const [square1, square1Net] = scrambledSquare1();
 
   const options: SVGVisualizerOptions<any> = {
     width: 250,
     height: 250
   }
-  let alg = "F' D U F F L L D D B F L' U' F F R R F' D' B F' D D U R R F F U U B R' B B"
+  let alg: string = "F' D U F F L L D D B F L' U' F F R R F' D' B F' D D U R R F F U U B R' B B"
   SVG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg }});
   SVG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg }});
 
-  renderGroup('megaminx-scrambled', megaminx.group);
-  renderGroup('pyraminx-scrambled', pyraminx.group);
-  renderGroup('skewb-scrambled', skewb.group);
+  alg = [
+    'R++','D++','R++','D--','R--','D++','R--','D++', 'R--','D++','U',
+    'D++','R--','D++','R++','D++','R--','D--','R--','D--','R--','U',
+    'R--','D--','R++','D++','R++','D--','R--','D--','R++','D--','U\'',
+    'R--','D++','R--','D--','R++','D--','R++','D++','R--','D++','U\''
+  ].join(' ');
+  SVG("#megaminx-scrambled", VisualizerType.MEGAMINX, {...options, puzzle: { alg }});
+  SVG("#megaminx-net-scrambled", VisualizerType.MEGAMINX_NET, {...options, puzzle: { alg }});
+
+  alg = [
+    "B", "U", "R", "L", "R'", "U'", "B'", "L", "B'", "u'", "l'", "r"
+  ].join(' ');
+  
+  SVG("#pyraminx-scrambled", VisualizerType.PYRAMINX, {...options, puzzle: { alg }})
+  SVG("#pyraminx-net-scrambled", VisualizerType.PYRAMINX_NET, {...options, puzzle: { alg }})
+  
+  alg = [
+    "L", "R'","B'","U","L",
+    "B","U","R'","L","U",
+    "R'","B","L","R'","U",
+    "L","U","L'","U'","L'",
+    "U'","B'","R","U'","R"
+  ].join(' ')
+  SVG("#skewb-scrambled2", VisualizerType.SKEWB, {...options, puzzle: { alg }})
+  SVG("#skewb-net-scrambled2", VisualizerType.SKEWB_NET, {...options, puzzle: { alg }})
+  
   renderGroup('square1-scrambled', square1.group);
-  renderGroup('megaminx-net-scrambled', megaminxNet.group);
-  renderGroup('pyraminx-net-scrambled', pyraminxNet.group);
-  renderGroup('skewb-net-scrambled', skewbNet.group);
   renderGroup('square1-net-scrambled', square1Net.group);
   console.timeEnd('Scrambled Renders');
 });

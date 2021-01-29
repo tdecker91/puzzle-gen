@@ -1,3 +1,5 @@
+import { TurnType } from "../../algorithms/algorithm";
+import { parseSkewbAlgorithm } from "../../algorithms/skewb";
 import { fillArray } from "../../utils/arrays";
 import { Simulator } from "./../simulator";
 
@@ -161,6 +163,31 @@ export class SkewbSimulator extends Simulator {
 
   B(reverse?: boolean) {
     this.doTurn("B", reverse);
+  }
+
+  alg(alg: string) {
+    if (!alg) {
+      return;
+    }
+
+    parseSkewbAlgorithm(alg).forEach((turn) => {
+      let reverse = turn.turnType === TurnType.CounterClockwise;
+
+      switch (turn.unit) {
+        case "R":
+          this.R(reverse);
+          break;
+        case "U":
+          this.U(reverse);
+          break;
+        case "L":
+          this.L(reverse);
+          break;
+        case "B":
+          this.B(reverse);
+          break;
+      }
+    });
   }
 }
 

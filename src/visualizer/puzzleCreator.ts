@@ -1,4 +1,3 @@
-import { BLUE, RED, WHITE, ORANGE, GREEN } from './../puzzles/colors';
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
 import { Square1 } from "./../puzzles/square1/square1";
@@ -21,7 +20,6 @@ import {
   Square1Options,
 } from "./interface";
 import { Pyraminx } from "../puzzles/pyraminx";
-import { YELLOW } from "../puzzles/colors";
 
 export function createCube(
   options: CubeOptions = {}
@@ -81,7 +79,7 @@ export function createSkewb(
   options: SkewbOptions = {}
 ): [Skewb, SkewbSimulator] {
   const geometry = new Skewb();
-  const simulator = new PyraminxSimulator();
+  const simulator = new SkewbSimulator();
 
   return [geometry, simulator];
 }
@@ -90,7 +88,7 @@ export function createSkewbNet(
   options: SkewbOptions = {}
 ): [SkewbNet, SkewbSimulator] {
   const geometry = new SkewbNet();
-  const simulator = new PyraminxSimulator();
+  const simulator = new SkewbSimulator();
 
   return [geometry, simulator];
 }

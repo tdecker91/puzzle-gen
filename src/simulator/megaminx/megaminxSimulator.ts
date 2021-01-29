@@ -1,6 +1,8 @@
+import { TurnType } from "./../../algorithms/algorithm";
 import { MEGAMINX_FACES } from "./constants";
 import { Simulator, Pair } from "./../simulator";
 import { fillArray } from "../../utils/arrays";
+import { parseMegaminxAlgorithm } from "../../algorithms/megaminx";
 
 /**
  * Simulator to define megaminx type puzzles
@@ -369,16 +371,16 @@ export class MegaminxSimulator extends Simulator {
 
         // Bottom Layer
         [dr[0], br[0]],
-        [dr[1], br[7]],
-        [dr[2], br[8]],
-        [dr[3], br[9]],
-        [dr[4], br[10]],
-        [dr[5], br[1]],
-        [dr[6], br[2]],
-        [dr[7], br[3]],
-        [dr[8], br[4]],
-        [dr[9], br[5]],
-        [dr[10], br[6]],
+        [dr[1], br[5]],
+        [dr[2], br[6]],
+        [dr[3], br[7]],
+        [dr[4], br[8]],
+        [dr[5], br[9]],
+        [dr[6], br[10]],
+        [dr[7], br[1]],
+        [dr[8], br[2]],
+        [dr[9], br[3]],
+        [dr[10], br[4]],
 
         [br[0], b[0]],
         [br[1], b[3]],
@@ -484,28 +486,28 @@ export class MegaminxSimulator extends Simulator {
 
         // Bottom Layer
         [dr[0], R[0]],
-        [dr[1], R[8]],
-        [dr[2], R[9]],
-        [dr[3], R[10]],
-        [dr[4], R[1]],
-        [dr[5], R[2]],
-        [dr[6], R[3]],
-        [dr[7], R[4]],
-        [dr[8], R[5]],
-        [dr[9], R[6]],
-        [dr[10], R[7]],
+        [dr[1], R[9]],
+        [dr[2], R[10]],
+        [dr[3], R[1]],
+        [dr[4], R[2]],
+        [dr[5], R[3]],
+        [dr[6], R[4]],
+        [dr[7], R[5]],
+        [dr[8], R[6]],
+        [dr[9], R[7]],
+        [dr[10], R[8]],
 
         [R[0], BR[0]],
-        [R[1], BR[7]],
-        [R[2], BR[8]],
-        [R[3], BR[9]],
-        [R[4], BR[10]],
-        [R[5], BR[1]],
-        [R[6], BR[2]],
-        [R[7], BR[3]],
-        [R[8], BR[4]],
-        [R[9], BR[5]],
-        [R[10], BR[6]],
+        [R[1], BR[5]],
+        [R[2], BR[6]],
+        [R[3], BR[7]],
+        [R[4], BR[8]],
+        [R[5], BR[9]],
+        [R[6], BR[10]],
+        [R[7], BR[1]],
+        [R[8], BR[2]],
+        [R[9], BR[3]],
+        [R[10], BR[4]],
 
         [BR[0], b[0]],
         [BR[1], b[1]],
@@ -532,16 +534,16 @@ export class MegaminxSimulator extends Simulator {
         [b[10], d[4]],
 
         [d[0], dr[0]],
-        [d[1], dr[7]],
-        [d[2], dr[8]],
-        [d[3], dr[9]],
-        [d[4], dr[10]],
-        [d[5], dr[1]],
-        [d[6], dr[2]],
-        [d[7], dr[3]],
-        [d[8], dr[4]],
-        [d[9], dr[5]],
-        [d[10], dr[6]],
+        [d[1], dr[5]],
+        [d[2], dr[6]],
+        [d[3], dr[7]],
+        [d[4], dr[8]],
+        [d[5], dr[9]],
+        [d[6], dr[10]],
+        [d[7], dr[1]],
+        [d[8], dr[2]],
+        [d[9], dr[3]],
+        [d[10], dr[4]],
 
         ...makeFaceTurnDefinitions(br),
       ],
@@ -609,6 +611,41 @@ export class MegaminxSimulator extends Simulator {
    */
   Rxx(reverse?: boolean) {
     this.doTurn("R++", reverse);
+  }
+
+  /**
+   * Parses and executes a megaminx algorithm using WCA standard notation
+   *
+   * @see https://www.stefan-pochmann.info/spocc/other_stuff/tools/scramble_megaminx/)
+   * @see https://www.worldcubeassociation.org/regulations/#12d
+   *
+   * @param alg megaminx algorithm to parse
+   * @example
+   * ```
+   * R-- D++ R++ U'
+   * ```
+   */
+  alg(alg: string) {
+    if (!alg) {
+      return;
+    }
+
+    // pochmann notation
+    parseMegaminxAlgorithm(alg).forEach((turn) => {
+      let reverse = turn.turnType === TurnType.CounterClockwise;
+
+      switch (turn.unit) {
+        case "R":
+          this.Rxx(reverse);
+          break;
+        case "D":
+          this.Dxx(reverse);
+          break;
+        case "U":
+          this.U(reverse);
+          break;
+      }
+    });
   }
 }
 
