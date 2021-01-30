@@ -3,8 +3,14 @@ import { SOLVED_BOTTOM_PIECES } from "./../../puzzles/square1/constants";
 import { Sqaure1Piece } from "./../../puzzles/square1/interface";
 import { PIECE_TYPE } from "../../puzzles/square1/enum";
 import { SOLVED_TOP_PIECES } from "../../puzzles/square1/constants";
+import { parseSquare1Algorithm } from "../../algorithms/square1";
 
-export interface Square1Move {
+export type Square1Move = Square1Turns | Square1Slice
+
+export type Square1Slice = {
+  slice: boolean
+}
+export interface Square1Turns {
   top: number;
   bottom: number;
 }
@@ -26,11 +32,14 @@ export class Square1Simualtor extends Simulator {
     this.middleRotated = false;
   }
 
-  public algorithm(moves: Square1Move[]) {
-    moves.forEach((move) => {
-      this.rotateTop(move.top);
-      this.rotateBottom(move.bottom);
-      this.slice();
+  public alg(alg: string) {
+    parseSquare1Algorithm(alg).forEach(move => {
+      if ("slice" in move) {
+        this.slice();
+      } else {
+        this.rotateTop(move.top);
+        this.rotateBottom(move.bottom);
+      }
     });
   }
 

@@ -1,3 +1,4 @@
+import { WHITE, RED, BLUE, GREEN, ORANGE, YELLOW } from './../colors';
 import { IColor } from "./../../geometry/color";
 import { PIECE_TYPE } from "./enum";
 import { Sqaure1Piece } from "./interface";
@@ -5,12 +6,12 @@ import { vec3 } from "gl-matrix";
 
 export const ROTATION_VECTOR: vec3 = [0.96875, -0.24803, 0];
 
-export const TOP_COLOR: IColor = { value: "#FFFF00" };
-export const BOTTOM_COLOR: IColor = { value: "#FFFFFF" };
-export const FRONT_COLOR: IColor = { value: "#FF0000" };
-export const LEFT_COLOR: IColor = { value: "#0000FF" };
-export const RIGHT_COLOR: IColor = { value: "#00FF00" };
-export const BACK_COLOR: IColor = { value: "#FFA500" };
+export const TOP_COLOR: IColor = YELLOW;
+export const BOTTOM_COLOR: IColor = WHITE;
+export const FRONT_COLOR: IColor = RED;
+export const LEFT_COLOR: IColor = BLUE;
+export const RIGHT_COLOR: IColor = GREEN;
+export const BACK_COLOR: IColor = ORANGE;
 
 export const SOLVED_TOP_PIECES: Sqaure1Piece[] = [
   { type: PIECE_TYPE.CORNER, colors: [TOP_COLOR, FRONT_COLOR, LEFT_COLOR] },

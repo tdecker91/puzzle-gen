@@ -5,7 +5,6 @@ import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
 import { makeGrid, makeRow } from "./../../geometry/grid";
-import { chunkArray } from "../../utils/arrays";
 
 export class RubiksCubeTopLayer {
   stickers: Object3D[];

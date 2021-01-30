@@ -18,12 +18,12 @@ import { Group } from "../../geometry/group";
 
 export class Square1 extends Square1Builder {
   constructor(
-    sideLength: number = 1.25,
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
     bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
-    middleRotated: boolean = false
+    middleRotated: boolean = false,
+    sideLength: number = 1.25
   ) {
-    super(sideLength, topLayer, bottomLayer, middleRotated);
+    super(topLayer, bottomLayer, middleRotated, sideLength);
 
     this.group.rotate(-0.985398, [1, 0, 0]);
     this.group.rotate(-0.59, [0, 0, 1]);

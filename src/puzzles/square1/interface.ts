@@ -33,10 +33,10 @@ export abstract class Square1Builder {
   protected outerHalfEdgePiece: number;
 
   constructor(
-    sideLength: number = 0.7,
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
     bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
-    middleRotated: boolean = false
+    middleRotated: boolean = false,
+    sideLength: number = 0.7
   ) {
     this.sideLength = sideLength;
     this.halfSide = this.sideLength / 2;
@@ -87,4 +87,9 @@ export abstract class Square1Builder {
 
     return geometry;
   }
+
+  /**
+   * Not implemented. Just here for {@link Visualizer}'s sake 
+   */
+  setColors(colors: { [face: string]: IColor[] }) { }
 }

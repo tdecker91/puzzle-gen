@@ -106,8 +106,8 @@ export function createSkewbNet(
 export function createSquare1(
   options: Square1Options = {}
 ): [Square1, Square1Simualtor] {
-  const geometry = new Square1();
-  const simulator = new Square1Simualtor();
+  const simulator = initSquare1Simulator(options);
+  const geometry = new Square1(simulator.topLayer, simulator.bottomLayer);
 
   return [geometry, simulator];
 }
@@ -115,8 +115,18 @@ export function createSquare1(
 export function createSquare1Net(
   options: Square1Options = {}
 ): [Square1Net, Square1Simualtor] {
-  const geometry = new Square1Net();
-  const simulator = new Square1Simualtor();
+  const simulator = initSquare1Simulator(options);
+  const geometry = new Square1Net(simulator.topLayer, simulator.bottomLayer);
 
   return [geometry, simulator];
+}
+
+function initSquare1Simulator(options: Square1Options): Square1Simualtor {
+  const simulator = new Square1Simualtor();
+
+  if (options.alg) {
+    simulator.alg(options.alg)
+  }
+
+  return simulator;
 }

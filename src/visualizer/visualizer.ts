@@ -11,7 +11,6 @@ import {
   DARK_BLUE,
   GREY,
 } from "./../puzzles/colors";
-import { PyraminxNet } from "./../puzzles/pyraminxNet";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
 import {
@@ -167,9 +166,9 @@ function puzzleFactory<T extends PuzzleOptions>(
     case VisualizerType.SKEWB_NET:
       return createSkewbNet(options as SkewbOptions);
     case VisualizerType.SQUARE1:
-      return createSquare1(options as Square1Options) as any;
+      return createSquare1(options as Square1Options);
     case VisualizerType.SQUARE1_NET:
-      return createSquare1Net(options as Square1Options) as any;
+      return createSquare1Net(options as Square1Options);
   }
 }
 
@@ -207,6 +206,11 @@ export class Visualizer {
   }
 
   private applyAlgorithm(options: PuzzleOptions) {
+    if (this.type === VisualizerType.SQUARE1 || this.type === VisualizerType.SQUARE1_NET) {
+      // puzzle factory applies algorithm to square 1 when greating the puzzle geometry
+      return;
+    }
+
     this.simulator.alg(options.alg);
 
     const faceValues = this.simulator.getValues();

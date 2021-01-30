@@ -35,10 +35,11 @@ export function createPolygonElement(
   );
   const pointsAttribute = makePointsAttributeValue(points);
   const colorValue = color ? color.value : "black";
+  const strokeValue = color && color.stroke || "#000000";
   polygon.setAttributeNS(null, "points", pointsAttribute);
   polygon.setAttributeNS(null, "fill", colorValue);
   if (strokeWidth) {
-    polygon.setAttributeNS(null, "stroke", "#000000");
+    polygon.setAttributeNS(null, "stroke", strokeValue);
     polygon.setAttributeNS(null, "stroke-width", strokeWidth);
   }
   polygon.setAttributeNS(null, "stroke-linejoin", "round");
