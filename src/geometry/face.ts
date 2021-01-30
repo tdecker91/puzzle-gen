@@ -2,10 +2,20 @@ import { vec3 } from "gl-matrix";
 import { calculateCentroid } from "../math/utils";
 import { IColor } from "./color";
 
+const generateUid = (() => {
+  let current = 0;
+
+  return function() {
+    return current++;
+  }
+
+})()
+
 export interface IFace {
   indices: number[];
   centroid: vec3;
   color?: IColor;
+  uid: number;
 }
 
 /**
@@ -15,6 +25,7 @@ export class Face implements IFace {
   indices: number[];
   color?: IColor;
   centroid: vec3;
+  uid: number;
 
   /**
    * @param indices indices of vertices that make up a face
@@ -24,6 +35,7 @@ export class Face implements IFace {
   constructor(indices: number[], vertices: vec3[], color?: IColor) {
     this.indices = indices;
     this.color = color;
+    this.uid = generateUid();
 
     if (vertices) {
       this.calculateCentroid(vertices);

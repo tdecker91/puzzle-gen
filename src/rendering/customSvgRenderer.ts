@@ -1,11 +1,11 @@
-import { Face } from "./../geometry/face";
+import { IFace, Face } from "./../geometry/face";
 import { Camera } from "./camera";
 import { Scene } from "./scene";
 import { mat4, vec3 } from "gl-matrix";
 import { Geometry } from "../geometry/geometry";
 import { Object3D } from "../geometry/object3d";
 import { Group } from "../geometry/group";
-import { createSVGElement, clearSVG, createPolygonElement } from "../svg/svg";
+import { createSVGElement, clearSVG, createPolygonElement, updatePolygonElement } from "../svg/svg";
 import { Renderer } from "./renderer";
 
 /**
@@ -17,6 +17,7 @@ export class CustomSVGRenderer implements Renderer {
   strokeWidth: string = "0.035";
 
   protected polygons = [];
+  protected uidToPolygon: { [uid: number]: SVGPolygonElement } = {}
 
   /**
    * Creates an SVG renderer. This will create it's own html `<svg>` element. it's
@@ -58,7 +59,6 @@ export class CustomSVGRenderer implements Renderer {
 
   render(scene: Scene, camera: Camera) {
     this.polygons = [];
-    clearSVG(this.svgElement);
 
     // this.sortObjects(scene.objects, camera, []);
 
@@ -77,8 +77,27 @@ export class CustomSVGRenderer implements Renderer {
     this.polygons.forEach((p) => this.svgElement.appendChild(p.polygon));
   }
 
-  protected addPolygon(polygon) {
-    this.polygons.push(polygon);
+  protected addPolygon(points, face: IFace, object: Geometry, transformations: mat4[]) {
+    if (!this.uidToPolygon[face.uid]) {
+      // Create new polygon for a face that hasn't been rendered
+      this.uidToPolygon[face.uid] = createPolygonElement(
+        points,
+        face.color || object.color,
+        this.strokeWidth
+      );
+    } else {
+      // Just update existing polygon element
+      const polygon = this.uidToPolygon[face.uid];
+      updatePolygonElement(polygon, points, face.color || object.color, this.strokeWidth);
+    }
+    
+    this.polygons.push({
+      polygon: this.uidToPolygon[face.uid],
+      centroid: this.applyTransformations(face.centroid, [
+        object.matrix,
+        ...transformations,
+      ]),
+    });
   }
 
   private renderObject3D(
@@ -124,19 +143,7 @@ export class CustomSVGRenderer implements Renderer {
           points.push(screenPoint);
         });
 
-      const polygon = createPolygonElement(
-        points,
-        face.color || object.color,
-        this.strokeWidth
-      );
-
-      this.addPolygon({
-        polygon,
-        centroid: this.applyTransformations(face.centroid, [
-          object.matrix,
-          ...transformations,
-        ]),
-      });
+      this.addPolygon(points, face, object, transformations);
     });
   }
 

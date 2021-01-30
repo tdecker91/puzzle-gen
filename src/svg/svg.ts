@@ -33,6 +33,16 @@ export function createPolygonElement(
     "http://www.w3.org/2000/svg",
     "polygon"
   );
+  updatePolygonElement(polygon, points, color, strokeWidth);
+  return polygon;
+}
+
+export function updatePolygonElement(
+  polygon: SVGPolygonElement,
+  points: vec3[],
+  color?: IColor,
+  strokeWidth?: string
+) {
   const pointsAttribute = makePointsAttributeValue(points);
   const colorValue = color ? color.value : "black";
   const strokeValue = color && color.stroke || "#000000";
@@ -43,7 +53,6 @@ export function createPolygonElement(
     polygon.setAttributeNS(null, "stroke-width", strokeWidth);
   }
   polygon.setAttributeNS(null, "stroke-linejoin", "round");
-  return polygon;
 }
 
 export function clearSVG(svg: SVGSVGElement) {

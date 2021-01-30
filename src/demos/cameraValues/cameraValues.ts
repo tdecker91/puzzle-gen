@@ -239,7 +239,7 @@ export function renderDemo() {
       });
       renderer.render(scene, camera);
     }
-  }, 50)
+  }, 20)
 
   renderer.domElement.addEventListener('mousemove', funz);
 
