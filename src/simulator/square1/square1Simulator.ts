@@ -5,11 +5,11 @@ import { PIECE_TYPE } from "../../puzzles/square1/enum";
 import { SOLVED_TOP_PIECES } from "../../puzzles/square1/constants";
 import { parseSquare1Algorithm } from "../../algorithms/square1";
 
-export type Square1Move = Square1Turns | Square1Slice
+export type Square1Move = Square1Turns | Square1Slice;
 
 export type Square1Slice = {
-  slice: boolean
-}
+  slice: boolean;
+};
 export interface Square1Turns {
   top: number;
   bottom: number;
@@ -33,7 +33,7 @@ export class Square1Simualtor extends Simulator {
   }
 
   public alg(alg: string) {
-    parseSquare1Algorithm(alg).forEach(move => {
+    parseSquare1Algorithm(alg).forEach((move) => {
       if ("slice" in move) {
         this.slice();
       } else {
@@ -41,6 +41,19 @@ export class Square1Simualtor extends Simulator {
         this.rotateBottom(move.bottom);
       }
     });
+  }
+
+  public case(alg: string) {
+    parseSquare1Algorithm(alg)
+      .reverse()
+      .forEach((move) => {
+        if ("slice" in move) {
+          this.slice();
+        } else {
+          this.rotateTop(move.top * -1);
+          this.rotateBottom(move.bottom * -1);
+        }
+      });
   }
 
   public slice() {

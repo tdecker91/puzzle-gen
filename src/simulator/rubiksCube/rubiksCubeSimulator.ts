@@ -11,7 +11,7 @@ import {
 import { Simulator, TurnDefinitions } from "../simulator";
 import { range } from "../../math/utils";
 import { parseCubeAlgorithm } from "../../algorithms/cube";
-import { TurnType } from "../../algorithms/algorithm";
+import { Turn, TurnType } from "../../algorithms/algorithm";
 
 export class RubiksCubeSimulator extends Simulator {
   private size: number;
@@ -332,57 +332,88 @@ export class RubiksCubeSimulator extends Simulator {
       return;
     }
 
-    parseCubeAlgorithm(alg).forEach((move) => {
-      let turn: any;
+    this.doTurns(parseCubeAlgorithm(alg));
+  }
 
-      switch (move.unit) {
+  /**
+   * reverses an algorithm then executes it
+   */
+  case(alg: string) {
+    if (!alg) {
+      return;
+    }
+
+    let turns = parseCubeAlgorithm(alg)
+      .reverse()
+      .map((turn) => {
+        switch (turn.turnType) {
+          case TurnType.Clockwise:
+            turn.turnType = TurnType.CounterClockwise;
+            break;
+          case TurnType.CounterClockwise:
+            turn.turnType = TurnType.Clockwise;
+            break;
+          case TurnType.Double:
+            break;
+        }
+        return turn;
+      });
+
+    this.doTurns(turns);
+  }
+
+  doTurns(turns: Turn[]) {
+    turns.forEach((turn) => {
+      let turnFunc: any;
+
+      switch (turn.unit) {
         case CubeAlgorithmUnit.U:
-          turn = this.U.bind(this);
+          turnFunc = this.U.bind(this);
           break;
         case CubeAlgorithmUnit.R:
-          turn = this.R.bind(this);
+          turnFunc = this.R.bind(this);
           break;
         case CubeAlgorithmUnit.F:
-          turn = this.F.bind(this);
+          turnFunc = this.F.bind(this);
           break;
         case CubeAlgorithmUnit.D:
-          turn = this.D.bind(this);
+          turnFunc = this.D.bind(this);
           break;
         case CubeAlgorithmUnit.L:
-          turn = this.L.bind(this);
+          turnFunc = this.L.bind(this);
           break;
         case CubeAlgorithmUnit.B:
-          turn = this.B.bind(this);
+          turnFunc = this.B.bind(this);
           break;
         case CubeAlgorithmUnit.M:
-          turn = this.M.bind(this);
+          turnFunc = this.M.bind(this);
           break;
         case CubeAlgorithmUnit.E:
-          turn = this.E.bind(this);
+          turnFunc = this.E.bind(this);
           break;
         case CubeAlgorithmUnit.S:
-          turn = this.S.bind(this);
+          turnFunc = this.S.bind(this);
           break;
         case CubeAlgorithmUnit.X:
-          turn = this.X.bind(this);
+          turnFunc = this.X.bind(this);
           break;
         case CubeAlgorithmUnit.Y:
-          turn = this.Y.bind(this);
+          turnFunc = this.Y.bind(this);
           break;
         case CubeAlgorithmUnit.Z:
-          turn = this.Z.bind(this);
+          turnFunc = this.Z.bind(this);
           break;
         default:
-          console.warn(`Unsupported cube move`, move);
+          console.warn(`Unsupported cube move`, turn);
           break;
       }
 
-      const reverse = move.turnType === TurnType.CounterClockwise;
+      const reverse = turn.turnType === TurnType.CounterClockwise;
 
-      turn(reverse, move.slices);
+      turnFunc(reverse, turn.slices);
 
-      if (move.turnType === TurnType.Double) {
-        turn(reverse, move.slices);
+      if (turn.turnType === TurnType.Double) {
+        turnFunc(reverse, turn.slices);
       }
     });
   }

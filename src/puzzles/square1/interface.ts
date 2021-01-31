@@ -89,7 +89,7 @@ export abstract class Square1Builder {
   }
 
   /**
-   * Not implemented. Just here for {@link Visualizer}'s sake 
+   * Not implemented. Just here for {@link Visualizer}'s sake
    */
-  setColors(colors: { [face: string]: IColor[] }) { }
+  setColors(colors: { [face: string]: IColor[] }) {}
 }

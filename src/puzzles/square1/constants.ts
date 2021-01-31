@@ -1,4 +1,4 @@
-import { WHITE, RED, BLUE, GREEN, ORANGE, YELLOW } from './../colors';
+import { WHITE, RED, BLUE, GREEN, ORANGE, YELLOW } from "./../colors";
 import { IColor } from "./../../geometry/color";
 import { PIECE_TYPE } from "./enum";
 import { Sqaure1Piece } from "./interface";

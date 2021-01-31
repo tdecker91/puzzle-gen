@@ -201,7 +201,7 @@ export class Simulator {
    * simulator.alg("U R F")
    * ```
    *
-   * @param moves moves to execute
+   * @param alg algorithm
    */
   alg(alg: string) {
     // Default implementation
@@ -209,5 +209,12 @@ export class Simulator {
       return;
     }
     alg.split(" ").forEach((turn) => this.doTurn(turn));
+  }
+
+  /**
+   * reverses an algorithm then executes it
+   */
+  case(alg: string) {
+    // No default implementation
   }
 }

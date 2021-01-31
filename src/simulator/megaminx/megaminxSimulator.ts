@@ -1,4 +1,4 @@
-import { TurnType } from "./../../algorithms/algorithm";
+import { Turn, TurnType } from "./../../algorithms/algorithm";
 import { MEGAMINX_FACES } from "./constants";
 import { Simulator, Pair } from "./../simulator";
 import { fillArray } from "../../utils/arrays";
@@ -631,7 +631,29 @@ export class MegaminxSimulator extends Simulator {
     }
 
     // pochmann notation
-    parseMegaminxAlgorithm(alg).forEach((turn) => {
+    this.doTurns(parseMegaminxAlgorithm(alg));
+  }
+
+  case(alg: string) {
+    if (!alg) {
+      return;
+    }
+
+    let turns = parseMegaminxAlgorithm(alg)
+      .reverse()
+      .map((turn) => ({
+        ...turn,
+        turnType:
+          turn.turnType === TurnType.Clockwise
+            ? TurnType.CounterClockwise
+            : TurnType.Clockwise,
+      }));
+
+    this.doTurns(turns);
+  }
+
+  doTurns(turns: Turn[]) {
+    turns.forEach((turn) => {
       let reverse = turn.turnType === TurnType.CounterClockwise;
 
       switch (turn.unit) {

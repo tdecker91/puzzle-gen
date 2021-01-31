@@ -22,7 +22,7 @@ import { Scene } from '../../rendering/scene';
 import { YELLOW } from '../../puzzles/colors';
 
 let camera: Camera = new Camera();
-let g: Group;
+let g: Group = new Group();
 let rubiksCube: RubiksCube;
 let cubeNet: RubiksCubeNet;
 let cubeTop: RubiksCubeTopLayer;
@@ -175,7 +175,7 @@ export function renderDemo() {
   // megaSim.Rxx();
   // let {U, R, F, dr, dl, L, d, br, BR, BL, b, bl} = megaSim.getValues();
   // megaminx.oldSetColors([...U, ...R, ...F, ...dr, ...dl, ...L, ...d, ...br, ...BR, ...BL, ...bl, ...b].map(face => megaminxFaceColors[face]));
-  scene.add(megaminx.group);
+  g.addObject(megaminx.group);
 
   // megaminxNet = new MegaminxNet(2);
   // scene.add(megaminxNet.group);
@@ -193,6 +193,11 @@ export function renderDemo() {
   let down = false;
   let downX = 0;
   let downY = 0;
+
+  let identity = mat4.create();
+  let accRot = mat4.create();
+  let xRot = mat4.create();
+  let yRot = mat4.create();
 
   renderer.domElement.addEventListener('mousedown', e => {
     down = true;
@@ -215,37 +220,23 @@ export function renderDemo() {
 
   const funz = throttle(e => {
     if (down) {
-      const [diffX, diffY] = [downX - e.x, downY - e.y];
+      const [diffX, diffY] = [e.x - downX, e.y - downY];
       [downX, downY] = [e.x, e.y];
 
-      [
-        skewb,
-        skewbNet,
-        rubiksCube,
-        cubeNet,
-        megaminx,
-        megaminxNet,
-        pyraminx,
-        pyraminxNet,
-        square1,
-        square1Net,
-        cubeTop
-      ].forEach(puzzle => {
-        if (puzzle && puzzle.group) {
-    
-          puzzle.group.rotate(diffX/128, [0, -1, 0]);
-          puzzle.group.rotate(diffY/128, [0, 0, 1]);
-        } 
-      });
-      renderer.render(scene, camera);
+      mat4.fromRotation(xRot, diffY/128, [1,0,0]);
+      mat4.fromRotation(yRot, diffX/128, [0,1,0]);
+
+      mat4.multiply(g.matrix, g.matrix, xRot);
+      mat4.multiply(g.matrix, g.matrix, yRot);
+
+      window.requestAnimationFrame(() => renderer.render(scene, camera));
     }
-  }, 20)
+  }, 25)
 
   renderer.domElement.addEventListener('mousemove', funz);
 
   renderer.domElement.addEventListener('mouseup', e => {
     down = false;
-    console.log(e);
   });
 
   renderer.render(scene, camera);

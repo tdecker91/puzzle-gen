@@ -66,6 +66,28 @@ var puzzlesConfig = Object.assign({}, config, {
   ],
 });
 
+var mouseRotationConfig = Object.assign({}, config, {
+  entry: __dirname + "/src/demos/mouseRotation/mouseRotation.ts",
+
+  output: {
+    path: path.resolve(__dirname, "demos/mouseRotation"),
+    filename: "[name].js",
+    library: "rotationDemo",
+    libraryTarget: "umd",
+    globalObject: "this",
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "src/demos/mouseRotation/index.html",
+      minify: {
+        collapseWhitespace: false,
+      },
+    }),
+  ],
+});
+
 var cameraValuesConfig = Object.assign({}, config, {
   entry: __dirname + "/src/demos/cameraValues/cameraValues.ts",
 
@@ -88,4 +110,9 @@ var cameraValuesConfig = Object.assign({}, config, {
   ],
 });
 
-module.exports = [indexConfig, cameraValuesConfig, puzzlesConfig];
+module.exports = [
+  indexConfig,
+  cameraValuesConfig,
+  puzzlesConfig,
+  mouseRotationConfig,
+];

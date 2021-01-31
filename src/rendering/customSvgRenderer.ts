@@ -5,7 +5,12 @@ import { mat4, vec3 } from "gl-matrix";
 import { Geometry } from "../geometry/geometry";
 import { Object3D } from "../geometry/object3d";
 import { Group } from "../geometry/group";
-import { createSVGElement, clearSVG, createPolygonElement, updatePolygonElement } from "../svg/svg";
+import {
+  createSVGElement,
+  clearSVG,
+  createPolygonElement,
+  updatePolygonElement,
+} from "../svg/svg";
 import { Renderer } from "./renderer";
 
 /**
@@ -17,7 +22,7 @@ export class CustomSVGRenderer implements Renderer {
   strokeWidth: string = "0.035";
 
   protected polygons = [];
-  protected uidToPolygon: { [uid: number]: SVGPolygonElement } = {}
+  protected uidToPolygon: { [uid: number]: SVGPolygonElement } = {};
 
   /**
    * Creates an SVG renderer. This will create it's own html `<svg>` element. it's
@@ -77,7 +82,12 @@ export class CustomSVGRenderer implements Renderer {
     this.polygons.forEach((p) => this.svgElement.appendChild(p.polygon));
   }
 
-  protected addPolygon(points, face: IFace, object: Geometry, transformations: mat4[]) {
+  protected addPolygon(
+    points,
+    face: IFace,
+    object: Geometry,
+    transformations: mat4[]
+  ) {
     if (!this.uidToPolygon[face.uid]) {
       // Create new polygon for a face that hasn't been rendered
       this.uidToPolygon[face.uid] = createPolygonElement(
@@ -88,9 +98,14 @@ export class CustomSVGRenderer implements Renderer {
     } else {
       // Just update existing polygon element
       const polygon = this.uidToPolygon[face.uid];
-      updatePolygonElement(polygon, points, face.color || object.color, this.strokeWidth);
+      updatePolygonElement(
+        polygon,
+        points,
+        face.color || object.color,
+        this.strokeWidth
+      );
     }
-    
+
     this.polygons.push({
       polygon: this.uidToPolygon[face.uid],
       centroid: this.applyTransformations(face.centroid, [

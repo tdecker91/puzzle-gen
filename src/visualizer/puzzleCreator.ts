@@ -1,4 +1,4 @@
-import { RubiksCubeTopLayer } from './../puzzles/rubiksCube/rubiksCubeTop';
+import { RubiksCubeTopLayer } from "./../puzzles/rubiksCube/rubiksCubeTop";
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
 import { Square1 } from "./../puzzles/square1/square1";
@@ -107,7 +107,11 @@ export function createSquare1(
   options: Square1Options = {}
 ): [Square1, Square1Simualtor] {
   const simulator = initSquare1Simulator(options);
-  const geometry = new Square1(simulator.topLayer, simulator.bottomLayer);
+  const geometry = new Square1(
+    simulator.topLayer,
+    simulator.bottomLayer,
+    simulator.middleRotated
+  );
 
   return [geometry, simulator];
 }
@@ -116,7 +120,11 @@ export function createSquare1Net(
   options: Square1Options = {}
 ): [Square1Net, Square1Simualtor] {
   const simulator = initSquare1Simulator(options);
-  const geometry = new Square1Net(simulator.topLayer, simulator.bottomLayer);
+  const geometry = new Square1Net(
+    simulator.topLayer,
+    simulator.bottomLayer,
+    simulator.middleRotated
+  );
 
   return [geometry, simulator];
 }
@@ -124,8 +132,10 @@ export function createSquare1Net(
 function initSquare1Simulator(options: Square1Options): Square1Simualtor {
   const simulator = new Square1Simualtor();
 
-  if (options.alg) {
-    simulator.alg(options.alg)
+  if (options.case) {
+    simulator.case(options.case);
+  } else if (options.alg) {
+    simulator.alg(options.alg);
   }
 
   return simulator;

@@ -70,7 +70,7 @@ function renderScrambled() {
     "U'","B'","R","U'","R"
   ].join(' ');
 
-  const square1Alg = "-2,3 / 3,-1 / 3,-3 / 6,6 / 6,0 / -2,-1 / -4,-2 / 0,-3 / 0,-4 / -4,5 / -5,-2 / 2,-5 / 6,-4 / -3,6 / -2,2 / 3,-5 /";
+  const square1Alg = "(-2,3)/(3,-1)/(3,-3)/(6,6)/(6,0)/(-2,-1)/(-4,-2)/(0,-3)/(0,-4)/(-4,5)/(-5,-2)/(2,-5)/(6,-4)/(-3,6)/(-2,2)/(3,-5)/";
 
   SVG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg: cubeAlg }});
   SVG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg: cubeAlg }});

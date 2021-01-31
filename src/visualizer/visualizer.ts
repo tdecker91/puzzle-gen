@@ -200,18 +200,25 @@ export class Visualizer {
     [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
     this.scene.add(this.puzzleGeometry.group);
 
-    if (options.alg) this.applyAlgorithm(options);
+    if (options.alg || options.case) this.applyAlgorithm(options);
 
     this.render();
   }
 
   private applyAlgorithm(options: PuzzleOptions) {
-    if (this.type === VisualizerType.SQUARE1 || this.type === VisualizerType.SQUARE1_NET) {
+    if (
+      this.type === VisualizerType.SQUARE1 ||
+      this.type === VisualizerType.SQUARE1_NET
+    ) {
       // puzzle factory applies algorithm to square 1 when greating the puzzle geometry
       return;
     }
 
-    this.simulator.alg(options.alg);
+    if (options.case) {
+      this.simulator.case(options.case);
+    } else if (options.alg) {
+      this.simulator.alg(options.alg);
+    }
 
     const faceValues = this.simulator.getValues();
     const faceColors = applyColorScheme(faceValues, options.scheme);

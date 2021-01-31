@@ -52,6 +52,10 @@ Publish to registry
 > coming eventually
 ```
 
+## Todo
+
+- support more megaminx algs. currently only supports pochmann notation for scrambling
+
 ## Notes
 
 using webpack dev server 4 beta version due to issue described here with `webpack serve` https://github.com/webpack/webpack-dev-server/issues/2484

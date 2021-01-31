@@ -5,11 +5,10 @@ import { IColor } from "./color";
 const generateUid = (() => {
   let current = 0;
 
-  return function() {
+  return function () {
     return current++;
-  }
-
-})()
+  };
+})();
 
 export interface IFace {
   indices: number[];
