@@ -28,6 +28,22 @@ export interface PuzzleOptions {
    * ```
    */
   scheme?: { [face: string]: IColor };
+
+  /**
+   * List of face stickers to mask. This will
+   * draw the sticker in gray instead of the
+   * actual color. This is helpfull to highlight
+   * only the pieces of a puzzle relevant for an
+   * algorithm
+   *
+   * @example
+   * ```typescript
+   * {
+   *   U: [0,1,2] // mask stickers 0, 1, and 2 on the U face of the puzzle
+   * }
+   * ```
+   */
+  mask?: { [face: string]: number[] };
 }
 
 export interface CubeOptions extends PuzzleOptions {

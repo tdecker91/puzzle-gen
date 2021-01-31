@@ -203,7 +203,6 @@ export function renderDemo() {
     down = true;
     downX = e.x;
     downY = e.y;
-    console.log(e);
   });
 
   function throttle(callback, interval) {

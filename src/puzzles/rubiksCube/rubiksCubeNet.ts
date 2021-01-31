@@ -1,6 +1,14 @@
 import { Geometry } from "./../../geometry/geometry";
 import { IColor } from "./../../geometry/color";
-import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN } from "./../colors";
+import {
+  YELLOW,
+  RED,
+  BLUE,
+  WHITE,
+  ORANGE,
+  GREEN,
+  MASK_COLOR,
+} from "./../colors";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
 import { makeGrid } from "../../geometry/grid";

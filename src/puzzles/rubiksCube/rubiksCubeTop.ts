@@ -1,6 +1,6 @@
 import { IColor } from "./../../geometry/color";
 import { vec3 } from "gl-matrix";
-import { YELLOW, RED, BLUE, GREEN, ORANGE } from "./../colors";
+import { YELLOW, RED, BLUE, GREEN, ORANGE, MASK_COLOR } from "./../colors";
 import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";

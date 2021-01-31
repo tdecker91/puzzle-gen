@@ -193,6 +193,32 @@ export class Simulator {
   }
 
   /**
+   * override value of sticker on a face
+   *
+   * @param face label
+   * @param index index of sticker to set value of
+   * @param value value to set the sticker to
+   */
+  setValue(face: string, index: number, value: string) {
+    if (!this.faces.has(face)) {
+      console.warn(`attempting to set sticker value on invalid face: ${face}`);
+      return;
+    }
+    let faceStickers = this.faces.get(face);
+    let stickerId = faceStickers[index];
+
+    if (!faceStickers) {
+      console.warn(
+        `attempting to set sticker value for invalid sticker: ${face} ${index}`
+      );
+      return;
+    }
+
+    console.log(stickerId, value);
+    this.stickers.set(stickerId, value);
+  }
+
+  /**
    * parse and execute a sequence of moves
    *
    * @example

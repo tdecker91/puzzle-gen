@@ -10,6 +10,7 @@ import {
   PURPLE,
   DARK_BLUE,
   GREY,
+  MASK_COLOR,
 } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
@@ -41,6 +42,7 @@ import {
 } from "./puzzleCreator";
 import { YELLOW } from "../puzzles/colors";
 import { IColor } from "../geometry/color";
+import { Masks } from "./mask";
 
 const defaultCubeOptions: CubeOptions = {
   size: 3,
@@ -52,6 +54,7 @@ const defaultCubeOptions: CubeOptions = {
     L: ORANGE,
     B: GREEN,
   },
+  mask: Masks.CUBE_3.CORNERS_LAST_LAYER,
 };
 
 const defaultMegaminxOptions: MegaminxOptions = {
@@ -129,7 +132,7 @@ function applyColorScheme(
   scheme: ColorScheme
 ): { [face: string]: IColor[] } {
   return Object.keys(faceValues).reduce((colors, face) => {
-    colors[face] = faceValues[face].map((value) => scheme[value]);
+    colors[face] = faceValues[face].map((value) => scheme[value] || MASK_COLOR);
     return colors;
   }, {});
 }
@@ -200,7 +203,14 @@ export class Visualizer {
     [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
     this.scene.add(this.puzzleGeometry.group);
 
+    if (options.mask) this.applyMask(options);
+
     if (options.alg || options.case) this.applyAlgorithm(options);
+
+    const faceValues = this.simulator.getValues();
+    const faceColors = applyColorScheme(faceValues, options.scheme);
+
+    this.puzzleGeometry.setColors(faceColors);
 
     this.render();
   }
@@ -219,11 +229,14 @@ export class Visualizer {
     } else if (options.alg) {
       this.simulator.alg(options.alg);
     }
+  }
 
-    const faceValues = this.simulator.getValues();
-    const faceColors = applyColorScheme(faceValues, options.scheme);
-
-    this.puzzleGeometry.setColors(faceColors);
+  private applyMask(options: PuzzleOptions) {
+    Object.keys(options.mask).forEach((maskedFace) => {
+      options.mask[maskedFace].forEach((index) =>
+        this.simulator.setValue(maskedFace, index, "mask")
+      );
+    });
   }
 
   render() {
