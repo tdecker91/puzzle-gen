@@ -1,4 +1,4 @@
-export const enum PIECE_TYPE {
+export enum PIECE_TYPE {
   CORNER,
   EDGE,
   MIDDLE,

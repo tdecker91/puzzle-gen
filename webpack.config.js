@@ -5,9 +5,9 @@ var config = {
   entry: __dirname + "/src/index.ts",
   devtool: "source-map",
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name].js",
-    library: "srVisualizer",
+    path: path.resolve(__dirname, "dist/bundle"),
+    filename: "puzzleGen.min.js",
+    library: "puzzleGen",
     libraryTarget: "umd", // exposes and know when to use module.exports or exports
     globalObject: "this",
   },

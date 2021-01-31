@@ -1,8 +1,8 @@
 {
-  "name": "sr-visualizer",
+  "name": "sr-puzzlegen",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/lib/index.js",
   "scripts": {
     "build": "webpack",
     "build:demos": "webpack --config webpack.demos.config.js",
@@ -36,5 +36,8 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/tdecker91/puzzle-visualizer.git"
-  }
+  },
+  "files": [
+    "/dist"
+  ]
 }

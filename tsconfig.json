@@ -1,13 +1,14 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
+    "outDir": "./dist/lib",
     "noImplicitAny": false,
     "module": "es6",
     "target": "es6",
     "allowJs": true,
     "moduleResolution": "node",
     "isolatedModules": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "declaration": true
   },
   "include": ["./src"],
   "exclude": ["./tests", "./node_modules", "./src/demos"]
