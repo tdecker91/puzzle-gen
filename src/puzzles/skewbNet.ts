@@ -1,5 +1,5 @@
 import { Object3D } from "./../geometry/object3d";
-import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE } from "./colors";
+import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE, BLACK } from "./colors";
 import { Group } from "../geometry/group";
 import { IColor } from "../geometry/color";
 import { vec3 } from "gl-matrix";
@@ -94,11 +94,11 @@ export class SkewbNet {
     this.setFaceColors(this.B, back);
   }
 
-  private setFaceColors(faceStickers: Group, colors: IColor[]) {
-    (<any>faceStickers).objects[0].faces[0].color = colors[0];
-    (<any>faceStickers).objects[1].faces[0].color = colors[1];
-    (<any>faceStickers).objects[2].faces[0].color = colors[2];
-    (<any>faceStickers).objects[3].faces[0].color = colors[4]; // Setting 3 -> 4 and 4 -> 3 now because 4 and 3 are stored incorrectly in this class.
-    (<any>faceStickers).objects[4].faces[0].color = colors[3];
+  private setFaceColors(faceStickers: Group, colors: IColor[] = []) {
+    (<any>faceStickers).objects[0].faces[0].color = colors[0] || BLACK;
+    (<any>faceStickers).objects[1].faces[0].color = colors[1] || BLACK;
+    (<any>faceStickers).objects[2].faces[0].color = colors[2] || BLACK;
+    (<any>faceStickers).objects[3].faces[0].color = colors[4] || BLACK; // Setting 3 -> 4 and 4 -> 3 now because 4 and 3 are stored incorrectly in this class.
+    (<any>faceStickers).objects[4].faces[0].color = colors[3] || BLACK;
   }
 }

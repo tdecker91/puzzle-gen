@@ -16,6 +16,7 @@ export const LIGHT_YELLOW: IColor = { value: "#ffffb3" };
 export const LIGHT_GREEN: IColor = { value: "#32CD32" };
 export const PINK: IColor = { value: "#FF69B4" };
 
+export const BLACK: IColor = { value: "#000000" };
 export const MASK_COLOR: IColor = { value: "#404040" };
 
 // Stickerless

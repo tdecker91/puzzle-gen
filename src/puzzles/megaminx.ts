@@ -13,6 +13,7 @@ import {
   DARK_BLUE,
   GREY,
   PURPLE,
+  BLACK,
 } from "./colors";
 import { Group } from "./../geometry/group";
 import { Object3D } from "./../geometry/object3d";
@@ -160,6 +161,8 @@ export class Megaminx {
     faceStickers.faces.forEach((f: Face, i) => {
       if (colors && colors[i]) {
         f.color = colors[i];
+      } else {
+        f.color = BLACK;
       }
     });
   }

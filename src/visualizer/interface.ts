@@ -34,7 +34,7 @@ export interface PuzzleOptions {
    * draw the sticker in gray instead of the
    * actual color. This is helpfull to highlight
    * only the pieces of a puzzle relevant for an
-   * algorithm
+   * algorithm.
    *
    * @example
    * ```typescript
@@ -44,6 +44,24 @@ export interface PuzzleOptions {
    * ```
    */
   mask?: { [face: string]: number[] };
+
+  /**
+   * manually set the colors of the puzzle stickers. This
+   * will take presidence over any other color altering option
+   * like alg, case, scheme etc...
+   *
+   * @example
+   * ```typescript
+   * import { RED } from "sr-visualizer/puzzles/colors"
+   *
+   * let BLUE = { value: "#00F" }
+   *
+   * {
+   *   U: [RED, RED, RED, RED, RED, RED, RED, RED, BLUE]
+   * }
+   * ```
+   */
+  stickerColors?: { [face: string]: IColor[] };
 }
 
 export interface CubeOptions extends PuzzleOptions {

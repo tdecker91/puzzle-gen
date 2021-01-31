@@ -8,6 +8,7 @@ import {
   ORANGE,
   GREEN,
   MASK_COLOR,
+  BLACK,
 } from "./../colors";
 import { Group } from "../../geometry/group";
 import { Object3D } from "../../geometry/object3d";
@@ -71,6 +72,8 @@ export class RubiksCube {
     faceStickers.objects.forEach((g: Geometry, i) => {
       if (colors && colors[i]) {
         g.faces[0].color = colors[i];
+      } else {
+        g.faces[0].color = BLACK;
       }
     });
   }

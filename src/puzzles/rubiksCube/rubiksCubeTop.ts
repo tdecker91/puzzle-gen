@@ -1,6 +1,14 @@
 import { IColor } from "./../../geometry/color";
 import { vec3 } from "gl-matrix";
-import { YELLOW, RED, BLUE, GREEN, ORANGE, MASK_COLOR } from "./../colors";
+import {
+  YELLOW,
+  RED,
+  BLUE,
+  GREEN,
+  ORANGE,
+  MASK_COLOR,
+  BLACK,
+} from "./../colors";
 import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
@@ -60,6 +68,8 @@ export class RubiksCubeTopLayer {
     faceStickers.objects.forEach((g: Geometry, i) => {
       if (colors && colors[i]) {
         g.faces[0].color = colors[i];
+      } else {
+        g.faces[0].color = BLACK;
       }
     });
   }

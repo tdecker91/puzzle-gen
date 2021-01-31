@@ -1,6 +1,6 @@
 import { Face } from "./../geometry/face";
 import { IColor } from "./../geometry/color";
-import { GREEN, RED, BLUE, YELLOW } from "./colors";
+import { GREEN, RED, BLUE, YELLOW, BLACK } from "./colors";
 import { TriangleLattice } from "./../geometry/triangleLattice";
 import { Group } from "./../geometry/group";
 import { Object3D } from "./../geometry/object3d";
@@ -66,6 +66,8 @@ export class PyraminxNet {
     lattice.faces.forEach((f: Face, i) => {
       if (colors && colors[i]) {
         f.color = colors[i];
+      } else {
+        f.color = BLACK;
       }
     });
   }

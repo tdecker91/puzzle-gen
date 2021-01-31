@@ -11,6 +11,9 @@ import {
   DARK_BLUE,
   GREY,
   MASK_COLOR,
+  RED_STICKERLESS,
+  ORANGE_STICKERLESS,
+  GREEN_STICKERLESS,
 } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
@@ -42,7 +45,6 @@ import {
 } from "./puzzleCreator";
 import { YELLOW } from "../puzzles/colors";
 import { IColor } from "../geometry/color";
-import { Masks } from "./mask";
 
 const defaultCubeOptions: CubeOptions = {
   size: 3,
@@ -54,7 +56,6 @@ const defaultCubeOptions: CubeOptions = {
     L: ORANGE,
     B: GREEN,
   },
-  mask: Masks.CUBE_3.CORNERS_LAST_LAYER,
 };
 
 const defaultMegaminxOptions: MegaminxOptions = {
@@ -175,6 +176,10 @@ function puzzleFactory<T extends PuzzleOptions>(
   }
 }
 
+function isSquare1(type: VisualizerType) {
+  return type === VisualizerType.SQUARE1 || type === VisualizerType.SQUARE1_NET;
+}
+
 /**
  * Encapsulates logic for setting up a puzzle environment for rendering
  * images. Sets up puzzle geometry, applies any algorithm or masking
@@ -203,23 +208,31 @@ export class Visualizer {
     [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
     this.scene.add(this.puzzleGeometry.group);
 
-    if (options.mask) this.applyMask(options);
+    if (options.stickerColors && !isSquare1(type)) {
+      this.applyManualColors(options);
+    } else {
+      this.applySimulatorColors(options);
+    }
 
+    this.render();
+  }
+
+  private applyManualColors(options: PuzzleOptions) {
+    this.puzzleGeometry.setColors(options.stickerColors);
+  }
+
+  private applySimulatorColors(options: PuzzleOptions) {
+    if (options.mask) this.applyMask(options);
     if (options.alg || options.case) this.applyAlgorithm(options);
 
     const faceValues = this.simulator.getValues();
     const faceColors = applyColorScheme(faceValues, options.scheme);
 
     this.puzzleGeometry.setColors(faceColors);
-
-    this.render();
   }
 
   private applyAlgorithm(options: PuzzleOptions) {
-    if (
-      this.type === VisualizerType.SQUARE1 ||
-      this.type === VisualizerType.SQUARE1_NET
-    ) {
+    if (isSquare1(this.type)) {
       // puzzle factory applies algorithm to square 1 when greating the puzzle geometry
       return;
     }
