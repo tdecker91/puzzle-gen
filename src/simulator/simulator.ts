@@ -63,8 +63,8 @@ export class Simulator {
   /**
    * Adds a face of stickers to the puzzle.
    *
-   * @param stickers array of sticker values
-   * @param label label to reference the face by
+   * @param stickers - array of sticker values
+   * @param label - label to reference the face by
    * @returns object with the faceId and list of sticker ids.
    *  faceId will be label if that is present. Otherwise it
    *  will be generated.
@@ -112,8 +112,8 @@ export class Simulator {
    * this means that when turning 'sticker1' will go to 'sticker2'.
    * Or when doing a reverse turn, `sticker2' will go to 'sticker1'
    *
-   * @param changes list of turn definitions.
-   * @param label label to reference the turn by
+   * @param changes - list of turn definitions.
+   * @param label - label to reference the turn by
    * @returns label of the turn that was created
    */
   addTurn(changes: Pair<string>[], label?: string): string {
@@ -131,8 +131,8 @@ export class Simulator {
   /**
    * Executes a turn on the puzzle
    *
-   * @param label label of the turn to execute
-   * @param prime true to do the turn in reverse
+   * @param label - label of the turn to execute
+   * @param prime - true to do the turn in reverse
    */
   doTurn(label: string, reverse: boolean = false) {
     const changes = this.turns.get(label);
@@ -195,9 +195,9 @@ export class Simulator {
   /**
    * override value of sticker on a face
    *
-   * @param face label
-   * @param index index of sticker to set value of
-   * @param value value to set the sticker to
+   * @param face - label
+   * @param index - index of sticker to set value of
+   * @param value - value to set the sticker to
    */
   setValue(face: string, index: number, value: string) {
     if (!this.faces.has(face)) {
@@ -227,7 +227,7 @@ export class Simulator {
    * simulator.alg("U R F")
    * ```
    *
-   * @param alg algorithm
+   * @param alg - algorithm
    */
   alg(alg: string) {
     // Default implementation

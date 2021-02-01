@@ -8,7 +8,8 @@
     "moduleResolution": "node",
     "isolatedModules": true,
     "esModuleInterop": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["./src"],
   "exclude": ["./tests", "./node_modules", "./src/demos"]

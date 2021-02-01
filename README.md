@@ -55,6 +55,7 @@ Publish to registry
 ## Todo
 
 - support more megaminx algs. currently only supports pochmann notation for scrambling
+- expand functionality for `Visualizer` so user can do more stuff with it. (reset options, for example)
 
 ## Notes
 
