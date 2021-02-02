@@ -110,3 +110,15 @@ describe("Scramble", () => {
     expect(pyraminxSim.isSolved()).toBeTruthy();
   });
 });
+
+describe("Reset", () => {
+  it("resets to solved state", () => {
+    const pyraminxSim = new PyraminxSimulator();
+    pyraminxSim.alg("U L R B' L' U B U' B U' u' r");
+
+    expect(pyraminxSim.isSolved()).toBeFalsy();
+    pyraminxSim.reset();
+    
+    expect(pyraminxSim.isSolved()).toBeTruthy();
+  });
+});

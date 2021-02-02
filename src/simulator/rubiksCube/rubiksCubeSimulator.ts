@@ -319,14 +319,6 @@ export class RubiksCubeSimulator extends Simulator {
     }
   }
 
-  reset(): void {
-    this.faces.forEach((stickerIds, faceName) => {
-      stickerIds.forEach((stickerId) => {
-        this.stickers.set(stickerId, faceName);
-      });
-    });
-  }
-
   alg(alg: string) {
     if (!alg) {
       return;

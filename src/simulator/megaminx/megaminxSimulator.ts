@@ -655,18 +655,31 @@ export class MegaminxSimulator extends Simulator {
   doTurns(turns: Turn[]) {
     turns.forEach((turn) => {
       let reverse = turn.turnType === TurnType.CounterClockwise;
+      let turnFunc;
 
       switch (turn.unit) {
-        case "R":
-          this.Rxx(reverse);
-          break;
-        case "D":
-          this.Dxx(reverse);
-          break;
+        case "Rxx":
+          turnFunc = this.Rxx.bind(this); break;
+        case "Dxx":
+          turnFunc = this.Dxx.bind(this); break;
         case "U":
-          this.U(reverse);
-          break;
+          turnFunc = this.U.bind(this); break;
+        case "R":
+          turnFunc = this.R.bind(this); break;
+        case "F":
+          turnFunc = this.F.bind(this); break;
+        case "L":
+          turnFunc = this.L.bind(this); break;
+        case "BL":
+          turnFunc = this.BL.bind(this); break;
+        case "BR":
+          turnFunc = this.BR.bind(this); break;
       }
+
+      for (let i = turn.n; i > 0; i--) {
+        turnFunc(reverse);
+      }
+
     });
   }
 }

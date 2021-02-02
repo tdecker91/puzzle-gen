@@ -243,4 +243,16 @@ export class Simulator {
   case(alg: string) {
     // No default implementation
   }
+
+  /**
+   * resets stickers back to solved position. Uses face name 
+   * as sticker value by default
+   */
+  reset(): void {
+    this.faces.forEach((stickerIds, faceName) => {
+      stickerIds.forEach((stickerId) => {
+        this.stickers.set(stickerId, faceName);
+      });
+    });
+  }
 }

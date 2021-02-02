@@ -338,3 +338,24 @@ describe("Moves", () => {
     expect(megaSim.isSolved()).toBeTruthy();
   });
 });
+
+
+describe("Reset", () => {
+  it("resets to solved state", () => {
+    const megaSim = new MegaminxSimulator();
+    megaSim.alg([
+      "D-- R-- D++ R-- D-- R++ D++ R-- D-- R-- U",
+      "R-- D++ R++ D++ R++ D-- R-- D-- R-- D-- U",
+      "R-- D++ R-- D++ R++ D++ R-- D-- R-- D++ U'",
+      "D-- R-- D++ R-- D++ R++ D++ R-- D-- R-- U'",
+      "D-- R-- D++ R++ D++ R++ D++ R++ D++ R++ U",
+      "R-- D++ R++ D-- R-- D-- R-- D++ R++ D++ U'",
+      "D++ R++ D-- R++ D++ R++ D-- R++ D++ R-- U'"
+    ].join(' '));
+
+    expect(megaSim.isSolved()).toBeFalsy();
+    megaSim.reset();
+    
+    expect(megaSim.isSolved()).toBeTruthy();
+  });
+});

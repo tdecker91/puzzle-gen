@@ -185,3 +185,16 @@ describe("Moves", () => {
     expect(skewbSim.isSolved()).toBeTruthy();
   });
 });
+
+describe("Reset", () => {
+  it("resets to solved state", () => {
+    const skewbSim = new SkewbSimulator();
+    skewbSim.alg("F' L' R B R' B L F' B' L R L R' L' F L' R B R L' F B R' L R");
+
+    expect(skewbSim.isSolved()).toBeFalsy();
+    skewbSim.reset();
+    
+    expect(skewbSim.isSolved()).toBeTruthy();
+  });
+});
+

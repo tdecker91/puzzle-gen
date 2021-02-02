@@ -10,10 +10,7 @@ import {
   PURPLE,
   DARK_BLUE,
   GREY,
-  MASK_COLOR,
-  RED_STICKERLESS,
-  ORANGE_STICKERLESS,
-  GREEN_STICKERLESS,
+  MASK_COLOR
 } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
@@ -190,6 +187,7 @@ export class Visualizer {
   private scene: Scene;
   private renderer: Renderer;
   private type: VisualizerType;
+  private options: PuzzleOptions;
 
   public puzzleGeometry: PuzzleGeometry;
   public simulator: Simulator;
@@ -203,7 +201,7 @@ export class Visualizer {
     this.camera = new Camera();
     this.scene = new Scene();
     this.renderer = renderer;
-    options = { ...getDefaultOptions(type), ...options };
+    this.options = { ...getDefaultOptions(type), ...options };
 
     [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
     this.scene.add(this.puzzleGeometry.group);
