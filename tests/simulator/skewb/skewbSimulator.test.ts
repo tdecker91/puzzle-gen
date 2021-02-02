@@ -193,8 +193,7 @@ describe("Reset", () => {
 
     expect(skewbSim.isSolved()).toBeFalsy();
     skewbSim.reset();
-    
+
     expect(skewbSim.isSolved()).toBeTruthy();
   });
 });
-

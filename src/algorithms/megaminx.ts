@@ -19,7 +19,7 @@ const DirectionToTurnType = {
 /**
  * Takes in a megaminx algorithm in stefan pochmann notation as a string
  * and parses the turns from it
- * 
+ *
  * Also supports face turns U,F,R,L,BR,BL as i've seen in some algorithms online
  *
  * algorithm string format should be moves separated by a single space
@@ -49,7 +49,7 @@ export function parseMegaminxAlgorithm(algorithm: string): Turn[] {
       unit: rawUnit,
       turnType: DirectionToTurnType[rawDirection],
       slices: 1,
-      n: rawNumber ? parseInt(rawNumber) : 1
+      n: rawNumber ? parseInt(rawNumber) : 1,
     });
   }
 

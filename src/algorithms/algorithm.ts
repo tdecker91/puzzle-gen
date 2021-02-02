@@ -15,11 +15,11 @@ export interface Turn {
   unit: string;
   turnType: TurnType;
   slices: number;
-  n?: number; // number of turns to execute. 1 implied 
+  n?: number; // number of turns to execute. 1 implied
 }
 
 export enum TurnType {
   Clockwise,
   CounterClockwise,
-  Double
+  Double,
 }

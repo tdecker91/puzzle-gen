@@ -659,27 +659,34 @@ export class MegaminxSimulator extends Simulator {
 
       switch (turn.unit) {
         case "Rxx":
-          turnFunc = this.Rxx.bind(this); break;
+          turnFunc = this.Rxx.bind(this);
+          break;
         case "Dxx":
-          turnFunc = this.Dxx.bind(this); break;
+          turnFunc = this.Dxx.bind(this);
+          break;
         case "U":
-          turnFunc = this.U.bind(this); break;
+          turnFunc = this.U.bind(this);
+          break;
         case "R":
-          turnFunc = this.R.bind(this); break;
+          turnFunc = this.R.bind(this);
+          break;
         case "F":
-          turnFunc = this.F.bind(this); break;
+          turnFunc = this.F.bind(this);
+          break;
         case "L":
-          turnFunc = this.L.bind(this); break;
+          turnFunc = this.L.bind(this);
+          break;
         case "BL":
-          turnFunc = this.BL.bind(this); break;
+          turnFunc = this.BL.bind(this);
+          break;
         case "BR":
-          turnFunc = this.BR.bind(this); break;
+          turnFunc = this.BR.bind(this);
+          break;
       }
 
       for (let i = turn.n; i > 0; i--) {
         turnFunc(reverse);
       }
-
     });
   }
 }

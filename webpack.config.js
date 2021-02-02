@@ -1,9 +1,18 @@
 var path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 var config = {
   mode: "production",
   entry: __dirname + "/src/index.ts",
   devtool: "source-map",
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin({
+      terserOptions: {
+        keep_classnames: true
+      }
+    })]
+  },
   output: {
     path: path.resolve(__dirname, "dist/bundle"),
     filename: "puzzleGen.min.js",

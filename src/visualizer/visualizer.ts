@@ -10,7 +10,7 @@ import {
   PURPLE,
   DARK_BLUE,
   GREY,
-  MASK_COLOR
+  MASK_COLOR,
 } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
@@ -183,11 +183,11 @@ function isSquare1(type: VisualizerType) {
  * if necessary, and renders the puzzle
  */
 export class Visualizer {
-  private camera: Camera;
-  private scene: Scene;
-  private renderer: Renderer;
-  private type: VisualizerType;
-  private options: PuzzleOptions;
+  protected camera: Camera;
+  protected scene: Scene;
+  protected renderer: Renderer;
+  protected type: VisualizerType;
+  protected options: PuzzleOptions;
 
   public puzzleGeometry: PuzzleGeometry;
   public simulator: Simulator;
@@ -203,42 +203,41 @@ export class Visualizer {
     this.renderer = renderer;
     this.options = { ...getDefaultOptions(type), ...options };
 
-    [this.puzzleGeometry, this.simulator] = puzzleFactory(type, options);
+    [this.puzzleGeometry, this.simulator] = puzzleFactory(type, this.options);
     this.scene.add(this.puzzleGeometry.group);
 
-    if (options.stickerColors && !isSquare1(type)) {
-      this.applyManualColors(options);
-    } else {
-      this.applySimulatorColors(options);
-    }
-
+    this.applyColors();
     this.render();
   }
 
-  private applyManualColors(options: PuzzleOptions) {
-    this.puzzleGeometry.setColors(options.stickerColors);
+  private applyColors() {
+    if (this.options.stickerColors && !isSquare1(this.type)) {
+      this.puzzleGeometry.setColors(this.options.stickerColors);
+    } else {
+      this.applySimulatorColors();
+    }
   }
 
-  private applySimulatorColors(options: PuzzleOptions) {
-    if (options.mask) this.applyMask(options);
-    if (options.alg || options.case) this.applyAlgorithm(options);
+  private applySimulatorColors() {
+    if (this.options.mask) this.applyMask(this.options);
+    if (this.options.alg || this.options.case) this.applyAlgorithm();
 
     const faceValues = this.simulator.getValues();
-    const faceColors = applyColorScheme(faceValues, options.scheme);
+    const faceColors = applyColorScheme(faceValues, this.options.scheme);
 
     this.puzzleGeometry.setColors(faceColors);
   }
 
-  private applyAlgorithm(options: PuzzleOptions) {
+  private applyAlgorithm() {
     if (isSquare1(this.type)) {
       // puzzle factory applies algorithm to square 1 when greating the puzzle geometry
       return;
     }
 
-    if (options.case) {
-      this.simulator.case(options.case);
-    } else if (options.alg) {
-      this.simulator.alg(options.alg);
+    if (this.options.case) {
+      this.simulator.case(this.options.case);
+    } else if (this.options.alg) {
+      this.simulator.alg(this.options.alg);
     }
   }
 
@@ -248,6 +247,19 @@ export class Visualizer {
         this.simulator.setValue(maskedFace, index, "mask")
       );
     });
+  }
+
+  setPuzzleOptions(options: PuzzleOptions) {
+    this.options = { ...getDefaultOptions(this.type), ...options };
+
+    [this.puzzleGeometry, this.simulator] = puzzleFactory(
+      this.type,
+      this.options
+    );
+    this.scene.add(this.puzzleGeometry.group);
+
+    this.applyColors();
+    this.render();
   }
 
   render() {

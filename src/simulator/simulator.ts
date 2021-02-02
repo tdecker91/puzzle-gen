@@ -214,7 +214,6 @@ export class Simulator {
       return;
     }
 
-    console.log(stickerId, value);
     this.stickers.set(stickerId, value);
   }
 
@@ -245,7 +244,7 @@ export class Simulator {
   }
 
   /**
-   * resets stickers back to solved position. Uses face name 
+   * resets stickers back to solved position. Uses face name
    * as sticker value by default
    */
   reset(): void {

@@ -1827,11 +1827,13 @@ describe("Rotation moves", () => {
 describe("Reset", () => {
   it("resets to solved state", () => {
     const cubeSim = new RubiksCubeSimulator(3);
-    cubeSim.alg("L2 U B L F' R2 D' B' F' U F2 U R' U' F2 R2 U' F D B2 R2 B2 F' U2 D2");
+    cubeSim.alg(
+      "L2 U B L F' R2 D' B' F' U F2 U R' U' F2 R2 U' F D B2 R2 B2 F' U2 D2"
+    );
 
     expect(cubeSim.isSolved()).toBeFalsy();
     cubeSim.reset();
-    
+
     expect(cubeSim.isSolved()).toBeTruthy();
   });
 });

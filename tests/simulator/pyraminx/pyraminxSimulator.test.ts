@@ -118,7 +118,7 @@ describe("Reset", () => {
 
     expect(pyraminxSim.isSolved()).toBeFalsy();
     pyraminxSim.reset();
-    
+
     expect(pyraminxSim.isSolved()).toBeTruthy();
   });
 });
