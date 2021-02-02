@@ -54,8 +54,7 @@ Publish to registry
 
 ## Todo
 
-- support more megaminx algs. currently only supports pochmann notation for scrambling
-- expand functionality for `Visualizer` so user can do more stuff with it. (reset options, for example)
+- add support to rotate the visualizer puzzle in puzzle options
 
 ## Notes
 
