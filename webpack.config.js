@@ -7,11 +7,13 @@ var config = {
   devtool: "source-map",
   optimization: {
     minimize: true,
-    minimizer: [new TerserPlugin({
-      terserOptions: {
-        keep_classnames: true
-      }
-    })]
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          keep_classnames: true,
+        },
+      }),
+    ],
   },
   output: {
     path: path.resolve(__dirname, "dist/bundle"),

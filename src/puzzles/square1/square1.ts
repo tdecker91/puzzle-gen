@@ -24,9 +24,6 @@ export class Square1 extends Square1Builder {
     sideLength: number = 1.25
   ) {
     super(topLayer, bottomLayer, middleRotated, sideLength);
-
-    this.group.rotate(-0.985398, [1, 0, 0]);
-    this.group.rotate(-0.59, [0, 0, 1]);
   }
 
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {

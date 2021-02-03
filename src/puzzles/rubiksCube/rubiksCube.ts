@@ -1,19 +1,9 @@
 import { Geometry } from "./../../geometry/geometry";
 import { IColor } from "./../../geometry/color";
-import {
-  YELLOW,
-  RED,
-  BLUE,
-  WHITE,
-  ORANGE,
-  GREEN,
-  MASK_COLOR,
-  BLACK,
-} from "./../colors";
+import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN, BLACK } from "./../colors";
 import { Group } from "../../geometry/group";
 import { Object3D } from "../../geometry/object3d";
 import { makeGrid } from "../../geometry/grid";
-import { chunkArray } from "../../utils/arrays";
 
 export class RubiksCube {
   stickers: Object3D[];
@@ -30,7 +20,7 @@ export class RubiksCube {
 
   constructor(size: number) {
     this.size = size;
-    const cubeWidth = 1.5;
+    const cubeWidth = 1.25;
     const halfWidth = cubeWidth / 2;
 
     this.U = new Group(makeGrid(cubeWidth, size, YELLOW));
@@ -62,10 +52,6 @@ export class RubiksCube {
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
 
     this.group = new Group(this.stickers);
-
-    this.group.translate([0, 0, -1]);
-    this.group.rotate(0.593411946, [1, 0, 0]);
-    this.group.rotate(0.785398, [0, 1, 0]);
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {

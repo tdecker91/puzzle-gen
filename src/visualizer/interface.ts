@@ -21,7 +21,7 @@ export interface PuzzleOptions {
    *
    * @example
    * ```typescript
-   * {
+   * const scheme = {
    *   U: { value: "#FFF" },
    *  ...
    * }
@@ -38,7 +38,7 @@ export interface PuzzleOptions {
    *
    * @example
    * ```typescript
-   * {
+   * const mask = {
    *   U: [0,1,2] // mask stickers 0, 1, and 2 on the U face of the puzzle
    * }
    * ```
@@ -56,12 +56,38 @@ export interface PuzzleOptions {
    *
    * let BLUE = { value: "#00F" }
    *
-   * {
+   * const colors = {
    *   U: [RED, RED, RED, RED, RED, RED, RED, RED, BLUE]
    * }
    * ```
    */
   stickerColors?: { [face: string]: IColor[] };
+
+  /**
+   * list of rotations to perform on the puzzle
+   * before rendering. Each item is a set of
+   * euler angles measured in degrees.
+   *
+   * The camera by default is offset on the z axis
+   * looking at the origin, viewing the x/y plane.
+   * To get the default cube angle first rotate the
+   * x axis by 34 degrees, and then the y axis by 45 degrees
+   *
+   * @example
+   * ```typescript
+   * // Default cube rotation
+   * const rotations = [{
+   *   x: 0,
+   *   y: 45,
+   *   z: 0
+   * },{
+   *   x: 34,
+   *   y: 0,
+   *   z: 0
+   * }];
+   * ```
+   */
+  rotations?: { x: number; y: number; z: number }[];
 }
 
 export interface CubeOptions extends PuzzleOptions {

@@ -1,17 +1,6 @@
-import {
-  RED,
-  BLUE,
-  WHITE,
-  ORANGE,
-  GREEN,
-  PINK,
-  LIGHT_YELLOW,
-  LIGHT_GREEN,
-  PURPLE,
-  DARK_BLUE,
-  GREY,
-  MASK_COLOR,
-} from "./../puzzles/colors";
+import { getDefaultOptions } from "./options";
+import { mat4, quat, vec3 } from "gl-matrix";
+import { MASK_COLOR } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
 import {
@@ -40,84 +29,7 @@ import {
   createSquare1,
   createSquare1Net,
 } from "./puzzleCreator";
-import { YELLOW } from "../puzzles/colors";
 import { IColor } from "../geometry/color";
-
-const defaultCubeOptions: CubeOptions = {
-  size: 3,
-  scheme: {
-    U: YELLOW,
-    R: RED,
-    F: BLUE,
-    D: WHITE,
-    L: ORANGE,
-    B: GREEN,
-  },
-};
-
-const defaultMegaminxOptions: MegaminxOptions = {
-  size: 2,
-  scheme: {
-    U: WHITE,
-    F: RED,
-    R: BLUE,
-    dr: PINK,
-    dl: LIGHT_YELLOW,
-    L: GREEN,
-    d: GREY,
-    br: LIGHT_GREEN,
-    BR: YELLOW,
-    BL: PURPLE,
-    bl: DARK_BLUE,
-    b: ORANGE,
-  },
-};
-
-const defaultPyraminxOptions: PyraminxOptions = {
-  size: 3,
-  scheme: {
-    left: BLUE,
-    right: GREEN,
-    top: YELLOW,
-    back: RED,
-  },
-};
-
-const defaultSkewbOptions: SkewbOptions = {
-  scheme: {
-    top: YELLOW,
-    front: BLUE,
-    right: RED,
-    back: GREEN,
-    left: ORANGE,
-    bottom: WHITE,
-  },
-};
-
-const defaultSquare1Options: Square1Options = {};
-
-function getDefaultOptions(type: VisualizerType): PuzzleOptions {
-  switch (type) {
-    case VisualizerType.CUBE:
-    case VisualizerType.CUBE_NET:
-    case VisualizerType.CUBE_TOP:
-      return defaultCubeOptions;
-    case VisualizerType.MEGAMINX:
-    case VisualizerType.MEGAMINX_NET:
-      return defaultMegaminxOptions;
-    case VisualizerType.PYRAMINX:
-    case VisualizerType.PYRAMINX_NET:
-      return defaultPyraminxOptions;
-    case VisualizerType.SKEWB:
-    case VisualizerType.SKEWB_NET:
-      return defaultSkewbOptions;
-    case VisualizerType.SQUARE1:
-    case VisualizerType.SQUARE1_NET:
-      return defaultSquare1Options;
-    default:
-      throw new Error(`Could not get default options for puzzle ${type}`);
-  }
-}
 
 /**
  * Applies a color scheme to simulator values
@@ -201,12 +113,7 @@ export class Visualizer {
     this.camera = new Camera();
     this.scene = new Scene();
     this.renderer = renderer;
-    this.options = { ...getDefaultOptions(type), ...options };
-
-    [this.puzzleGeometry, this.simulator] = puzzleFactory(type, this.options);
-    this.scene.add(this.puzzleGeometry.group);
-
-    this.applyColors();
+    this.setPuzzleOptions(options);
     this.render();
   }
 
@@ -256,10 +163,24 @@ export class Visualizer {
       this.type,
       this.options
     );
+    this.scene.clear();
     this.scene.add(this.puzzleGeometry.group);
 
+    if (this.options.rotations) {
+      let matrix = mat4.create();
+      this.options.rotations.forEach((rotation) => {
+        const { x, y, z } = rotation;
+        mat4.mul(
+          matrix,
+          mat4.fromQuat(mat4.create(), quat.fromEuler(quat.create(), x, y, z)),
+          matrix
+        );
+      });
+
+      mat4.mul(this.puzzleGeometry.group.matrix, mat4.create(), matrix);
+    }
+
     this.applyColors();
-    this.render();
   }
 
   render() {

@@ -1,6 +1,25 @@
 <html>
+  <head>
+    <style>
+      #puzzle svg {
+        border: 1px solid gray;
+      }
+    </style>
+  </head>
   <body>
     <h2>click and drag to rotate</h2>
     <div id="puzzle"></div>
+
+    <button onclick="rotationDemo.reset()">Reset</button>
+
+    <div>
+      <label>Frame Render:</label> <span id="frame-out">0 ms</span>
+    </div>
+
+    </pre>
+    <h2>rotation matrix</h2>
+    <pre id="cameraValues">
+
+    </pre>
   </body>
 </html>

@@ -116,12 +116,12 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
   }
 
   /**
-   * 
+   *
    * @param options - options for the svg element that is being rendered to
    */
   setSvgOptions(options: SVGVisualizerOptions<T>) {
     this.svgOptions = { ...defaultOptions, ...options };
-    const renderer: CustomSVGRenderer = (this.renderer as CustomSVGRenderer);
+    const renderer: CustomSVGRenderer = this.renderer as CustomSVGRenderer;
     const svgElement: SVGElement = renderer.svgElement;
 
     renderer.strokeWidth = "" + this.svgOptions.strokeWidth;

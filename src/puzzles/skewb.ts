@@ -60,9 +60,6 @@ export class Skewb {
 
     this.stickers = [red, yellow, blue, orange, green, white];
     this.group = new Group(this.stickers);
-
-    this.group.rotate(0.593411946, [1, 0, 0]);
-    this.group.rotate(0.785398, [0, 1, 0]);
   }
 
   private makeStickers(color: IColor, width: number, axis?: vec3): Geometry[] {

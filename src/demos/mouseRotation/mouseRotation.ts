@@ -1,4 +1,8 @@
-import { YELLOW } from './../../puzzles/colors';
+import { RubiksCubeTopLayer } from './../../puzzles/rubiksCube/rubiksCubeTop';
+import { Square1 } from './../../puzzles/square1/square1';
+import { Skewb } from './../../puzzles/skewb';
+import { Pyraminx } from './../../puzzles/pyraminx';
+import { YELLOW, RED } from './../../puzzles/colors';
 import { mat4 } from 'gl-matrix';
 import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
 import { Group } from "../../geometry/group";
@@ -6,22 +10,23 @@ import { RubiksCube } from "../../puzzles/rubiksCube/rubiksCube";
 import { Camera } from "../../rendering/camera";
 import { Scene } from "../../rendering/scene";
 import { Megaminx } from '../../puzzles/megaminx';
+import { makeGrid } from '../../geometry/grid';
 
 let renderer: CustomSVGRenderer;
 let camera: Camera;
 let scene: Scene;
 let rotationGroup: Group;
-let rubiksCube: RubiksCube;
 
 let mouseDown: boolean;
 let x: number;
 let y: number;
 
+let valuesElement: HTMLPreElement = document.getElementById("cameraValues") as HTMLPreElement;
+
 function renderDemo() {
   camera = new Camera();
   scene = new Scene();
   rotationGroup = new Group();
-  rubiksCube = new RubiksCube(3);
   renderer = new CustomSVGRenderer(
     500,
     500,
@@ -34,9 +39,14 @@ function renderDemo() {
 
   document.getElementById("puzzle").appendChild(renderer.domElement);
 
-  // rotationGroup.addObject(rubiksCube.group);
-  rotationGroup.addObject(new Megaminx(2).group);
+  // rotationGroup.addObject(new Group(makeGrid(1.5, 3, RED)));
+  // rotationGroup.addObject(new RubiksCube(3).group);
+  // rotationGroup.addObject(new Megaminx(2).group);
+  rotationGroup.addObject(new Pyraminx(3).group);
+  // rotationGroup.addObject(new Skewb().group);
+  // rotationGroup.addObject(new Square1().group);
   scene.add(rotationGroup);
+  valuesElement.innerHTML = mat4String(rotationGroup.matrix);
 
   renderer.render(scene, camera);
 }
@@ -64,8 +74,12 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
   let originalMat: mat4 = mat4.create();
 
-  renderer.domElement.addEventListener('mousedown', e => {
+  let frameOut: HTMLSpanElement = document.getElementById("frame-out");
+  let start = new Date().getTime();
+
+  renderer.svgElement.addEventListener('mousedown', e => {
     mouseDown = true;
+    start = new Date().getTime();
     mat4.copy(originalMat, rotationGroup.matrix);
     x = e.x;
     y = e.y;
@@ -75,8 +89,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
    * Not a great implementation, as rotation becomes unintuitive
    * should look into camera rotating or quaternions
    */
-  renderer.domElement.addEventListener('mousemove', throttle(e => {
+  renderer.svgElement.addEventListener('mousemove', throttle(e => {
     if (mouseDown) {
+      start = new Date().getTime();
       const [diffX, diffY] = [e.x - x, e.y - y];
 
       let xRotation = mat4.fromXRotation(mat4.create(), diffY/128);
@@ -88,13 +103,36 @@ document.addEventListener("DOMContentLoaded", function (event) {
       mat4.multiply(acc, acc, xRotation);
       mat4.multiply(acc, acc, yRotation);
 
-      rotationGroup.matrix = mat4.multiply(rotationGroup.matrix, originalMat, acc);
+      rotationGroup.matrix = mat4.multiply(rotationGroup.matrix, acc, originalMat);
 
+      valuesElement.innerHTML = mat4String(rotationGroup.matrix);
       renderer.render(scene, camera);
+
+      const time = new Date().getTime() - start;
+      frameOut.innerHTML = `${time} ms`;
+
     }
   }, 25));
 
-  renderer.domElement.addEventListener('mouseup', e => {
+  renderer.svgElement.addEventListener('mouseup', e => {
     mouseDown = false;
   });
 });
+
+function round(n: number): string {
+  return n.toFixed(3);
+}
+
+function mat4String(m: mat4) {
+  return `${round(m[0])}\t\t${round(m[1])}\t\t${round(m[2])}\t\t${round(m[3])}\n` +
+  `${round(m[4])}\t\t${round(m[5])}\t\t${round(m[6])}\t\t${round(m[7])}\n` +
+  `${round(m[8])}\t\t${round(m[9])}\t\t${round(m[10])}\t\t${round(m[11])}\n` +
+  `${round(m[12])}\t\t${round(m[13])}\t\t${round(m[14])}\t\t${round(m[15])}\n`;
+}
+
+export function reset() {
+  rotationGroup.matrix = mat4.create();
+  valuesElement.innerHTML = mat4String(rotationGroup.matrix);
+  renderer.render(scene, camera);
+
+}

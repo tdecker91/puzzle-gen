@@ -4,7 +4,6 @@ import { GREEN, RED, BLUE, YELLOW, BLACK } from "./colors";
 import { TriangleLattice } from "./../geometry/triangleLattice";
 import { Group } from "./../geometry/group";
 import { Object3D } from "./../geometry/object3d";
-import { chunkArray } from "../utils/arrays";
 
 const ARC_COS_THIRD = Math.acos(1 / 3);
 const DEG_120_RADIANS = (120 * Math.PI) / 180;
@@ -53,9 +52,6 @@ export class Pyraminx {
     this.faces = [U, L, R, B];
 
     this.group = new Group(this.faces);
-
-    this.group.rotate(-Math.PI / 3, [1, 0, 0]);
-    this.group.rotate(Math.PI / 2.5, [0, 0, 1]);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {
