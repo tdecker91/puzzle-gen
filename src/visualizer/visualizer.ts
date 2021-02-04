@@ -156,16 +156,13 @@ export class Visualizer {
     });
   }
 
-  setPuzzleOptions(options: PuzzleOptions) {
-    this.options = { ...getDefaultOptions(this.type), ...options };
-
-    [this.puzzleGeometry, this.simulator] = puzzleFactory(
-      this.type,
-      this.options
-    );
-    this.scene.clear();
-    this.scene.add(this.puzzleGeometry.group);
-
+  /**
+   * build the group matrix for the puzzle. This sets up the
+   * rotation, scale, and translation for the resulting rendered
+   * image.
+   */
+  private buildGroupMatrix() {
+    // Rotate the group matrix
     if (this.options.rotations) {
       let matrix = mat4.create();
       this.options.rotations.forEach((rotation) => {
@@ -179,6 +176,46 @@ export class Visualizer {
 
       mat4.mul(this.puzzleGeometry.group.matrix, mat4.create(), matrix);
     }
+
+    // Scale the group matrix
+    if (this.options.scale) {
+      let scale = this.options.scale;
+      mat4.scale(
+        this.puzzleGeometry.group.matrix,
+        this.puzzleGeometry.group.matrix,
+        vec3.fromValues(scale, scale, scale)
+      );
+    }
+
+    // Translate the group matrix
+    if (this.options.translation) {
+      let translationMatrix = mat4.fromTranslation(
+        mat4.create(),
+        vec3.fromValues(
+          this.options.translation.x,
+          this.options.translation.y,
+          this.options.translation.z
+        )
+      );
+
+      mat4.mul(
+        this.puzzleGeometry.group.matrix,
+        translationMatrix,
+        this.puzzleGeometry.group.matrix
+      );
+    }
+  }
+
+  setPuzzleOptions(options: PuzzleOptions) {
+    this.options = { ...getDefaultOptions(this.type), ...options };
+
+    [this.puzzleGeometry, this.simulator] = puzzleFactory(
+      this.type,
+      this.options
+    );
+    this.buildGroupMatrix();
+    this.scene.clear();
+    this.scene.add(this.puzzleGeometry.group);
 
     this.applyColors();
   }

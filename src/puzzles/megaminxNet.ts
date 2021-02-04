@@ -63,73 +63,74 @@ export class MegaminxNet {
     const sideLength = 0.75;
     const layerWidth = getLayerWidth(length, layers);
 
-    // Top
+    // Left
     this.U = new DividedPentagon(WHITE, layers, sideLength, layerWidth);
     this.F = new DividedPentagon(RED, layers, sideLength, layerWidth);
-    this.L = new DividedPentagon(GREEN, layers, sideLength, layerWidth);
-    this.BL = new DividedPentagon(PURPLE, layers, sideLength, layerWidth);
-    this.BR = new DividedPentagon(YELLOW, layers, sideLength, layerWidth);
     this.R = new DividedPentagon(BLUE, layers, sideLength, layerWidth);
-
-    // Bottom
-    this.d = new DividedPentagon(GREY, layers, sideLength, layerWidth);
-    this.bl = new DividedPentagon(DARK_BLUE, layers, sideLength, layerWidth);
+    this.L = new DividedPentagon(GREEN, layers, sideLength, layerWidth);
     this.dl = new DividedPentagon(LIGHT_YELLOW, layers, sideLength, layerWidth);
     this.dr = new DividedPentagon(PINK, layers, sideLength, layerWidth);
+
+    // Right
+    this.BL = new DividedPentagon(PURPLE, layers, sideLength, layerWidth);
+    this.BR = new DividedPentagon(YELLOW, layers, sideLength, layerWidth);
+    this.d = new DividedPentagon(GREY, layers, sideLength, layerWidth);
+    this.bl = new DividedPentagon(DARK_BLUE, layers, sideLength, layerWidth);
     this.br = new DividedPentagon(LIGHT_GREEN, layers, sideLength, layerWidth);
     this.b = new DividedPentagon(ORANGE, layers, sideLength, layerWidth);
 
     const ind = 2 * pentagonInRadius(sideLength);
 
-    this.F.translate([0, ind, 0]);
-    this.F.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    // Left
+    this.U.translate([0, ind, 0]);
+    this.U.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.L.rotate(-DEG_72_RADIANS, [0, 0, 1]);
-    this.L.translate([0, ind, 0]);
-    this.L.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
-
-    this.BL.rotate(-2 * DEG_72_RADIANS, [0, 0, 1]);
-    this.BL.translate([0, ind, 0]);
-    this.BL.rotate(-DEG_36_RADIANS, [0, 0, 1]);
-
-    this.BR.rotate(2 * DEG_72_RADIANS, [0, 0, 1]);
-    this.BR.translate([0, ind, 0]);
-    this.BR.rotate(DEG_36_RADIANS, [0, 0, 1]);
-
-    this.R.rotate(DEG_72_RADIANS, [0, 0, 1]);
+    this.R.rotate(-DEG_72_RADIANS, [0, 0, 1]);
     this.R.translate([0, ind, 0]);
-    this.R.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.R.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    // Bottom
-    this.d.rotate(Math.PI, [0, 0, 1]);
-    this.d.rotate(-2 * DEG_36_RADIANS, [0, 0, 1]);
+    this.L.rotate(DEG_72_RADIANS, [0, 0, 1]);
+    this.L.translate([0, ind, 0]);
+    this.L.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.b.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
-    this.b.translate([0, ind, 0]);
-    this.b.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
-
-    this.bl.rotate(DEG_36_RADIANS, [0, 0, 1]);
-    this.bl.translate([0, ind, 0]);
-    this.bl.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
-
-    this.dl.rotate(-DEG_36_RADIANS, [0, 0, 1]);
+    this.dl.rotate(2 * DEG_72_RADIANS, [0, 0, 1]);
     this.dl.translate([0, ind, 0]);
-    this.dl.rotate(-DEG_36_RADIANS, [0, 0, 1]);
+    this.dl.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.dr.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.dr.rotate(-2 * DEG_72_RADIANS, [0, 0, 1]);
     this.dr.translate([0, ind, 0]);
-    this.dr.rotate(DEG_36_RADIANS, [0, 0, 1]);
+    this.dr.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    this.br.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    // Right
+    this.b.rotate(Math.PI, [0, 0, 1]);
+    this.b.rotate(-2 * DEG_36_RADIANS, [0, 0, 1]);
+
+    this.d.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.d.translate([0, ind, 0]);
+    this.d.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+
+    this.br.rotate(DEG_36_RADIANS, [0, 0, 1]);
     this.br.translate([0, ind, 0]);
-    this.br.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.br.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
 
-    const top = new Group([this.U, this.F, this.L, this.BL, this.BR, this.R]);
+    this.BR.rotate(-DEG_36_RADIANS, [0, 0, 1]);
+    this.BR.translate([0, ind, 0]);
+    this.BR.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+
+    this.BL.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
+    this.BL.translate([0, ind, 0]);
+    this.BL.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+
+    this.bl.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.bl.translate([0, ind, 0]);
+    this.bl.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+
+    const top = new Group([this.U, this.F, this.L, this.dr, this.dl, this.R]);
     const bottom = new Group([
       this.d,
       this.bl,
-      this.dr,
-      this.dl,
+      this.BL,
+      this.BR,
       this.br,
       this.b,
     ]);

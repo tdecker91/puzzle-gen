@@ -1,16 +1,9 @@
-import { RubiksCubeTopLayer } from './../../puzzles/rubiksCube/rubiksCubeTop';
-import { Square1 } from './../../puzzles/square1/square1';
-import { Skewb } from './../../puzzles/skewb';
-import { Pyraminx } from './../../puzzles/pyraminx';
-import { YELLOW, RED } from './../../puzzles/colors';
 import { mat4 } from 'gl-matrix';
 import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
 import { Group } from "../../geometry/group";
 import { RubiksCube } from "../../puzzles/rubiksCube/rubiksCube";
 import { Camera } from "../../rendering/camera";
 import { Scene } from "../../rendering/scene";
-import { Megaminx } from '../../puzzles/megaminx';
-import { makeGrid } from '../../geometry/grid';
 
 let renderer: CustomSVGRenderer;
 let camera: Camera;
@@ -39,12 +32,7 @@ function renderDemo() {
 
   document.getElementById("puzzle").appendChild(renderer.domElement);
 
-  // rotationGroup.addObject(new Group(makeGrid(1.5, 3, RED)));
-  // rotationGroup.addObject(new RubiksCube(3).group);
-  // rotationGroup.addObject(new Megaminx(2).group);
-  rotationGroup.addObject(new Pyraminx(3).group);
-  // rotationGroup.addObject(new Skewb().group);
-  // rotationGroup.addObject(new Square1().group);
+  rotationGroup.addObject(new RubiksCube(3).group);
   scene.add(rotationGroup);
   valuesElement.innerHTML = mat4String(rotationGroup.matrix);
 
@@ -112,7 +100,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
       frameOut.innerHTML = `${time} ms`;
 
     }
-  }, 25));
+  }, 40));
 
   renderer.svgElement.addEventListener('mouseup', e => {
     mouseDown = false;

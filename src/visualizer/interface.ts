@@ -88,6 +88,31 @@ export interface PuzzleOptions {
    * ```
    */
   rotations?: { x: number; y: number; z: number }[];
+
+  /**
+   * scalar value to sale the render by
+   *
+   * @example
+   * ```
+   * .5 will scale the image by 1/2
+   * 2 will double the size of the render
+   * ```
+   */
+  scale?: number;
+
+  /**
+   * translate the rendered image by a vector. Will be applied
+   * after rotations.
+   *
+   * @example
+   * ```typescript
+   * // shift the image on the y axis
+   * {
+   *   translation: { x: 0, y: 5, z: 0 }
+   * }
+   * ```
+   */
+  translation?: { x: number; y: number; z: number };
 }
 
 export interface CubeOptions extends PuzzleOptions {
