@@ -1,14 +1,7 @@
 import { vec3 } from "gl-matrix";
 import { calculateCentroid } from "../math/utils";
 import { IColor } from "./color";
-
-const generateUid = (() => {
-  let current = 0;
-
-  return function () {
-    return current++;
-  };
-})();
+import { generateUid } from "./uid";
 
 export interface IFace {
   indices: number[];

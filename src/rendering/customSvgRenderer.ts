@@ -1,3 +1,6 @@
+import { YELLOW, BLACK } from "./../puzzles/colors";
+import { IColor } from "./../../dist/lib/geometry/color.d";
+import { Arrow } from "./../geometry/arrow";
 import { IFace, Face } from "./../geometry/face";
 import { Camera } from "./camera";
 import { Scene } from "./scene";
@@ -10,6 +13,8 @@ import {
   clearSVG,
   createPolygonElement,
   updatePolygonElement,
+  createArrowLineElement,
+  createMarkers,
 } from "../svg/svg";
 import { Renderer } from "./renderer";
 
@@ -20,9 +25,12 @@ export class CustomSVGRenderer implements Renderer {
   domElement: HTMLElement;
   svgElement: SVGSVGElement;
   strokeWidth: string = "0.035";
+  arrowColor: IColor;
 
   protected polygons = [];
+  protected lines: SVGLineElement[] = [];
   protected uidToPolygon: { [uid: number]: SVGPolygonElement } = {};
+  protected uidToLine: { [uid: number]: SVGLineElement } = {};
 
   /**
    * Creates an SVG renderer. This will create it's own html `<svg>` element. it's
@@ -47,8 +55,10 @@ export class CustomSVGRenderer implements Renderer {
     minx: number,
     miny: number,
     svgWidth: number,
-    svgHeight: number
+    svgHeight: number,
+    arrowColor?: IColor
   ) {
+    this.arrowColor = arrowColor || BLACK;
     this.domElement = document.createElement("div");
     this.domElement.className = "svg-renderer";
     this.svgElement = createSVGElement(
@@ -59,11 +69,16 @@ export class CustomSVGRenderer implements Renderer {
       svgWidth,
       svgHeight
     );
+
+    const markers = createMarkers(this.arrowColor);
+    this.svgElement.appendChild(markers);
+
     this.domElement.appendChild(this.svgElement);
   }
 
   render(scene: Scene, camera: Camera) {
     this.polygons = [];
+    this.lines = [];
 
     // this.sortObjects(scene.objects, camera, []);
 
@@ -72,6 +87,7 @@ export class CustomSVGRenderer implements Renderer {
     });
 
     this.renderPolygons();
+    this.renderLines();
   }
 
   protected renderPolygons() {
@@ -80,6 +96,12 @@ export class CustomSVGRenderer implements Renderer {
     });
 
     this.polygons.forEach((p) => this.svgElement.appendChild(p.polygon));
+  }
+
+  protected renderLines() {
+    this.lines.forEach((line) => {
+      this.svgElement.appendChild(line);
+    });
   }
 
   protected addPolygon(
@@ -122,6 +144,8 @@ export class CustomSVGRenderer implements Renderer {
   ) {
     if (object instanceof Geometry) {
       this.renderGeometry(object, camera, transformations);
+    } else if (object instanceof Arrow) {
+      this.renderArrow(object, camera, transformations);
     } else if (object instanceof Group) {
       let group = <Group>object;
       this.sortObjects(group.objects, camera, [
@@ -160,6 +184,31 @@ export class CustomSVGRenderer implements Renderer {
 
       this.addPolygon(points, face, object, transformations);
     });
+  }
+
+  private renderArrow(object: Arrow, camera: Camera, transformations: mat4[]) {
+    let objectToScreen = [object.matrix, ...transformations, camera.matrix];
+    let p1Screen = this.applyTransformations(object.p1, objectToScreen);
+    let p2Screen = this.applyTransformations(object.p2, objectToScreen);
+    let arrow: SVGLineElement;
+
+    if (!this.uidToLine[object.uid]) {
+      arrow = createArrowLineElement(
+        p1Screen,
+        p2Screen,
+        this.arrowColor,
+        this.strokeWidth
+      );
+      this.uidToLine[object.uid] = arrow;
+    } else {
+      arrow = this.uidToLine[object.uid];
+      arrow.setAttributeNS(null, "x1", p1Screen[0].toString());
+      arrow.setAttributeNS(null, "y1", (-p1Screen[1]).toString());
+      arrow.setAttributeNS(null, "x2", p2Screen[0].toString());
+      arrow.setAttributeNS(null, "y2", (-p2Screen[1]).toString());
+    }
+
+    this.lines.push(arrow);
   }
 
   private sortFaces(faces: Face[], object: Object3D, transformations: mat4[]) {

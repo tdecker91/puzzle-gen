@@ -1,3 +1,5 @@
+import { IColor } from "./../../dist/lib/geometry/color.d";
+import { GREY } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { CustomSVGRenderer } from "./../rendering/customSvgRenderer";
 import { Visualizer } from "./visualizer";
@@ -43,6 +45,11 @@ export interface SVGVisualizerOptions<T> {
    * puzzle options for the cube to draw
    */
   puzzle?: T;
+
+  /**
+   * change the default arrow color for drawing arrows
+   */
+  arrowColor?: IColor;
 }
 
 const defaultOptions: SVGVisualizerOptions<any> = {
@@ -53,6 +60,7 @@ const defaultOptions: SVGVisualizerOptions<any> = {
   svgWidth: 1.8,
   svgHeight: 1.8,
   strokeWidth: 0.02,
+  arrowColor: GREY,
 };
 
 /**
@@ -91,7 +99,8 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
       options.minx,
       options.miny,
       options.svgWidth,
-      options.svgHeight
+      options.svgHeight,
+      options.arrowColor
     );
     renderer.strokeWidth = "" + options.strokeWidth;
 
@@ -116,7 +125,8 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
   }
 
   /**
-   *
+   * Dynamically update the svg element options
+   * 
    * @param options - options for the svg element that is being rendered to
    */
   setSvgOptions(options: SVGVisualizerOptions<T>) {
