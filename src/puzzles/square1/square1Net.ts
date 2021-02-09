@@ -140,6 +140,11 @@ export class Square1Net extends Square1Builder {
       middleRotated
     );
 
+    this.faces = {
+      top: topLayer,
+      bottom: bottomLayer
+    }
+
     pieces.push(m);
 
     return pieces;

@@ -17,6 +17,7 @@ import {
   createMarkers,
 } from "../svg/svg";
 import { Renderer } from "./renderer";
+import { applyTransformations } from "./utils";
 
 /**
  * A renderer that renders a scene viewed by a camera to an svg element.
@@ -25,6 +26,7 @@ export class CustomSVGRenderer implements Renderer {
   domElement: HTMLElement;
   svgElement: SVGSVGElement;
   strokeWidth: string = "0.035";
+  arrowStrokeWidth: string = "0.03";
   arrowColor: IColor;
 
   protected polygons = [];
@@ -130,7 +132,7 @@ export class CustomSVGRenderer implements Renderer {
 
     this.polygons.push({
       polygon: this.uidToPolygon[face.uid],
-      centroid: this.applyTransformations(face.centroid, [
+      centroid: applyTransformations(face.centroid, [
         object.matrix,
         ...transformations,
       ]),
@@ -175,7 +177,7 @@ export class CustomSVGRenderer implements Renderer {
             ...transformations,
             camera.matrix,
           ];
-          let v: vec3 = this.applyTransformations(vertex, objectToScreen);
+          let v: vec3 = applyTransformations(vertex, objectToScreen);
 
           // Need to flip y to look correct on svg viewbox
           let screenPoint = vec3.multiply(v, v, [1, -1, 1]);
@@ -188,8 +190,8 @@ export class CustomSVGRenderer implements Renderer {
 
   private renderArrow(object: Arrow, camera: Camera, transformations: mat4[]) {
     let objectToScreen = [object.matrix, ...transformations, camera.matrix];
-    let p1Screen = this.applyTransformations(object.p1, objectToScreen);
-    let p2Screen = this.applyTransformations(object.p2, objectToScreen);
+    let p1Screen = applyTransformations(object.p1, objectToScreen);
+    let p2Screen = applyTransformations(object.p2, objectToScreen);
     let arrow: SVGLineElement;
 
     if (!this.uidToLine[object.uid]) {
@@ -197,7 +199,7 @@ export class CustomSVGRenderer implements Renderer {
         p1Screen,
         p2Screen,
         this.arrowColor,
-        this.strokeWidth
+        this.arrowStrokeWidth
       );
       this.uidToLine[object.uid] = arrow;
     } else {
@@ -216,8 +218,8 @@ export class CustomSVGRenderer implements Renderer {
       let aToWorld = [object.matrix, ...transformations];
       let bToWorld = [object.matrix, ...transformations];
 
-      let aCentroid: vec3 = this.applyTransformations(a.centroid, aToWorld);
-      let bCentroid: vec3 = this.applyTransformations(b.centroid, bToWorld);
+      let aCentroid: vec3 = applyTransformations(a.centroid, aToWorld);
+      let bCentroid: vec3 = applyTransformations(b.centroid, bToWorld);
 
       // TODO actually use camera, currently only sorting by Z
       return aCentroid[2] - bCentroid[2];
@@ -233,17 +235,11 @@ export class CustomSVGRenderer implements Renderer {
       let aToWorld = [a.matrix, ...transformations];
       let bToWorld = [b.matrix, ...transformations];
 
-      let aCentroid: vec3 = this.applyTransformations(a.centroid, aToWorld);
-      let bCentroid: vec3 = this.applyTransformations(b.centroid, bToWorld);
+      let aCentroid: vec3 = applyTransformations(a.centroid, aToWorld);
+      let bCentroid: vec3 = applyTransformations(b.centroid, bToWorld);
 
       // TODO actually use camera, currently only sorting by Z
       return aCentroid[2] - bCentroid[2];
     });
-  }
-
-  private applyTransformations(vertex: vec3, transforms: mat4[]): vec3 {
-    return transforms.reduce((v, t) => {
-      return vec3.transformMat4(v, v, t);
-    }, vec3.clone(vertex));
   }
 }

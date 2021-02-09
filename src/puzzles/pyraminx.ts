@@ -10,7 +10,7 @@ const DEG_120_RADIANS = (120 * Math.PI) / 180;
 const SQRT_24 = Math.sqrt(24);
 
 export class Pyraminx {
-  faces: Object3D[];
+  faces: { [face: string]: TriangleLattice };
   group: Group;
 
   private size: number;
@@ -49,9 +49,14 @@ export class Pyraminx {
     B.rotate(Math.PI, [0, 1, 0]);
     B.translate([0, 0, insphereRadius]);
 
-    this.faces = [U, L, R, B];
+    this.faces = {
+      top: this.U,
+      right: this.R,
+      left: this.L,
+      bottom: this.B,
+    };
 
-    this.group = new Group(this.faces);
+    this.group = new Group([U, L, R, B]);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {

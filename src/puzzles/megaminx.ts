@@ -19,7 +19,6 @@ import { Group } from "./../geometry/group";
 import { Object3D } from "./../geometry/object3d";
 import { DividedPentagon } from "../geometry/dividedPentagon";
 import { dodecahedronInRadius } from "../math/utils";
-import { chunkArray } from "../utils/arrays";
 
 const OPTIMAL_LAYER_WIDTH = {
   2: 0.3,
@@ -34,6 +33,7 @@ function getLayerWidth(length: number, layers: number): number {
 export class Megaminx {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: DividedPentagon };
 
   private layers: number;
 
@@ -136,6 +136,21 @@ export class Megaminx {
       this.bl,
       this.b,
     ];
+
+    this.faces = {
+      U: this.U,
+      F: this.F,
+      R: this.R,
+      dr: this.dr,
+      dl: this.dl,
+      L: this.L,
+      d: this.d,
+      br: this.br,
+      BR: this.BR,
+      BL: this.BL,
+      bl: this.bl,
+      b: this.b,
+    }
 
     this.group = new Group(this.stickers);
   }

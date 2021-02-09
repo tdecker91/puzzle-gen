@@ -11,6 +11,7 @@ import { chunkArray } from "../utils/arrays";
 export class SkewbNet {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: Group };
 
   private U: Group;
   private R: Group;
@@ -23,29 +24,38 @@ export class SkewbNet {
     const cubeWidth = 1;
     const centerWidth = Math.sqrt(Math.pow(cubeWidth / 2, 2) * 2);
 
-    const red = new Group(
-      this.makeStickers(RED, centerWidth, [-cubeWidth, 0, 0])
-    );
-    const yellow = new Group(
-      this.makeStickers(YELLOW, centerWidth, [2 * cubeWidth, 0, 0])
-    );
-    const blue = new Group(
-      this.makeStickers(BLUE, centerWidth, [0, -cubeWidth, 0])
-    );
     const orange = new Group(
-      this.makeStickers(ORANGE, centerWidth, [cubeWidth, 0, 0])
+      this.makeStickers(ORANGE, centerWidth, [-cubeWidth, 0, 0])
     );
     const green = new Group(
-      this.makeStickers(GREEN, centerWidth, [0, cubeWidth, 0])
+      this.makeStickers(GREEN, centerWidth, [2 * cubeWidth, 0, 0])
     );
-    const white = new Group(this.makeStickers(WHITE, centerWidth, [0, 0, 0]));
+    const white = new Group(
+      this.makeStickers(WHITE, centerWidth, [0, -cubeWidth, 0])
+    );
+    const red = new Group(
+      this.makeStickers(RED, centerWidth, [cubeWidth, 0, 0])
+    );
+    const yellow = new Group(
+      this.makeStickers(YELLOW, centerWidth, [0, cubeWidth, 0])
+    );
+    const blue = new Group(this.makeStickers(BLUE, centerWidth, [0, 0, 0]));
 
-    this.U = green;
-    this.R = orange;
-    this.F = white;
-    this.L = red;
-    this.B = yellow;
-    this.D = blue;
+    this.U = yellow;
+    this.R = red;
+    this.F = blue;
+    this.L = orange;
+    this.B = green;
+    this.D = white;
+
+    this.faces = {
+      top: this.U,
+      front: this.F,
+      right: this.R,
+      back: this.B,
+      left: this.L,
+      bottom: this.D,
+    }
 
     this.stickers = [red, yellow, blue, orange, green, white];
     this.group = new Group(this.stickers);

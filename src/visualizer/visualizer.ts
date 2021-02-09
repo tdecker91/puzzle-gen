@@ -1,3 +1,6 @@
+import { Square1 } from './../puzzles/square1/square1';
+import { Geometry } from './../geometry/geometry';
+import { Arrow } from './../geometry/arrow';
 import { getDefaultOptions } from "./options";
 import { mat4, quat, vec3 } from "gl-matrix";
 import { MASK_COLOR } from "./../puzzles/colors";
@@ -11,6 +14,7 @@ import {
   Square1Options,
   PuzzleOptions,
   ColorScheme,
+  ArrowDefinition,
 } from "./interface";
 import { Renderer } from "./../rendering/renderer";
 import { Scene } from "../rendering/scene";
@@ -30,6 +34,8 @@ import {
   createSquare1Net,
 } from "./puzzleCreator";
 import { IColor } from "../geometry/color";
+import { applyTransformations } from "../rendering/utils";
+import { Group } from '../geometry/group';
 
 /**
  * Applies a color scheme to simulator values
@@ -87,6 +93,47 @@ function puzzleFactory<T extends PuzzleOptions>(
 
 function isSquare1(type: VisualizerType) {
   return type === VisualizerType.SQUARE1 || type === VisualizerType.SQUARE1_NET;
+}
+
+function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
+  // Get the face the arrow is pointing to
+  let startFace = puzzle.faces[a.start.face];
+  let endFace = puzzle.faces[a.end.face];
+
+  if (!startFace || !endFace) {
+    throw new Error(`Invalid arrow definition ${JSON.stringify(a)}`);
+  }
+
+  let startTransformations = [startFace.matrix, puzzle.group.matrix];
+  let endTransformations = [endFace.matrix, puzzle.group.matrix];
+
+  let start: vec3;
+  let end: vec3;
+  
+  // Get the stickers on the face
+  if (startFace instanceof Geometry && endFace instanceof Geometry) {
+    start = startFace.faces[a.start.sticker]?.centroid;
+    end = endFace.faces[a.end.sticker]?.centroid;
+  } else {
+    if (puzzle instanceof Square1) {
+      start = (startFace as any).objects[a.start.sticker]?.faces[0].centroid;
+      end = (endFace as any).objects[a.end.sticker]?.faces[0].centroid;
+    } else {
+      start = (startFace as Group).objects[a.start.sticker]?.centroid;
+      end = (endFace as Group).objects[a.end.sticker]?.centroid;
+    }
+    startTransformations.unshift((startFace as Group).objects[a.start.sticker]?.matrix);
+    endTransformations.unshift((endFace as Group).objects[a.end.sticker]?.matrix);
+  }
+
+  if (!start || !end) {
+    throw new Error(`Invalid arrow definition ${JSON.stringify(a)}`);
+  }
+
+  let p1 = applyTransformations(start, startTransformations);
+  let p2 = applyTransformations(end, endTransformations);
+
+  return new Arrow(p1, p2);
 }
 
 /**
@@ -206,6 +253,20 @@ export class Visualizer {
     }
   }
 
+  private addArrows() {
+    if (!this.options.arrows) {
+      return;
+    }
+
+    this.options.arrows.forEach(arrow => {
+      try {
+        this.scene.add(createArrow(arrow, this.puzzleGeometry));
+      } catch {
+        console.warn(`Invalid arrow ${JSON.stringify(arrow)}`);
+      }
+    });
+  }
+
   setPuzzleOptions(options: PuzzleOptions) {
     this.options = { ...getDefaultOptions(this.type), ...options };
 
@@ -217,6 +278,7 @@ export class Visualizer {
     this.scene.clear();
     this.scene.add(this.puzzleGeometry.group);
 
+    this.addArrows();
     this.applyColors();
   }
 

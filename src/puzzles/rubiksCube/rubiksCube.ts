@@ -8,6 +8,7 @@ import { makeGrid } from "../../geometry/grid";
 export class RubiksCube {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: Group };
 
   private size: number;
 
@@ -50,6 +51,15 @@ export class RubiksCube {
     this.B.translate([0, 0, halfWidth]);
 
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
+
+    this.faces = {
+      U: this.U,
+      R: this.R,
+      F: this.F,
+      D: this.D,
+      L: this.L,
+      B: this.B,
+    }
 
     this.group = new Group(this.stickers);
   }

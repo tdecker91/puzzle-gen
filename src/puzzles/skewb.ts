@@ -6,11 +6,11 @@ import { IColor } from "../geometry/color";
 import { vec3 } from "gl-matrix";
 import { Plane } from "../geometry/plane";
 import { Triangle } from "../geometry/triangle";
-import { chunkArray } from "../utils/arrays";
 
 export class Skewb {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: Group };
 
   private U: Group;
   private R: Group;
@@ -37,6 +37,15 @@ export class Skewb {
     this.L = orange;
     this.B = green;
     this.D = white;
+
+    this.faces = {
+      top: this.U,
+      front: this.F,
+      right: this.R,
+      back: this.B,
+      left: this.L,
+      bottom: this.D,
+    }
 
     red.translate([0, 0, halfWidth]);
     red.rotate(Math.PI, [1, 0, 0]);

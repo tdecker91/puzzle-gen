@@ -13,10 +13,12 @@ import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
 import { makeGrid, makeRow } from "./../../geometry/grid";
+import { calculateCentroid } from "../../math/utils";
 
 export class RubiksCubeTopLayer {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: Group };
 
   private size: number;
   private stickerWidth: number;
@@ -62,6 +64,13 @@ export class RubiksCubeTopLayer {
 
     this.stickers = [this.U, this.R, this.F, this.B, this.L];
     this.group = new Group(this.stickers);
+    this.faces = {
+      U: this.U,
+      R: this.R,
+      F: this.F,
+      L: this.L,
+      B: this.B
+    }
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {
@@ -99,6 +108,7 @@ export class RubiksCubeTopLayer {
           radians
         );
       });
+      sticker.centroid = calculateCentroid(sticker.vertices)
     });
   }
 }

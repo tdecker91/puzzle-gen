@@ -18,6 +18,7 @@ import { chunkArray } from "../../utils/arrays";
 export class RubiksCubeNet {
   stickers: Object3D[];
   group: Group;
+  faces: { [face: string]: Group };
 
   private size: number;
 
@@ -57,6 +58,15 @@ export class RubiksCubeNet {
     this.B.translate([2 * cubeWidth, 0, 0]);
 
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
+
+    this.faces = {
+      U: this.U,
+      R: this.R,
+      F: this.F,
+      D: this.D,
+      L: this.L,
+      B: this.B,
+    }
 
     this.group = new Group(this.stickers);
     this.group.translate([-cubeWidth / 4, 0, 0]);

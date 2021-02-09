@@ -18,6 +18,7 @@ export interface Sqaure1Piece {
 export abstract class Square1Builder {
   public pieces: Object3D[];
   public group: Group;
+  public faces: { [face: string]: Group }
 
   // Numbers used to calculate geometry
   protected sideLength: number;

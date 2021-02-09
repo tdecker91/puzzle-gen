@@ -94,9 +94,9 @@ export function createMarkers(color: IColor): SVGDefsElement {
     "marker"
   );
   arrowHeadMarker.setAttributeNS(null, "id", "arrowhead");
-  arrowHeadMarker.setAttributeNS(null, "markerWidth", "5");
+  arrowHeadMarker.setAttributeNS(null, "markerWidth", "4");
   arrowHeadMarker.setAttributeNS(null, "markerHeight", "3.5");
-  arrowHeadMarker.setAttributeNS(null, "refX", "0");
+  arrowHeadMarker.setAttributeNS(null, "refX", "3");
   arrowHeadMarker.setAttributeNS(null, "refY", "1.75");
   arrowHeadMarker.setAttributeNS(null, "orient", "auto");
 
@@ -104,7 +104,7 @@ export function createMarkers(color: IColor): SVGDefsElement {
     "http://www.w3.org/2000/svg",
     "polygon"
   );
-  arrowHeadPolygon.setAttributeNS(null, "points", "0 0, 5 1.75, 0 3.5");
+  arrowHeadPolygon.setAttributeNS(null, "points", "0 0, 4 1.75, 0 3.5");
   arrowHeadPolygon.setAttributeNS(null, "fill", color.value);
 
   defs.appendChild(arrowHeadMarker);

@@ -3,14 +3,12 @@ import { IColor } from "./../geometry/color";
 import { GREEN, RED, BLUE, YELLOW, BLACK } from "./colors";
 import { TriangleLattice } from "./../geometry/triangleLattice";
 import { Group } from "./../geometry/group";
-import { Object3D } from "./../geometry/object3d";
 import { SQRT_3 } from "../math/constants";
-import { chunkArray } from "../utils/arrays";
 
 const DEG_60_RADIANS = (60 * Math.PI) / 180;
 
 export class PyraminxNet {
-  faces: Object3D[];
+  faces: { [face: string]: TriangleLattice };
   group: Group;
 
   private size: number;
@@ -49,9 +47,14 @@ export class PyraminxNet {
     B.translate([0, inDiameter + faceSpacing, 0]);
     B.rotate(-2 * DEG_60_RADIANS, [0, 0, 1]);
 
-    this.faces = [U, R, L, B];
+    this.faces = {
+      top: this.U,
+      right: this.R,
+      left: this.L,
+      bottom: this.B,
+    };
 
-    this.group = new Group(this.faces);
+    this.group = new Group([U, R, L, B]);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {

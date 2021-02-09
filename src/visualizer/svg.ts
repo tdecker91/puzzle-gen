@@ -50,6 +50,13 @@ export interface SVGVisualizerOptions<T> {
    * change the default arrow color for drawing arrows
    */
   arrowColor?: IColor;
+
+  /**
+   * change the default arrow stroke width
+   * 
+   * @default 0.03
+   */
+  arrowStrokeWidth?: number;
 }
 
 const defaultOptions: SVGVisualizerOptions<any> = {
@@ -61,6 +68,7 @@ const defaultOptions: SVGVisualizerOptions<any> = {
   svgHeight: 1.8,
   strokeWidth: 0.02,
   arrowColor: GREY,
+  arrowStrokeWidth: .03
 };
 
 /**
@@ -135,6 +143,7 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
     const svgElement: SVGElement = renderer.svgElement;
 
     renderer.strokeWidth = "" + this.svgOptions.strokeWidth;
+    renderer.arrowStrokeWidth = "" + this.svgOptions.arrowStrokeWidth;
     svgElement.setAttributeNS(null, "width", this.svgOptions.width.toString());
     svgElement.setAttributeNS(null, "height", this.svgOptions.width.toString());
 

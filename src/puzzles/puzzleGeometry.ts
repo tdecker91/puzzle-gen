@@ -1,3 +1,5 @@
+import { Geometry } from './../geometry/geometry';
+import { Object3D } from './../geometry/object3d';
 import { IColor } from "../geometry/color";
 import { Group } from "../geometry/group";
 
@@ -10,5 +12,8 @@ export interface PuzzleGeometry {
    */
   group: Group;
 
+  faces: { [face: string]: Group | Geometry };
+
   setColors: (colors: { [face: string]: IColor[] }) => void;
+
 }

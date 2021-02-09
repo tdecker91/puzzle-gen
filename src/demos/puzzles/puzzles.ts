@@ -1,35 +1,16 @@
+import { CubeOptions } from './../../../dist/lib/visualizer/interface.d';
 import { SVGVisualizerOptions } from './../../visualizer/svg';
 import { VisualizerType } from './../../visualizer/enum';
-import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
-import { Camera } from './../../rendering/camera';
-import { Scene } from '../../rendering/scene';
-import { Group } from '../../geometry/group';
 import { SVG } from '../../visualizer/svg';
-
-const width: number = 250;
-const height: number = 250;
-const minx: number = -.9;
-const miny: number = -.9;
-const svgwidth: number = 1.8;
-const svgheight: number = 1.8;
-const strokeWidth: number = .02;
-
-function renderGroup(elementId: string, group: Group) {
-  let camera: Camera = new Camera();
-  let scene = new Scene();
-  let renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
-  renderer.strokeWidth = "" + strokeWidth;
-
-  scene.add(group);
-
-  document.getElementById(elementId).appendChild(renderer.domElement);
-  renderer.render(scene, camera);
-}
 
 function renderDefault() {
   const options: SVGVisualizerOptions<any> = {
     width: 250,
-    height: 250
+    height: 250,
+    puzzle: {
+      scale: 1,
+      translation: { x: 0, y: 0, z: 0 }
+    }
   }
   SVG("#cube", VisualizerType.CUBE, options);
   SVG("#megaminx", VisualizerType.MEGAMINX, options);
@@ -45,14 +26,14 @@ function renderDefault() {
 }
 
 function renderScrambled() {
-  const options: SVGVisualizerOptions<any> = {
+  const options: SVGVisualizerOptions<CubeOptions> = {
     width: 250,
-    height: 250
+    height: 250,
   };
 
   const cubeAlg = "F' D U F F L L D D B F L' U' F F R R F' D' B F' D D U R R F F U U B R' B B"
   const megaminxAlg = [
-    'R++','D++','R++','D--','R--','D++','R--','D++', 'R--','D++','U',
+    'R++', 'D++','R++','D--','R--','D++','R--','D++', 'R--','D++','U',
     'D++','R--','D++','R++','D++','R--','D--','R--','D--','R--','U',
     'R--','D--','R++','D++','R++','D--','R--','D--','R++','D--','U\'',
     'R--','D++','R--','D--','R++','D--','R++','D++','R--','D++','U\''
