@@ -66,7 +66,7 @@ export class RubiksCubeNet {
       D: this.D,
       L: this.L,
       B: this.B,
-    }
+    };
 
     this.group = new Group(this.stickers);
     this.group.translate([-cubeWidth / 4, 0, 0]);

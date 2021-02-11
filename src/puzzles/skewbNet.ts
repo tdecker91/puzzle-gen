@@ -55,7 +55,7 @@ export class SkewbNet {
       back: this.B,
       left: this.L,
       bottom: this.D,
-    }
+    };
 
     this.stickers = [red, yellow, blue, orange, green, white];
     this.group = new Group(this.stickers);

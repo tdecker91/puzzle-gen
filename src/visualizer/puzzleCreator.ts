@@ -1,3 +1,4 @@
+import { MegaminxTop } from "./../puzzles/megaminxTop";
 import { RubiksCubeTopLayer } from "./../puzzles/rubiksCube/rubiksCubeTop";
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
@@ -62,6 +63,15 @@ export function createMegaminxNet(
   options: MegaminxOptions = {}
 ): [MegaminxNet, MegaminxSimulator] {
   const geometry = new MegaminxNet(options.size);
+  const simulator = new MegaminxSimulator();
+
+  return [geometry, simulator];
+}
+
+export function createMegaminxTop(
+  options: MegaminxOptions = {}
+): [MegaminxTop, MegaminxSimulator] {
+  const geometry = new MegaminxTop();
   const simulator = new MegaminxSimulator();
 
   return [geometry, simulator];

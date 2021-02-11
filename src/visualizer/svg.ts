@@ -53,7 +53,7 @@ export interface SVGVisualizerOptions<T> {
 
   /**
    * change the default arrow stroke width
-   * 
+   *
    * @default 0.03
    */
   arrowStrokeWidth?: number;
@@ -68,7 +68,7 @@ const defaultOptions: SVGVisualizerOptions<any> = {
   svgHeight: 1.8,
   strokeWidth: 0.02,
   arrowColor: GREY,
-  arrowStrokeWidth: .03
+  arrowStrokeWidth: 0.03,
 };
 
 /**
@@ -134,7 +134,7 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
 
   /**
    * Dynamically update the svg element options
-   * 
+   *
    * @param options - options for the svg element that is being rendered to
    */
   setSvgOptions(options: SVGVisualizerOptions<T>) {

@@ -166,8 +166,8 @@ export class Square1 extends Square1Builder {
 
     this.faces = {
       top: topLayer,
-      bottom: bottomLayer
-    }
+      bottom: bottomLayer,
+    };
 
     return pieces;
   }

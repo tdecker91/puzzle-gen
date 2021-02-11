@@ -142,8 +142,8 @@ export class Square1Net extends Square1Builder {
 
     this.faces = {
       top: topLayer,
-      bottom: bottomLayer
-    }
+      bottom: bottomLayer,
+    };
 
     pieces.push(m);
 

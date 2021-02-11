@@ -45,7 +45,7 @@ export class Skewb {
       back: this.B,
       left: this.L,
       bottom: this.D,
-    }
+    };
 
     red.translate([0, 0, halfWidth]);
     red.rotate(Math.PI, [1, 0, 0]);

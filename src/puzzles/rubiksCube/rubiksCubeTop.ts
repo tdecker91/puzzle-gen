@@ -69,8 +69,8 @@ export class RubiksCubeTopLayer {
       R: this.R,
       F: this.F,
       L: this.L,
-      B: this.B
-    }
+      B: this.B,
+    };
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {
@@ -108,7 +108,7 @@ export class RubiksCubeTopLayer {
           radians
         );
       });
-      sticker.centroid = calculateCentroid(sticker.vertices)
+      sticker.centroid = calculateCentroid(sticker.vertices);
     });
   }
 }

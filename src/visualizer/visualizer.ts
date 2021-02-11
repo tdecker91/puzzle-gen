@@ -1,6 +1,6 @@
-import { Square1 } from './../puzzles/square1/square1';
-import { Geometry } from './../geometry/geometry';
-import { Arrow } from './../geometry/arrow';
+import { Square1 } from "./../puzzles/square1/square1";
+import { Geometry } from "./../geometry/geometry";
+import { Arrow } from "./../geometry/arrow";
 import { getDefaultOptions } from "./options";
 import { mat4, quat, vec3 } from "gl-matrix";
 import { MASK_COLOR } from "./../puzzles/colors";
@@ -26,6 +26,7 @@ import {
   createCubeTop,
   createMegaminx,
   createMegaminxNet,
+  createMegaminxTop,
   createPyraminx,
   createPyraminxNet,
   createSkewb,
@@ -35,7 +36,7 @@ import {
 } from "./puzzleCreator";
 import { IColor } from "../geometry/color";
 import { applyTransformations } from "../rendering/utils";
-import { Group } from '../geometry/group';
+import { Group } from "../geometry/group";
 
 /**
  * Applies a color scheme to simulator values
@@ -76,6 +77,8 @@ function puzzleFactory<T extends PuzzleOptions>(
       return createMegaminx(options as MegaminxOptions);
     case VisualizerType.MEGAMINX_NET:
       return createMegaminxNet(options as MegaminxOptions);
+    case VisualizerType.MEGAMINX_TOP:
+      return createMegaminxTop(options as MegaminxOptions);
     case VisualizerType.PYRAMINX:
       return createPyraminx(options as PyraminxOptions);
     case VisualizerType.PYRAMINX_NET:
@@ -109,7 +112,7 @@ function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
 
   let start: vec3;
   let end: vec3;
-  
+
   // Get the stickers on the face
   if (startFace instanceof Geometry && endFace instanceof Geometry) {
     start = startFace.faces[a.start.sticker]?.centroid;
@@ -122,8 +125,12 @@ function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
       start = (startFace as Group).objects[a.start.sticker]?.centroid;
       end = (endFace as Group).objects[a.end.sticker]?.centroid;
     }
-    startTransformations.unshift((startFace as Group).objects[a.start.sticker]?.matrix);
-    endTransformations.unshift((endFace as Group).objects[a.end.sticker]?.matrix);
+    startTransformations.unshift(
+      (startFace as Group).objects[a.start.sticker]?.matrix
+    );
+    endTransformations.unshift(
+      (endFace as Group).objects[a.end.sticker]?.matrix
+    );
   }
 
   if (!start || !end) {
@@ -258,7 +265,7 @@ export class Visualizer {
       return;
     }
 
-    this.options.arrows.forEach(arrow => {
+    this.options.arrows.forEach((arrow) => {
       try {
         this.scene.add(createArrow(arrow, this.puzzleGeometry));
       } catch {
@@ -275,11 +282,12 @@ export class Visualizer {
       this.options
     );
     this.buildGroupMatrix();
+    this.applyColors();
+
     this.scene.clear();
     this.scene.add(this.puzzleGeometry.group);
 
     this.addArrows();
-    this.applyColors();
   }
 
   render() {

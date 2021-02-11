@@ -1,5 +1,5 @@
-import { mat4 } from 'gl-matrix';
-import { Geometry } from './../geometry/geometry';
+import { mat4 } from "gl-matrix";
+import { Geometry } from "./../geometry/geometry";
 import { Face } from "./../geometry/face";
 import { IColor } from "./../geometry/color";
 import {
@@ -41,7 +41,7 @@ function getLayerWidth(length: number, layers: number): number {
 }
 
 export class MegaminxNet {
-  faces: { [face: string]: Geometry };;
+  faces: { [face: string]: Geometry };
   group: Group;
 
   private layers: number;
@@ -130,17 +130,14 @@ export class MegaminxNet {
     let bottomTransforms = mat4.create();
     mat4.rotate(bottomTransforms, bottomTransforms, -DEG_72_RADIANS, [0, 0, 1]);
     mat4.translate(bottomTransforms, bottomTransforms, [0, 2 * ind, 0]);
-    mat4.rotate(bottomTransforms, bottomTransforms, 2 * DEG_72_RADIANS, [0, 0, 1]);
+    mat4.rotate(bottomTransforms, bottomTransforms, 2 * DEG_72_RADIANS, [
+      0,
+      0,
+      1,
+    ]);
     mat4.translate(bottomTransforms, bottomTransforms, [0, -ind, 0]);
 
-    [
-      this.d,
-      this.bl,
-      this.BL,
-      this.BR,
-      this.br,
-      this.b,
-    ].forEach(face => {
+    [this.d, this.bl, this.BL, this.BR, this.br, this.b].forEach((face) => {
       mat4.mul(face.matrix, bottomTransforms, face.matrix);
     });
 
@@ -157,7 +154,7 @@ export class MegaminxNet {
       BL: this.BL,
       bl: this.bl,
       b: this.b,
-    }
+    };
 
     this.group = new Group([
       this.U,
@@ -171,7 +168,7 @@ export class MegaminxNet {
       this.BL,
       this.BR,
       this.br,
-      this.b
+      this.b,
     ]);
     this.group.scale([0.33, 0.33, 0.33]);
     this.group.translate([-1.75 * sideLength, 0, 0]);

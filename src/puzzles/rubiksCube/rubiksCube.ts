@@ -59,7 +59,7 @@ export class RubiksCube {
       D: this.D,
       L: this.L,
       B: this.B,
-    }
+    };
 
     this.group = new Group(this.stickers);
   }

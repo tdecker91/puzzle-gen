@@ -134,6 +134,7 @@ export function getDefaultOptions(type: VisualizerType): PuzzleOptions {
       return { ...defaultCubeOptions, rotations: null };
     case VisualizerType.MEGAMINX:
     case VisualizerType.MEGAMINX_NET:
+    case VisualizerType.MEGAMINX_TOP:
       return defaultMegaminxOptions;
     case VisualizerType.PYRAMINX:
       return defaultPyraminxOptions;

@@ -74,6 +74,7 @@ export class Megaminx {
     this.b = new DividedPentagon(ORANGE, layers, length, layerWidth);
 
     this.F.translate([0, 0, megaminxRadius]);
+
     this.b.rotate(Math.PI, [0, 0, 1]);
     this.b.rotate(Math.PI, [0, 1, 0]);
     this.b.translate([0, 0, megaminxRadius]);
@@ -150,7 +151,7 @@ export class Megaminx {
       BL: this.BL,
       bl: this.bl,
       b: this.b,
-    }
+    };
 
     this.group = new Group(this.stickers);
   }

@@ -23,6 +23,7 @@ function renderDefault() {
   SVG("#skewb-net", VisualizerType.SKEWB_NET, options);
   SVG("#square1-net", VisualizerType.SQUARE1_NET, options);
   SVG("#cube-top", VisualizerType.CUBE_TOP, options);
+  SVG("#mega-top", VisualizerType.MEGAMINX_TOP, options);
 }
 
 function renderScrambled() {
@@ -64,6 +65,7 @@ function renderScrambled() {
   SVG("#skewb-net-scrambled", VisualizerType.SKEWB_NET, {...options, puzzle: { alg: skewbAlg }});
   SVG("#square1-scrambled", VisualizerType.SQUARE1, {...options, puzzle: { alg: square1Alg }});
   SVG("#square1-net-scrambled", VisualizerType.SQUARE1_NET, {...options, puzzle: { alg: square1Alg }});
+  SVG("#mega-top-scrambled", VisualizerType.MEGAMINX_TOP, {...options, puzzle: { alg: megaminxAlg }});
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {

@@ -4,6 +4,7 @@ export enum VisualizerType {
   CUBE_TOP = "cube-top",
   MEGAMINX = "megaminx",
   MEGAMINX_NET = "megaminx-net",
+  MEGAMINX_TOP = "megaminx-top",
   PYRAMINX = "pyraminx",
   PYRAMINX_NET = "pyraminx-net",
   SKEWB = "skewb",

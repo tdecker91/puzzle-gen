@@ -3,8 +3,8 @@ import { IColor } from "../geometry/color";
 export type ColorScheme = { [face: string]: IColor };
 
 export type ArrowDefinition = {
-  start: { face: string, sticker: number },
-  end: { face: string, sticker: number }
+  start: { face: string; sticker: number };
+  end: { face: string; sticker: number };
 };
 
 export interface PuzzleOptions {
@@ -120,7 +120,7 @@ export interface PuzzleOptions {
   translation?: { x: number; y: number; z: number };
 
   /**
-   * Draw arrows on the face of the puzzle 
+   * Draw arrows on the face of the puzzle
    */
   arrows?: ArrowDefinition[];
 }
