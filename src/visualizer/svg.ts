@@ -5,7 +5,7 @@ import { Visualizer } from "./visualizer";
 import { PuzzleOptions, validColor } from "./interface";
 import { IColor } from "../geometry/color";
 
-export interface SVGVisualizerOptions<T> {
+export interface SVGVisualizerOptions {
   /**
    * Width of the svg element in pixels
    */
@@ -44,7 +44,7 @@ export interface SVGVisualizerOptions<T> {
   /**
    * puzzle options for the cube to draw
    */
-  puzzle?: T;
+  puzzle?: PuzzleOptions;
 
   /**
    * change the default arrow color for drawing arrows
@@ -59,7 +59,7 @@ export interface SVGVisualizerOptions<T> {
   arrowStrokeWidth?: number;
 }
 
-const defaultOptions: SVGVisualizerOptions<any> = {
+const defaultOptions: SVGVisualizerOptions = {
   width: 500,
   height: 500,
   minx: -0.9,
@@ -74,21 +74,21 @@ const defaultOptions: SVGVisualizerOptions<any> = {
 /**
  * Visualize puzzles with svg in a DOM
  */
-export function SVG<T extends PuzzleOptions>(
+export function SVG(
   element: Element | string,
   type: VisualizerType,
-  options: SVGVisualizerOptions<T> = {}
+  options: SVGVisualizerOptions = {}
 ): Visualizer {
   return new SvgVisualizer(element, type, options);
 }
 
-export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
-  private svgOptions: SVGVisualizerOptions<T>;
+export class SvgVisualizer extends Visualizer {
+  private svgOptions: SVGVisualizerOptions;
 
   constructor(
     element: Element | string,
     type: VisualizerType,
-    options: SVGVisualizerOptions<T> = {}
+    options: SVGVisualizerOptions = {}
   ) {
     options = { ...defaultOptions, ...options };
 
@@ -137,7 +137,7 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
    *
    * @param options - options for the svg element that is being rendered to
    */
-  setSvgOptions(options: SVGVisualizerOptions<T>) {
+  setSvgOptions(options: SVGVisualizerOptions) {
     this.svgOptions = { ...defaultOptions, ...options };
     validateSvgOptions(this.svgOptions);
 
@@ -159,7 +159,7 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
   }
 }
 
-function validateSvgOptions(options: SVGVisualizerOptions<any>) {
+function validateSvgOptions(options: SVGVisualizerOptions) {
   if (!Number.isInteger(options.width)) {
     console.warn(`invalid svg width ${options.width}. Must be a whole number`);
     options.width = defaultOptions.width;

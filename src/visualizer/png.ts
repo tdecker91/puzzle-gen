@@ -3,9 +3,9 @@ import { VisualizerType } from "./enum";
 import { PuzzleOptions } from "./interface";
 import { SVG, SVGVisualizerOptions } from "./svg";
 
-export interface PNGVisualizerOptions<T> extends SVGVisualizerOptions<T> {}
+export interface PNGVisualizerOptions extends SVGVisualizerOptions {}
 
-const defaultOptions: PNGVisualizerOptions<any> = {
+const defaultOptions: PNGVisualizerOptions = {
   width: 500,
   height: 500,
   minx: -0.9,
@@ -20,10 +20,10 @@ const defaultOptions: PNGVisualizerOptions<any> = {
 /**
  * Creates PNG element
  */
-export function PNG<T extends PuzzleOptions>(
+export function PNG(
   container: Element | string,
   type: VisualizerType,
-  options: PNGVisualizerOptions<T> = {}
+  options: PNGVisualizerOptions = {}
 ) {
 
   if (typeof container === "string") {

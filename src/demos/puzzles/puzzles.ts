@@ -1,10 +1,9 @@
-import { CubeOptions } from './../../../dist/lib/visualizer/interface.d';
 import { SVGVisualizerOptions } from './../../visualizer/svg';
 import { VisualizerType } from './../../visualizer/enum';
-import { PNG } from '../../visualizer/png';
+import { PNG, PNGVisualizerOptions } from '../../visualizer/png';
 
 function renderDefault() {
-  const options: SVGVisualizerOptions<any> = {
+  const options: SVGVisualizerOptions = {
     width: 250,
     height: 250,
     puzzle: {
@@ -27,7 +26,7 @@ function renderDefault() {
 }
 
 function renderScrambled() {
-  const options: SVGVisualizerOptions<CubeOptions> = {
+  const options: SVGVisualizerOptions = {
     width: 250,
     height: 250,
   };
