@@ -162,7 +162,11 @@ export function validatePuzzleOptions(options: PuzzleOptions) {
     } else {
       Object.keys(options.scheme).forEach((face) => {
         const faceColor = options.scheme[face];
-        if (faceColor == null || typeof faceColor !== "object" || !faceColor.value) {
+        if (
+          faceColor == null ||
+          typeof faceColor !== "object" ||
+          !faceColor.value
+        ) {
           console.warn(
             `Invalid scheme color ${faceColor}. must be an type IColor`
           );
@@ -198,7 +202,10 @@ export function validatePuzzleOptions(options: PuzzleOptions) {
   }
 
   if (options.stickerColors) {
-    if (typeof options.stickerColors !== "object" || Array.isArray(options.stickerColors)) {
+    if (
+      typeof options.stickerColors !== "object" ||
+      Array.isArray(options.stickerColors)
+    ) {
       console.warn(
         `Invalid stickerColors ${options.stickerColors}. stickerColors must be an object`
       );

@@ -1,4 +1,3 @@
-import { IColor } from "./../../dist/lib/geometry/color.d";
 import { vec3 } from "gl-matrix";
 import { calculateCentroid } from "../math/utils";
 import { Object3D } from "./object3d";

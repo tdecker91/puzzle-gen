@@ -1,9 +1,9 @@
-import { IColor } from "./../../dist/lib/geometry/color.d";
 import { BLACK, GREY } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { CustomSVGRenderer } from "./../rendering/customSvgRenderer";
 import { Visualizer } from "./visualizer";
 import { PuzzleOptions, validColor } from "./interface";
+import { IColor } from "../geometry/color";
 
 export interface SVGVisualizerOptions<T> {
   /**
@@ -140,7 +140,7 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
   setSvgOptions(options: SVGVisualizerOptions<T>) {
     this.svgOptions = { ...defaultOptions, ...options };
     validateSvgOptions(this.svgOptions);
-    
+
     const renderer: CustomSVGRenderer = this.renderer as CustomSVGRenderer;
     const svgElement: SVGElement = renderer.svgElement;
 
@@ -166,7 +166,9 @@ function validateSvgOptions(options: SVGVisualizerOptions<any>) {
   }
 
   if (!Number.isInteger(options.height)) {
-    console.warn(`invalid svg height ${options.height}. Must be a whole number`);
+    console.warn(
+      `invalid svg height ${options.height}. Must be a whole number`
+    );
     options.width = defaultOptions.height;
   }
 

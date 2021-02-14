@@ -2,14 +2,14 @@ import { BLACK } from "../../src/puzzles/colors";
 import { validatePuzzleOptions } from "../../src/visualizer/interface";
 
 beforeEach(() => {
-  global.console = {warn: jest.fn()} as any;
+  global.console = { warn: jest.fn() } as any;
 });
 
 describe("Puzzle Options alg", () => {
   it("alg can be string", () => {
     let options: any = {
-      alg: ""
-    }
+      alg: "",
+    };
 
     validatePuzzleOptions(options);
 
@@ -19,8 +19,8 @@ describe("Puzzle Options alg", () => {
 
   it("alg cannot be number", () => {
     let options: any = {
-      alg: 1
-    }
+      alg: 1,
+    };
 
     validatePuzzleOptions(options);
 
@@ -30,8 +30,8 @@ describe("Puzzle Options alg", () => {
 
   it("alg cannot be object", () => {
     let options: any = {
-      alg: {}
-    }
+      alg: {},
+    };
 
     validatePuzzleOptions(options);
 
@@ -43,8 +43,8 @@ describe("Puzzle Options alg", () => {
 describe("Puzzle Options case", () => {
   it("case can be string", () => {
     let options: any = {
-      case: ""
-    }
+      case: "",
+    };
 
     validatePuzzleOptions(options);
 
@@ -54,8 +54,8 @@ describe("Puzzle Options case", () => {
 
   it("case cannot be number", () => {
     let options: any = {
-      case: 1
-    }
+      case: 1,
+    };
 
     validatePuzzleOptions(options);
 
@@ -65,8 +65,8 @@ describe("Puzzle Options case", () => {
 
   it("case cannot be object", () => {
     let options: any = {
-      case: {}
-    }
+      case: {},
+    };
 
     validatePuzzleOptions(options);
 
@@ -76,12 +76,12 @@ describe("Puzzle Options case", () => {
 });
 
 describe("Puzzle Options scheme", () => {
-  it('passes valid scheme', () => {
+  it("passes valid scheme", () => {
     let options: any = {
       scheme: {
-        U: BLACK
-      }
-    }
+        U: BLACK,
+      },
+    };
 
     validatePuzzleOptions(options);
 
@@ -89,12 +89,12 @@ describe("Puzzle Options scheme", () => {
     expect(console.warn).not.toBeCalled();
   });
 
-  it('scheme properties must be object', () => {
+  it("scheme properties must be object", () => {
     let options: any = {
       scheme: {
-        U: "test"
-      }
-    }
+        U: "test",
+      },
+    };
 
     validatePuzzleOptions(options);
 
@@ -103,7 +103,7 @@ describe("Puzzle Options scheme", () => {
 
     (<any>console.warn).mockClear();
 
-    options.scheme.U = 1
+    options.scheme.U = 1;
 
     validatePuzzleOptions(options);
 
@@ -112,7 +112,7 @@ describe("Puzzle Options scheme", () => {
 
     (<any>console.warn).mockClear();
 
-    options.scheme.U = [1]
+    options.scheme.U = [1];
 
     validatePuzzleOptions(options);
 
@@ -129,10 +129,10 @@ describe("Puzzle Options scheme", () => {
     expect(console.warn).toBeCalled();
   });
 
-  it('scheme must be object', () => {
+  it("scheme must be object", () => {
     let options: any = {
-      scheme: "test"
-    }
+      scheme: "test",
+    };
 
     validatePuzzleOptions(options);
     expect(options.scheme).toEqual({});
@@ -156,9 +156,9 @@ describe("Puzzle Options mask", () => {
   it("mask must be an object", () => {
     let options: any = {
       mask: {
-        U: [1]
-      }
-    }
+        U: [1],
+      },
+    };
 
     validatePuzzleOptions(options);
     expect(console.warn).not.toBeCalled();
@@ -185,9 +185,9 @@ describe("Puzzle Options mask", () => {
   it("mask properties must be arrays of numbers", () => {
     let options: any = {
       mask: {
-        U: "test"
-      }
-    }
+        U: "test",
+      },
+    };
 
     validatePuzzleOptions(options);
     expect(options.mask.U).toEqual([]);
@@ -229,9 +229,9 @@ describe("Puzzle Options stickerColors", () => {
   it("stickerColors must be an object", () => {
     let options: any = {
       stickerColors: {
-        U: [BLACK]
-      }
-    }
+        U: [BLACK],
+      },
+    };
 
     validatePuzzleOptions(options);
     expect(console.warn).not.toBeCalled();
@@ -258,9 +258,9 @@ describe("Puzzle Options stickerColors", () => {
   it("stickerColor properties must be array of colors", () => {
     let options: any = {
       stickerColors: {
-        U: null
-      }
-    }
+        U: null,
+      },
+    };
 
     validatePuzzleOptions(options);
     expect(options.stickerColors.U).toEqual([]);
@@ -301,9 +301,13 @@ describe("Puzzle Options stickerColors", () => {
 describe("Puzzle Options rotations", () => {
   it("rotations must be array of rotations", () => {
     let options: any = {
-      rotations: [{
-        x: 0, y: 1.2, z: 0
-      }]
+      rotations: [
+        {
+          x: 0,
+          y: 1.2,
+          z: 0,
+        },
+      ],
     };
 
     validatePuzzleOptions(options);
@@ -334,19 +338,19 @@ describe("Puzzle Options rotations", () => {
     expect(console.warn).toBeCalled();
 
     (<any>console.warn).mockClear();
-    options.rotations = [{x: "test"}];
+    options.rotations = [{ x: "test" }];
     validatePuzzleOptions(options);
     expect(options.rotations).toEqual([]);
     expect(console.warn).toBeCalled();
 
     (<any>console.warn).mockClear();
-    options.rotations = [{x: []}];
+    options.rotations = [{ x: [] }];
     validatePuzzleOptions(options);
     expect(options.rotations).toEqual([]);
     expect(console.warn).toBeCalled();
 
     (<any>console.warn).mockClear();
-    options.rotations = [{x: {}}];
+    options.rotations = [{ x: {} }];
     validatePuzzleOptions(options);
     expect(options.rotations).toEqual([]);
     expect(console.warn).toBeCalled();
@@ -356,7 +360,7 @@ describe("Puzzle Options rotations", () => {
 describe("Puzzle Options scale", () => {
   it("scale must be a number", () => {
     let options: any = {
-      scale: 2
+      scale: 2,
     };
 
     validatePuzzleOptions(options);
@@ -391,7 +395,7 @@ describe("Puzzle Options scale", () => {
 describe("Puzzle Options translation", () => {
   it("translation must be valid translation object", () => {
     let options: any = {
-      translation: { x: 1, y: 2.3, z: 3 }
+      translation: { x: 1, y: 2.3, z: 3 },
     };
 
     validatePuzzleOptions(options);
@@ -420,10 +424,12 @@ describe("Puzzle Options translation", () => {
 describe("Puzzle Options arrows", () => {
   it("arrows must be valid array of arrows", () => {
     let options: any = {
-      arrows: [{
-        start: { face: "U", sticker: 1 },
-        end: { face: "U", sticker: 2 }
-      }]
+      arrows: [
+        {
+          start: { face: "U", sticker: 1 },
+          end: { face: "U", sticker: 2 },
+        },
+      ],
     };
 
     validatePuzzleOptions(options);

@@ -1,5 +1,4 @@
-import { YELLOW, BLACK } from "./../puzzles/colors";
-import { IColor } from "./../../dist/lib/geometry/color.d";
+import { BLACK } from "./../puzzles/colors";
 import { Arrow } from "./../geometry/arrow";
 import { IFace, Face } from "./../geometry/face";
 import { Camera } from "./camera";
@@ -10,7 +9,6 @@ import { Object3D } from "../geometry/object3d";
 import { Group } from "../geometry/group";
 import {
   createSVGElement,
-  clearSVG,
   createPolygonElement,
   updatePolygonElement,
   createArrowLineElement,
@@ -18,6 +16,7 @@ import {
 } from "../svg/svg";
 import { Renderer } from "./renderer";
 import { applyTransformations } from "./utils";
+import { IColor } from "../geometry/color";
 
 /**
  * A renderer that renders a scene viewed by a camera to an svg element.

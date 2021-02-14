@@ -1,7 +1,7 @@
 import { CubeOptions } from './../../../dist/lib/visualizer/interface.d';
 import { SVGVisualizerOptions } from './../../visualizer/svg';
 import { VisualizerType } from './../../visualizer/enum';
-import { SVG } from '../../visualizer/svg';
+import { PNG } from '../../visualizer/png';
 
 function renderDefault() {
   const options: SVGVisualizerOptions<any> = {
@@ -12,18 +12,18 @@ function renderDefault() {
       translation: { x: 0, y: 0, z: 0 }
     }
   }
-  SVG("#cube", VisualizerType.CUBE, options);
-  SVG("#megaminx", VisualizerType.MEGAMINX, options);
-  SVG("#pyraminx", VisualizerType.PYRAMINX, options);
-  SVG("#skewb", VisualizerType.SKEWB, options);
-  SVG("#square1", VisualizerType.SQUARE1, options);
-  SVG("#cube-net", VisualizerType.CUBE_NET, options);
-  SVG("#megaminx-net", VisualizerType.MEGAMINX_NET, options);
-  SVG("#pyraminx-net", VisualizerType.PYRAMINX_NET, options);
-  SVG("#skewb-net", VisualizerType.SKEWB_NET, options);
-  SVG("#square1-net", VisualizerType.SQUARE1_NET, options);
-  SVG("#cube-top", VisualizerType.CUBE_TOP, options);
-  SVG("#mega-top", VisualizerType.MEGAMINX_TOP, options);
+  PNG("#cube", VisualizerType.CUBE, options);
+  PNG("#megaminx", VisualizerType.MEGAMINX, options);
+  PNG("#pyraminx", VisualizerType.PYRAMINX, options);
+  PNG("#skewb", VisualizerType.SKEWB, options);
+  PNG("#square1", VisualizerType.SQUARE1, options);
+  PNG("#cube-net", VisualizerType.CUBE_NET, options);
+  PNG("#megaminx-net", VisualizerType.MEGAMINX_NET, options);
+  PNG("#pyraminx-net", VisualizerType.PYRAMINX_NET, options);
+  PNG("#skewb-net", VisualizerType.SKEWB_NET, options);
+  PNG("#square1-net", VisualizerType.SQUARE1_NET, options);
+  PNG("#cube-top", VisualizerType.CUBE_TOP, options);
+  PNG("#mega-top", VisualizerType.MEGAMINX_TOP, options);
 }
 
 function renderScrambled() {
@@ -54,18 +54,18 @@ function renderScrambled() {
 
   const square1Alg = "(-2,3)/(3,-1)/(3,-3)/(6,6)/(6,0)/(-2,-1)/(-4,-2)/(0,-3)/(0,-4)/(-4,5)/(-5,-2)/(2,-5)/(6,-4)/(-3,6)/(-2,2)/(3,-5)/";
 
-  SVG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg: cubeAlg }});
-  SVG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg: cubeAlg }});
-  SVG("#cube-top-scrambled", VisualizerType.CUBE_TOP, {...options, puzzle: { alg: cubeAlg }});
-  SVG("#megaminx-scrambled", VisualizerType.MEGAMINX, {...options, puzzle: { alg: megaminxAlg }});
-  SVG("#megaminx-net-scrambled", VisualizerType.MEGAMINX_NET, {...options, puzzle: { alg: megaminxAlg }});
-  SVG("#pyraminx-scrambled", VisualizerType.PYRAMINX, {...options, puzzle: { alg: pyraminxAlg }});
-  SVG("#pyraminx-net-scrambled", VisualizerType.PYRAMINX_NET, {...options, puzzle: { alg: pyraminxAlg }});
-  SVG("#skewb-scrambled", VisualizerType.SKEWB, {...options, puzzle: { alg: skewbAlg }});
-  SVG("#skewb-net-scrambled", VisualizerType.SKEWB_NET, {...options, puzzle: { alg: skewbAlg }});
-  SVG("#square1-scrambled", VisualizerType.SQUARE1, {...options, puzzle: { alg: square1Alg }});
-  SVG("#square1-net-scrambled", VisualizerType.SQUARE1_NET, {...options, puzzle: { alg: square1Alg }});
-  SVG("#mega-top-scrambled", VisualizerType.MEGAMINX_TOP, {...options, puzzle: { alg: megaminxAlg }});
+  PNG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg: cubeAlg }});
+  PNG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg: cubeAlg }});
+  PNG("#cube-top-scrambled", VisualizerType.CUBE_TOP, {...options, puzzle: { alg: cubeAlg }});
+  PNG("#megaminx-scrambled", VisualizerType.MEGAMINX, {...options, puzzle: { alg: megaminxAlg }});
+  PNG("#megaminx-net-scrambled", VisualizerType.MEGAMINX_NET, {...options, puzzle: { alg: megaminxAlg }});
+  PNG("#pyraminx-scrambled", VisualizerType.PYRAMINX, {...options, puzzle: { alg: pyraminxAlg }});
+  PNG("#pyraminx-net-scrambled", VisualizerType.PYRAMINX_NET, {...options, puzzle: { alg: pyraminxAlg }});
+  PNG("#skewb-scrambled", VisualizerType.SKEWB, {...options, puzzle: { alg: skewbAlg }});
+  PNG("#skewb-net-scrambled", VisualizerType.SKEWB_NET, {...options, puzzle: { alg: skewbAlg }});
+  PNG("#square1-scrambled", VisualizerType.SQUARE1, {...options, puzzle: { alg: square1Alg }});
+  PNG("#square1-net-scrambled", VisualizerType.SQUARE1_NET, {...options, puzzle: { alg: square1Alg }});
+  PNG("#mega-top-scrambled", VisualizerType.MEGAMINX_TOP, {...options, puzzle: { alg: megaminxAlg }});
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {
