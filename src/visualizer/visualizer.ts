@@ -15,6 +15,7 @@ import {
   PuzzleOptions,
   ColorScheme,
   ArrowDefinition,
+  validatePuzzleOptions,
 } from "./interface";
 import { Renderer } from "./../rendering/renderer";
 import { Scene } from "../rendering/scene";
@@ -220,7 +221,7 @@ export class Visualizer {
     if (this.options.rotations) {
       let matrix = mat4.create();
       this.options.rotations.forEach((rotation) => {
-        const { x, y, z } = rotation;
+        const { x = 0, y = 0, z = 0 } = rotation;
         mat4.mul(
           matrix,
           mat4.fromQuat(mat4.create(), quat.fromEuler(quat.create(), x, y, z)),
@@ -243,13 +244,10 @@ export class Visualizer {
 
     // Translate the group matrix
     if (this.options.translation) {
+      const { x = 0, y = 0, z = 0 } = this.options.translation;
       let translationMatrix = mat4.fromTranslation(
         mat4.create(),
-        vec3.fromValues(
-          this.options.translation.x,
-          this.options.translation.y,
-          this.options.translation.z
-        )
+        vec3.fromValues(x, y, z)
       );
 
       mat4.mul(
@@ -276,6 +274,7 @@ export class Visualizer {
 
   setPuzzleOptions(options: PuzzleOptions) {
     this.options = { ...getDefaultOptions(this.type), ...options };
+    validatePuzzleOptions(this.options);
 
     [this.puzzleGeometry, this.simulator] = puzzleFactory(
       this.type,

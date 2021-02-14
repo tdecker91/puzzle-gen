@@ -1,9 +1,9 @@
 import { IColor } from "./../../dist/lib/geometry/color.d";
-import { GREY } from "./../puzzles/colors";
+import { BLACK, GREY } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { CustomSVGRenderer } from "./../rendering/customSvgRenderer";
 import { Visualizer } from "./visualizer";
-import { PuzzleOptions } from "./interface";
+import { PuzzleOptions, validColor } from "./interface";
 
 export interface SVGVisualizerOptions<T> {
   /**
@@ -139,6 +139,8 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
    */
   setSvgOptions(options: SVGVisualizerOptions<T>) {
     this.svgOptions = { ...defaultOptions, ...options };
+    validateSvgOptions(this.svgOptions);
+    
     const renderer: CustomSVGRenderer = this.renderer as CustomSVGRenderer;
     const svgElement: SVGElement = renderer.svgElement;
 
@@ -154,5 +156,51 @@ export class SvgVisualizer<T extends PuzzleOptions> extends Visualizer {
     );
 
     this.render();
+  }
+}
+
+function validateSvgOptions(options: SVGVisualizerOptions<any>) {
+  if (!Number.isInteger(options.width)) {
+    console.warn(`invalid svg width ${options.width}. Must be a whole number`);
+    options.width = defaultOptions.width;
+  }
+
+  if (!Number.isInteger(options.height)) {
+    console.warn(`invalid svg height ${options.height}. Must be a whole number`);
+    options.width = defaultOptions.height;
+  }
+
+  if (!Number.isFinite(options.minx)) {
+    console.warn(`invalid svg minx ${options.minx}`);
+    options.minx = defaultOptions.minx;
+  }
+
+  if (!Number.isFinite(options.miny)) {
+    console.warn(`invalid svg miny ${options.miny}`);
+    options.minx = defaultOptions.miny;
+  }
+
+  if (!Number.isFinite(options.svgWidth)) {
+    console.warn(`invalid svgWidth ${options.svgWidth}`);
+    options.minx = defaultOptions.svgWidth;
+  }
+
+  if (!Number.isFinite(options.svgHeight)) {
+    console.warn(`invalid svgHeight ${options.svgHeight}`);
+    options.minx = defaultOptions.svgHeight;
+  }
+
+  if (!Number.isFinite(options.strokeWidth)) {
+    console.warn(`invalid strokeWidth ${options.strokeWidth}`);
+    options.minx = defaultOptions.strokeWidth;
+  }
+
+  if (!Number.isFinite(options.arrowStrokeWidth)) {
+    console.warn(`invalid arrowStrokeWidth ${options.arrowStrokeWidth}`);
+    options.minx = defaultOptions.arrowStrokeWidth;
+  }
+
+  if (options.arrowColor && !validColor(options.arrowColor)) {
+    options.arrowColor = BLACK;
   }
 }
