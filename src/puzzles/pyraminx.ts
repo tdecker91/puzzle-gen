@@ -53,7 +53,7 @@ export class Pyraminx {
       top: this.U,
       right: this.R,
       left: this.L,
-      bottom: this.B,
+      back: this.B,
     };
 
     this.group = new Group([U, L, R, B]);

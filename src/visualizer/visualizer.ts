@@ -99,6 +99,32 @@ function isSquare1(type: VisualizerType) {
   return type === VisualizerType.SQUARE1 || type === VisualizerType.SQUARE1_NET;
 }
 
+function isPyraminx(type: VisualizerType) {
+  return type === VisualizerType.PYRAMINX || type === VisualizerType.PYRAMINX_NET;
+}
+
+function isMegaminx(type: VisualizerType) {
+  return type === VisualizerType.MEGAMINX ||
+    type === VisualizerType.MEGAMINX_NET ||
+    type === VisualizerType.MEGAMINX_TOP;
+}
+
+/**
+ * Return true if we can apply simulator colors. Currently
+ * we don't simulate n-layered megaminx/pyraminx.
+ */
+function canApplySimulatorColors(type: VisualizerType, size: number) {
+  if (isPyraminx(type)) {
+    return size === 3;
+  }
+
+  if (isMegaminx(type)) {
+    return size === 2;
+  }
+
+  return true;
+}
+
 function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
   // Get the face the arrow is pointing to
   let startFace = puzzle.faces[a.start.face];
@@ -173,10 +199,26 @@ export class Visualizer {
   }
 
   private applyColors() {
-    if (this.options.stickerColors && !isSquare1(this.type)) {
+    const hasCustomColors = this.options.stickerColors && !isSquare1(this.type);
+    const canUseSimulator = canApplySimulatorColors(this.type, (<any>this.options).size);
+
+    if (hasCustomColors) {
       this.puzzleGeometry.setColors(this.options.stickerColors);
-    } else {
+    } else if (canUseSimulator) {
       this.applySimulatorColors();
+    } else {
+      // Apply scheme to puzzle geomety manually, for puzzles
+      // not supported by simulators (megaminx != 2 pyraminx != 3)
+      const faces = this.puzzleGeometry.faces;
+      Object.keys(faces).forEach(face => {
+        const stickers = faces[face];
+        const faceColor = this.options.scheme[face];
+        if (stickers instanceof Geometry) {
+          stickers.faces.forEach(f => f.color = faceColor);
+        } else if (stickers instanceof Group) {
+          stickers.objects.forEach(o => o.color = faceColor);
+        }
+      });
     }
   }
 
