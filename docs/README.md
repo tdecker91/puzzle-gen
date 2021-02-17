@@ -43,8 +43,6 @@ Here are some examples of what the library is capable of.
 > # npm install instructions comming
 ```
 
-## Usage
-
 ## Development
 
 > Requirements
@@ -63,7 +61,7 @@ Install dependencies
 > npm install
 ```
 
-Run development demos. This will automatically start a web server and open a browser to the index. For more info see [Demos](src/demos/README.md)
+Run development demos. This will automatically start a web server and open a browser to the index.
 
 ```bash
 > npm run dev
