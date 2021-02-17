@@ -40,7 +40,7 @@ Here are some examples of what the library is capable of.
 ## Installation
 
 ```bash
-> # npm install instructions comming
+> npm install sr-puzzlegen
 ```
 
 ## Development
