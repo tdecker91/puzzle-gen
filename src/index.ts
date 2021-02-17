@@ -24,6 +24,7 @@ import { parsePyraminxAlgorithm } from "./algorithms/pyraminx";
 import { parseSkewbAlgorithm } from "./algorithms/skewb";
 import { parseSquare1Algorithm } from "./algorithms/square1";
 
+export  * as Colors from "./puzzles/colors";
 export * from "./visualizer";
 export * from "./rendering/renderer";
 

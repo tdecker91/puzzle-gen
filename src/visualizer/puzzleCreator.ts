@@ -140,7 +140,7 @@ export function createSquare1Net(
 }
 
 function initSquare1Simulator(options: Square1Options): Square1Simualtor {
-  const simulator = new Square1Simualtor();
+  const simulator = new Square1Simualtor(options.scheme);
 
   if (options.case) {
     simulator.case(options.case);

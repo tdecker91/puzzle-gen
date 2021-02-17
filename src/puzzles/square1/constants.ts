@@ -13,6 +13,15 @@ export const LEFT_COLOR: IColor = BLUE;
 export const RIGHT_COLOR: IColor = GREEN;
 export const BACK_COLOR: IColor = ORANGE;
 
+export const DEFAULT_SQ1_SCHEME = {
+  top: TOP_COLOR,
+  front: FRONT_COLOR,
+  bottom: BOTTOM_COLOR,
+  left: LEFT_COLOR,
+  right: RIGHT_COLOR,
+  back: BACK_COLOR
+}
+
 export const SOLVED_TOP_PIECES: Sqaure1Piece[] = [
   { type: PIECE_TYPE.CORNER, colors: [TOP_COLOR, FRONT_COLOR, LEFT_COLOR] },
   { type: PIECE_TYPE.EDGE, colors: [TOP_COLOR, LEFT_COLOR] },

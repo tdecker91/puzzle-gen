@@ -21,6 +21,7 @@ import {
   SkewbOptions,
   Square1Options,
 } from "./interface";
+import { DEFAULT_SQ1_SCHEME } from "../puzzles/square1/constants";
 
 export const defaultCubeOptions: CubeOptions = {
   size: 3,
@@ -110,6 +111,7 @@ export const defaultSkewbOptions: SkewbOptions = {
 };
 
 export const defaultSquare1Options: Square1Options = {
+  scheme: DEFAULT_SQ1_SCHEME,
   rotations: [
     {
       x: 0,
