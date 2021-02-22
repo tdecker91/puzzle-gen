@@ -40,6 +40,6 @@
     "url": "git://github.com/tdecker91/puzzle-visualizer.git"
   },
   "files": [
-    "/dist"
+    "/dist", "LICENSE"
   ]
 }
