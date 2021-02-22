@@ -49,7 +49,7 @@ Check out the [releases](https://github.com/tdecker91/puzzle-gen/releases) for t
 
     <script type="text/javascript">
       puzzleGen.PNG("#cube", puzzleGen.Type.CUBE);
-      puzzleGen.PNG("#cube", "pyraminx"); // string value can be passed in too
+      puzzleGen.PNG("#pyraminx", "pyraminx"); // string value can be passed in too
     </script>
   </body>
 </html>
