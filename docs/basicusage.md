@@ -20,7 +20,7 @@ Call the PNG method to render puzzles to an html element in the dom. Pass in the
 import { PNG, Type } from "sr-puzzlegen"
 
 // pass query selector
-PNG("#puzzle", Type.CUBE);
+PNG("#cube", Type.CUBE);
 
 // pass element directly
 let skewb = document.getElementById("skewb");
