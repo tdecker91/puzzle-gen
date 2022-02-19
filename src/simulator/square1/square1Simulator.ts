@@ -1,6 +1,15 @@
-import { IColor } from './../../geometry/color';
+import { IColor } from "./../../geometry/color";
 import { Simulator } from "./../simulator";
-import { BACK_COLOR, BOTTOM_COLOR, DEFAULT_SQ1_SCHEME, FRONT_COLOR, LEFT_COLOR, RIGHT_COLOR, SOLVED_BOTTOM_PIECES, TOP_COLOR } from "./../../puzzles/square1/constants";
+import {
+  BACK_COLOR,
+  BOTTOM_COLOR,
+  DEFAULT_SQ1_SCHEME,
+  FRONT_COLOR,
+  LEFT_COLOR,
+  RIGHT_COLOR,
+  SOLVED_BOTTOM_PIECES,
+  TOP_COLOR,
+} from "./../../puzzles/square1/constants";
 import { Sqaure1Piece } from "./../../puzzles/square1/interface";
 import { PIECE_TYPE } from "../../puzzles/square1/enum";
 import { SOLVED_TOP_PIECES } from "../../puzzles/square1/constants";
@@ -136,26 +145,106 @@ export class Square1Simualtor extends Simulator {
 
 function solvedTop(scheme): Sqaure1Piece[] {
   return [
-    { type: PIECE_TYPE.CORNER, colors: [scheme.top || TOP_COLOR, scheme.front || FRONT_COLOR, scheme.left || LEFT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.top || TOP_COLOR, scheme.left || LEFT_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.top || TOP_COLOR, scheme.left || LEFT_COLOR, scheme.back || BACK_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.top || TOP_COLOR, scheme.back || BACK_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.top || TOP_COLOR, scheme.back || BACK_COLOR, scheme.right || RIGHT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.top || TOP_COLOR, scheme.right || RIGHT_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.top || TOP_COLOR, scheme.right || RIGHT_COLOR, scheme.front || FRONT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.top || TOP_COLOR, scheme.front || FRONT_COLOR] }
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.top || TOP_COLOR,
+        scheme.front || FRONT_COLOR,
+        scheme.left || LEFT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.top || TOP_COLOR, scheme.left || LEFT_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.top || TOP_COLOR,
+        scheme.left || LEFT_COLOR,
+        scheme.back || BACK_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.top || TOP_COLOR, scheme.back || BACK_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.top || TOP_COLOR,
+        scheme.back || BACK_COLOR,
+        scheme.right || RIGHT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.top || TOP_COLOR, scheme.right || RIGHT_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.top || TOP_COLOR,
+        scheme.right || RIGHT_COLOR,
+        scheme.front || FRONT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.top || TOP_COLOR, scheme.front || FRONT_COLOR],
+    },
   ];
 }
 
 function solvedBottom(scheme): Sqaure1Piece[] {
   return [
-    { type: PIECE_TYPE.EDGE, colors: [scheme.bottom || BOTTOM_COLOR, scheme.back || BACK_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.bottom || BOTTOM_COLOR, scheme.back || BACK_COLOR, scheme.left || LEFT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.bottom || BOTTOM_COLOR, scheme.left || LEFT_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.bottom || BOTTOM_COLOR, scheme.left || LEFT_COLOR, scheme.front || FRONT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.bottom || BOTTOM_COLOR, scheme.front || FRONT_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.bottom || BOTTOM_COLOR, scheme.front || FRONT_COLOR, scheme.right || RIGHT_COLOR] },
-    { type: PIECE_TYPE.EDGE, colors: [scheme.bottom || BOTTOM_COLOR, scheme.right || RIGHT_COLOR] },
-    { type: PIECE_TYPE.CORNER, colors: [scheme.bottom || BOTTOM_COLOR, scheme.right || RIGHT_COLOR, scheme.back || BACK_COLOR] },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.bottom || BOTTOM_COLOR, scheme.back || BACK_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.bottom || BOTTOM_COLOR,
+        scheme.back || BACK_COLOR,
+        scheme.left || LEFT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.bottom || BOTTOM_COLOR, scheme.left || LEFT_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.bottom || BOTTOM_COLOR,
+        scheme.left || LEFT_COLOR,
+        scheme.front || FRONT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.bottom || BOTTOM_COLOR, scheme.front || FRONT_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.bottom || BOTTOM_COLOR,
+        scheme.front || FRONT_COLOR,
+        scheme.right || RIGHT_COLOR,
+      ],
+    },
+    {
+      type: PIECE_TYPE.EDGE,
+      colors: [scheme.bottom || BOTTOM_COLOR, scheme.right || RIGHT_COLOR],
+    },
+    {
+      type: PIECE_TYPE.CORNER,
+      colors: [
+        scheme.bottom || BOTTOM_COLOR,
+        scheme.right || RIGHT_COLOR,
+        scheme.back || BACK_COLOR,
+      ],
+    },
   ];
 }

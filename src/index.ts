@@ -16,7 +16,7 @@ import { Megaminx } from "./puzzles/megaminx";
 import { RubiksCubeTopLayer } from "./puzzles/rubiksCube/rubiksCubeTop";
 import { RubiksCubeNet } from "./puzzles/rubiksCube/rubiksCubeNet";
 import { RubiksCube } from "./puzzles/rubiksCube/rubiksCube";
-import { CustomSVGRenderer } from "./rendering/customSvgRenderer";
+import { HtmlSvgRenderer } from "./rendering/htmlSvgRenderer";
 import { Camera } from "./rendering/camera";
 import { Scene } from "./rendering/scene";
 import { parseMegaminxAlgorithm } from "./algorithms/megaminx";
@@ -24,14 +24,14 @@ import { parsePyraminxAlgorithm } from "./algorithms/pyraminx";
 import { parseSkewbAlgorithm } from "./algorithms/skewb";
 import { parseSquare1Algorithm } from "./algorithms/square1";
 
-export  * as Colors from "./puzzles/colors";
+export * as Colors from "./puzzles/colors";
 export * from "./visualizer";
 export * from "./rendering/renderer";
 
 export const Rendering = {
   Scene,
   Camera,
-  CustomSVGRenderer,
+  HtmlSvgRenderer,
 };
 
 export const PuzzleGeometry = {

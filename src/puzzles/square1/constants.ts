@@ -19,8 +19,8 @@ export const DEFAULT_SQ1_SCHEME = {
   bottom: BOTTOM_COLOR,
   left: LEFT_COLOR,
   right: RIGHT_COLOR,
-  back: BACK_COLOR
-}
+  back: BACK_COLOR,
+};
 
 export const SOLVED_TOP_PIECES: Sqaure1Piece[] = [
   { type: PIECE_TYPE.CORNER, colors: [TOP_COLOR, FRONT_COLOR, LEFT_COLOR] },

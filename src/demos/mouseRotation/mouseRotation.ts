@@ -1,11 +1,11 @@
 import { mat4 } from 'gl-matrix';
-import { CustomSVGRenderer } from './../../rendering/customSvgRenderer';
+import { HtmlSvgRenderer } from './../../rendering/htmlSvgRenderer';
 import { Group } from "../../geometry/group";
 import { RubiksCube } from "../../puzzles/rubiksCube/rubiksCube";
 import { Camera } from "../../rendering/camera";
 import { Scene } from "../../rendering/scene";
 
-let renderer: CustomSVGRenderer;
+let renderer: HtmlSvgRenderer;
 let camera: Camera;
 let scene: Scene;
 let rotationGroup: Group;
@@ -20,7 +20,7 @@ function renderDemo() {
   camera = new Camera();
   scene = new Scene();
   rotationGroup = new Group();
-  renderer = new CustomSVGRenderer(
+  renderer = new HtmlSvgRenderer(
     500,
     500,
     -.9,
