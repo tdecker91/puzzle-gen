@@ -1,0 +1,44 @@
+<html>
+
+<head>
+  <style>
+    #puzzle svg {
+      border: 1px solid gray;
+    }
+
+    #puzzle canvas {
+      border: 1px solid gray;
+    }
+  </style>
+  <script type="text/javascript">
+    function renderSvg() {
+      document.getElementById("puzzle").childNodes.forEach(child => {
+        document.getElementById("puzzle").removeChild(child);
+      })
+      var size = parseInt(document.getElementById("size").value);
+      renderSpeedDemo.renderSvg(size)
+    }
+
+    function renderCanvas() {
+      document.getElementById("puzzle").childNodes.forEach(child => {
+        document.getElementById("puzzle").removeChild(child);
+      })
+      var size = parseInt(document.getElementById("size").value);
+      renderSpeedDemo.renderCanvas(size)
+    }
+  </script>
+</head>
+
+<body>
+  <div id="puzzle"></div>
+  <div>
+    <input id="size" type="number" />
+    <button onclick="renderSvg()">renderSVG</button>
+    <button onclick="renderCanvas()">renderCanvas</button>
+  </div>
+  <br />
+  <textarea id="output"></textarea>
+
+</body>
+
+</html>

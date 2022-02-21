@@ -110,9 +110,31 @@ var cameraValuesConfig = Object.assign({}, config, {
   ],
 });
 
+var renderSpeedConfig = Object.assign({}, config, {
+  entry: __dirname + "/src/demos/renderSpeed/renderSpeed.ts",
+
+  output: {
+    path: path.resolve(__dirname, "demos/renderSpeed"),
+    filename: "[name].js",
+    library: "renderSpeedDemo",
+    libraryTarget: "umd", // exposes and know when to use module.exports or exports
+    globalObject: "this",
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "src/demos/renderSpeed/index.html",
+      minify: {
+        collapseWhitespace: false,
+      },
+    }),
+  ],
+});
 module.exports = [
   indexConfig,
   cameraValuesConfig,
   puzzlesConfig,
   mouseRotationConfig,
+  renderSpeedConfig,
 ];

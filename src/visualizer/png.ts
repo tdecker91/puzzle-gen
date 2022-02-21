@@ -25,7 +25,6 @@ export function PNG(
   type: VisualizerType,
   options: PNGVisualizerOptions = {}
 ) {
-
   if (typeof container === "string") {
     container = document.querySelector(container as string);
     if (container === null) {
@@ -51,10 +50,10 @@ export function PNG(
 
     loader.width = canvas.width = targetImage.width = options.width;
     loader.height = canvas.height = targetImage.height = options.height;
-    loader.onload = function() {
+    loader.onload = function () {
       ctx.drawImage(loader, 0, 0, loader.width, loader.height);
-      targetImage.src = canvas.toDataURL(); 
-    }
+      targetImage.src = canvas.toDataURL();
+    };
 
     var svgAsXML = new XMLSerializer().serializeToString(svgElement);
     loader.src = `data:image/svg+xml,${encodeURIComponent(svgAsXML)}`;

@@ -1,7 +1,7 @@
 import { BLACK, GREY } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
-import { CustomSVGRenderer } from "./../rendering/customSvgRenderer";
 import { Visualizer } from "./visualizer";
+import { HtmlSvgRenderer } from "../rendering/htmlSvgRenderer";
 import { PuzzleOptions, validColor } from "./interface";
 import { IColor } from "../geometry/color";
 
@@ -101,7 +101,7 @@ export class SvgVisualizer extends Visualizer {
       }
     }
 
-    const renderer = new CustomSVGRenderer(
+    const renderer = new HtmlSvgRenderer(
       options.width,
       options.height,
       options.minx,
@@ -127,7 +127,7 @@ export class SvgVisualizer extends Visualizer {
    */
   setStrokeWidth(strokeWidth: number) {
     this.svgOptions.strokeWidth = strokeWidth;
-    (this.renderer as CustomSVGRenderer).strokeWidth =
+    (this.renderer as HtmlSvgRenderer).strokeWidth =
       "" + this.svgOptions.strokeWidth;
     this.render();
   }
@@ -141,7 +141,7 @@ export class SvgVisualizer extends Visualizer {
     this.svgOptions = { ...defaultOptions, ...options };
     validateSvgOptions(this.svgOptions);
 
-    const renderer: CustomSVGRenderer = this.renderer as CustomSVGRenderer;
+    const renderer: HtmlSvgRenderer = this.renderer as HtmlSvgRenderer;
     const svgElement: SVGElement = renderer.svgElement;
 
     renderer.strokeWidth = "" + this.svgOptions.strokeWidth;

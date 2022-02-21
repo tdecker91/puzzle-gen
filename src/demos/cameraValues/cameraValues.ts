@@ -2,9 +2,8 @@ import { MegaminxSimulator } from './../../simulator/megaminx/megaminxSimulator'
 import { PINK, LIGHT_YELLOW, GREY, LIGHT_GREEN, PURPLE, DARK_BLUE } from './../../puzzles/colors';
 import { PyraminxSimulator } from '../../simulator/pyraminx/pyraminxSimulator';
 import { RED, BLUE, WHITE, ORANGE, GREEN } from '../../puzzles/colors';
-import { RubiksCubeSimulator } from '../../simulator/rubiksCube/rubiksCubeSimulator';
 import { mat4 } from 'gl-matrix';
-import { CustomSVGRenderer } from '../../rendering/customSvgRenderer';
+import { HtmlSvgRenderer } from '../../rendering/htmlSvgRenderer';
 import { Square1Net } from '../../puzzles/square1/square1Net';
 import { Square1 } from '../../puzzles/square1/square1';
 import { MegaminxNet } from '../../puzzles/megaminxNet';
@@ -35,7 +34,7 @@ let megaminxNet: MegaminxNet;
 let square1: Square1;
 let square1Net: Square1Net;
 
-let renderer: CustomSVGRenderer;
+let renderer: HtmlSvgRenderer;
 let scene;
 
 let width: number = 500;
@@ -100,7 +99,7 @@ export function getInputs() {
 export function renderDemo() {
 
   scene = new Scene();
-  renderer = new CustomSVGRenderer(width, height, minx, miny, svgwidth, svgheight);
+  renderer = new HtmlSvgRenderer(width, height, minx, miny, svgwidth, svgheight);
   renderer.strokeWidth = "" + strokeWidth;
 
   // let cubeSim = new RubiksCubeSimulator(3);

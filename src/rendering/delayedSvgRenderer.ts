@@ -1,8 +1,8 @@
 import { Camera } from "./camera";
 import { Scene } from "./scene";
-import { CustomSVGRenderer } from "./customSvgRenderer";
+import { HtmlSvgRenderer } from "./htmlSvgRenderer";
 
-export class DelayedSvgRenderer extends CustomSVGRenderer {
+export class DelayedSvgRenderer extends HtmlSvgRenderer {
   private renderQueue = [];
   private renderInterval;
 

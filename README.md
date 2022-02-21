@@ -44,6 +44,7 @@ Here are some examples of what the library is capable of.
 ```
 
 ## Usage
+
 For full usage demonsration see [here](https://tdecker91.github.io/puzzle-gen/#/basicusage)
 
 ## Development
