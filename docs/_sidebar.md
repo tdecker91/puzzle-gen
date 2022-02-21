@@ -7,3 +7,4 @@
 * [Pyraminx](pyraminx.md)
 * [Skewb](skewb.md)
 * [Square1](square1.md)
+* [Advanced](advanced.md)
