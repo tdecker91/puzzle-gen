@@ -113,4 +113,6 @@ export class HtmlSvgRenderer extends PolygonRenderer {
 
     this.svgElement.appendChild(this.uidToLine[uid]);
   }
+
+  onComplete() {}
 }

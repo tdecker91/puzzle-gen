@@ -28,6 +28,7 @@ export interface Polygon {
  * Implementers need just implement
  *   - drawPolygon - a method that draws polygons on some 2d graphics area
  *   - drawArrow - a method that draws an arrow
+ *   - onComplete - handle any final logic
  */
 export abstract class PolygonRenderer implements Renderer {
   protected polygons = [];
@@ -35,6 +36,7 @@ export abstract class PolygonRenderer implements Renderer {
 
   abstract drawPolygon(polygon: Polygon);
   abstract drawArrow(p1: vec3, p2: vec3, uid: string);
+  abstract onComplete();
 
   render(scene: Scene, camera: Camera): void {
     this.polygons = [];
@@ -45,6 +47,7 @@ export abstract class PolygonRenderer implements Renderer {
 
     this.renderPolygons();
     this.renderArrows();
+    this.onComplete();
   }
 
   protected renderPolygons() {
@@ -61,7 +64,7 @@ export abstract class PolygonRenderer implements Renderer {
     });
   }
 
-  private renderObject3D(
+  protected renderObject3D(
     object: Object3D,
     camera: Camera,
     transformations: mat4[]
@@ -82,7 +85,7 @@ export abstract class PolygonRenderer implements Renderer {
     }
   }
 
-  private renderGeometry(
+  protected renderGeometry(
     object: Geometry,
     camera: Camera,
     transformations: mat4[]
@@ -110,7 +113,11 @@ export abstract class PolygonRenderer implements Renderer {
     });
   }
 
-  private renderArrow(object: Arrow, camera: Camera, transformations: mat4[]) {
+  protected renderArrow(
+    object: Arrow,
+    camera: Camera,
+    transformations: mat4[]
+  ) {
     let objectToScreen = [object.matrix, ...transformations, camera.matrix];
     let p1Screen = applyTransformations(object.p1, objectToScreen);
     let p2Screen = applyTransformations(object.p2, objectToScreen);
@@ -135,7 +142,7 @@ export abstract class PolygonRenderer implements Renderer {
     } as Polygon);
   }
 
-  private sortObjects(
+  protected sortObjects(
     objects: Object3D[],
     camera: Camera,
     transformations: mat4[]

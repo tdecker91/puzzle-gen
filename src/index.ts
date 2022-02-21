@@ -17,6 +17,8 @@ import { RubiksCubeTopLayer } from "./puzzles/rubiksCube/rubiksCubeTop";
 import { RubiksCubeNet } from "./puzzles/rubiksCube/rubiksCubeNet";
 import { RubiksCube } from "./puzzles/rubiksCube/rubiksCube";
 import { HtmlSvgRenderer } from "./rendering/htmlSvgRenderer";
+import { HtmlCanvasRenderer } from "./rendering/htmlCanvasRenderer";
+import { PolygonRenderer } from "./rendering/polygonRenderer";
 import { Camera } from "./rendering/camera";
 import { Scene } from "./rendering/scene";
 import { parseMegaminxAlgorithm } from "./algorithms/megaminx";
@@ -32,6 +34,8 @@ export const Rendering = {
   Scene,
   Camera,
   HtmlSvgRenderer,
+  HtmlCanvasRenderer,
+  PolygonRenderer,
 };
 
 export const PuzzleGeometry = {
