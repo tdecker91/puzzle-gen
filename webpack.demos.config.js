@@ -131,10 +131,33 @@ var renderSpeedConfig = Object.assign({}, config, {
     }),
   ],
 });
+
+var teapotConfig = Object.assign({}, config, {
+  entry: __dirname + "/src/demos/teapot/teapot.ts",
+
+  output: {
+    path: path.resolve(__dirname, "demos/teapot"),
+    filename: "[name].js",
+    library: "teapotDemo",
+    libraryTarget: "umd", // exposes and know when to use module.exports or exports
+    globalObject: "this",
+  },
+
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      template: "src/demos/teapot/index.html",
+      minify: {
+        collapseWhitespace: false,
+      },
+    }),
+  ],
+});
 module.exports = [
   indexConfig,
   cameraValuesConfig,
   puzzlesConfig,
   mouseRotationConfig,
   renderSpeedConfig,
+  teapotConfig,
 ];
