@@ -147,7 +147,7 @@ export abstract class PolygonRenderer implements Renderer {
     camera: Camera,
     transformations: mat4[]
   ) {
-    objects.sort((a, b) => {
+    [...objects].sort((a, b) => {
       let aToWorld = [a.matrix, ...transformations];
       let bToWorld = [b.matrix, ...transformations];
 
