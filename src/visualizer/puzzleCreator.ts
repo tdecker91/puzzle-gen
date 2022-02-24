@@ -44,17 +44,21 @@ const geometryCache: {
   [VisualizerType.SKEWB]: {},
   [VisualizerType.SKEWB_NET]: {},
   [VisualizerType.SQUARE1]: {},
-  [VisualizerType.SQUARE1_NET]: {}
+  [VisualizerType.SQUARE1_NET]: {},
 };
 
 export function createCube(
   options: CubeOptions = {}
 ): [RubiksCube, RubiksCubeSimulator] {
   if (!geometryCache[VisualizerType.CUBE][options.size]) {
-    geometryCache[VisualizerType.CUBE][options.size] = new RubiksCube(options.size);
+    geometryCache[VisualizerType.CUBE][options.size] = new RubiksCube(
+      options.size
+    );
   }
 
-  const geometry = geometryCache[VisualizerType.CUBE][options.size] as RubiksCube;
+  const geometry = geometryCache[VisualizerType.CUBE][
+    options.size
+  ] as RubiksCube;
   const simulator = new RubiksCubeSimulator(options.size);
 
   return [geometry, simulator];
@@ -69,7 +73,9 @@ export function createCubeNet(
     );
   }
 
-  const geometry = geometryCache[VisualizerType.CUBE_NET][options.size] as RubiksCubeNet;
+  const geometry = geometryCache[VisualizerType.CUBE_NET][
+    options.size
+  ] as RubiksCubeNet;
   const simulator = new RubiksCubeSimulator(options.size);
 
   return [geometry, simulator];
@@ -79,9 +85,9 @@ export function createCubeTop(
   options: CubeOptions = {}
 ): [RubiksCubeTopLayer, RubiksCubeSimulator] {
   if (!geometryCache[VisualizerType.CUBE_TOP][options.size]) {
-    geometryCache[VisualizerType.CUBE_TOP][options.size] = new RubiksCubeTopLayer(
+    geometryCache[VisualizerType.CUBE_TOP][
       options.size
-    );
+    ] = new RubiksCubeTopLayer(options.size);
   }
 
   const geometry = geometryCache[VisualizerType.CUBE_TOP][
@@ -96,10 +102,14 @@ export function createMegaminx(
   options: MegaminxOptions = {}
 ): [Megaminx, MegaminxSimulator] {
   if (!geometryCache[VisualizerType.MEGAMINX][options.size]) {
-    geometryCache[VisualizerType.MEGAMINX][options.size] = new Megaminx(options.size);
+    geometryCache[VisualizerType.MEGAMINX][options.size] = new Megaminx(
+      options.size
+    );
   }
 
-  const geometry = geometryCache[VisualizerType.MEGAMINX][options.size] as Megaminx;
+  const geometry = geometryCache[VisualizerType.MEGAMINX][
+    options.size
+  ] as Megaminx;
   const simulator = new MegaminxSimulator();
 
   return [geometry, simulator];
@@ -140,10 +150,14 @@ export function createPyraminx(
   options: PyraminxOptions = {}
 ): [Pyraminx, PyraminxSimulator] {
   if (!geometryCache[VisualizerType.PYRAMINX][options.size]) {
-    geometryCache[VisualizerType.PYRAMINX][options.size] = new Pyraminx(options.size);
+    geometryCache[VisualizerType.PYRAMINX][options.size] = new Pyraminx(
+      options.size
+    );
   }
 
-  const geometry = geometryCache[VisualizerType.PYRAMINX][options.size] as Pyraminx;
+  const geometry = geometryCache[VisualizerType.PYRAMINX][
+    options.size
+  ] as Pyraminx;
   const simulator = new PyraminxSimulator();
 
   return [geometry, simulator];
