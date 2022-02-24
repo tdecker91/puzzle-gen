@@ -34,10 +34,11 @@ export class RubiksCubeTopLayer {
 
   constructor(size: number, rotationAngle: number = Math.PI / 4) {
     this.size = size;
-    this.stickerWidth = 1 / 2;
+    this.cubeWidth = 1.25;
+    this.halfCubeWidth = this.cubeWidth / 2;
+    this.stickerWidth = this.cubeWidth / size;
     this.halfStickerWidth = this.stickerWidth / 2;
     this.cubeWidth = this.stickerWidth * size;
-    this.halfCubeWidth = this.cubeWidth / 2;
 
     this.U = new Group(makeGrid(this.cubeWidth, this.size, YELLOW));
     this.R = new Group(makeRow(this.cubeWidth, this.size, RED));
