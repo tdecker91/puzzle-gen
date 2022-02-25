@@ -70,6 +70,8 @@ export class HtmlSvgRenderer extends PolygonRenderer {
     this.domElement.appendChild(this.svgElement);
   }
 
+  onBeforeRender() { }
+
   drawPolygon({ points, face, object }: Polygon) {
     if (!this.uidToPolygon[face.uid]) {
       // Create new polygon for a face that hasn't been rendered

@@ -4,6 +4,12 @@ PuzzleGen is a javascript library intended to render [WCA puzzles](https://www.w
 
 PuzzleGen is built to be customizable, so if desired functionality can be extended to use cases other than embedding scramble previews in web pages.
 
+## Demonstration
+
+Check out the library in action [HERE](https://tdecker91.github.io/puzzlegen-demo/)
+
+## Docs
+
 See the [docs](https://tdecker91.github.io/puzzle-gen/) for more information
 
 ## Examples

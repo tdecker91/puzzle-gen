@@ -53,6 +53,10 @@ export class HtmlCanvasRenderer extends PolygonRenderer {
     return ((n - -0.9) / (0.9 - -0.9)) * range;
   }
 
+  onBeforeRender() {
+    this.ctx.clearRect(0, 0, this.width, this.height);
+  }
+
   drawPolygon(polygon: Polygon) {
     this.ctx.lineWidth = this.lineWidth;
     this.ctx.lineJoin = "round";
