@@ -6,7 +6,6 @@ import {
   BLUE,
   GREEN,
   ORANGE,
-  MASK_COLOR,
   BLACK,
 } from "./../colors";
 import { Geometry } from "./../../geometry/geometry";
@@ -34,7 +33,7 @@ export class RubiksCubeTopLayer {
 
   constructor(size: number, rotationAngle: number = Math.PI / 4) {
     this.size = size;
-    this.cubeWidth = 1.25;
+    this.cubeWidth = 1.45;
     this.halfCubeWidth = this.cubeWidth / 2;
     this.stickerWidth = this.cubeWidth / size;
     this.halfStickerWidth = this.stickerWidth / 2;

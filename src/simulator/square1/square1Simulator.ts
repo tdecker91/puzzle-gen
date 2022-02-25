@@ -7,12 +7,10 @@ import {
   FRONT_COLOR,
   LEFT_COLOR,
   RIGHT_COLOR,
-  SOLVED_BOTTOM_PIECES,
   TOP_COLOR,
 } from "./../../puzzles/square1/constants";
 import { Sqaure1Piece } from "./../../puzzles/square1/interface";
 import { PIECE_TYPE } from "../../puzzles/square1/enum";
-import { SOLVED_TOP_PIECES } from "../../puzzles/square1/constants";
 import { parseSquare1Algorithm } from "../../algorithms/square1";
 
 export type Square1Move = Square1Turns | Square1Slice;
@@ -73,14 +71,24 @@ export class Square1Simualtor extends Simulator {
     let topNum = 0;
     let bottomNum = 0;
 
-    for (let i = this.topLayer.length, value = 0; i > 0 && value < 6; i--) {
+    let value = 0;
+    for (let i = this.topLayer.length; i > 0 && value < 6; i--) {
       value += pieceValue[this.topLayer[i - 1].type];
       topNum++;
     }
 
-    for (let i = this.bottomLayer.length, value = 0; i > 0 && value < 6; i--) {
+    if (value != 6) {
+      throw "Cannot perform slice move. Top layer misaligned";
+    }
+
+    value = 0;
+    for (let i = this.bottomLayer.length; i > 0 && value < 6; i--) {
       value += pieceValue[this.bottomLayer[i - 1].type];
       bottomNum++;
+    }
+
+    if (value != 6) {
+      throw "Cannot perform slice move. Bottom layer misaligned";
     }
 
     const topSlice = this.topLayer.splice(
@@ -99,12 +107,13 @@ export class Square1Simualtor extends Simulator {
   }
 
   public rotateTop(turns: number) {
+    const originalTurns = turns;
     while (turns != 0) {
       if (turns < 0) {
         const piece = this.topLayer.shift();
         const value = pieceValue[piece.type];
         if (Math.abs(turns) < value) {
-          throw "Invalid Square1 Move";
+          throw `Invalid Square1 Move. Cannot turn top layer ${originalTurns} steps`;
         }
         this.topLayer.push(piece);
         turns += value;
@@ -112,7 +121,7 @@ export class Square1Simualtor extends Simulator {
         const piece = this.topLayer.pop();
         const value = pieceValue[piece.type];
         if (Math.abs(turns) < value) {
-          throw "Invalid Square1 Move";
+          throw `Invalid Square1 Move. Cannot turn top layer ${originalTurns} steps`;
         }
         this.topLayer.unshift(piece);
         turns -= value;
@@ -121,12 +130,13 @@ export class Square1Simualtor extends Simulator {
   }
 
   public rotateBottom(turns: number) {
+    const originalTurns = turns;
     while (turns != 0) {
       if (turns < 0) {
         const piece = this.bottomLayer.shift();
         const value = pieceValue[piece.type];
         if (Math.abs(turns) < value) {
-          throw "Invalid Square1 Move";
+          throw `Invalid Square1 Move. Cannot turn top layer ${originalTurns} steps`;
         }
         this.bottomLayer.push(piece);
         turns += value;
@@ -134,7 +144,7 @@ export class Square1Simualtor extends Simulator {
         const piece = this.bottomLayer.pop();
         const value = pieceValue[piece.type];
         if (Math.abs(turns) < value) {
-          throw "Invalid Square1 Move";
+          throw `Invalid Square1 Move. Cannot turn top layer ${originalTurns} steps`;
         }
         this.bottomLayer.unshift(piece);
         turns -= value;

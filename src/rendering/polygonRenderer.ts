@@ -28,6 +28,7 @@ export interface Polygon {
  * Implementers need just implement
  *   - drawPolygon - a method that draws polygons on some 2d graphics area
  *   - drawArrow - a method that draws an arrow
+ *   - onBeforeRender - do any prep work necessary before rendering a frame
  *   - onComplete - handle any final logic
  */
 export abstract class PolygonRenderer implements Renderer {
@@ -36,6 +37,7 @@ export abstract class PolygonRenderer implements Renderer {
 
   abstract drawPolygon(polygon: Polygon);
   abstract drawArrow(p1: vec3, p2: vec3, uid: string);
+  abstract onBeforeRender();
   abstract onComplete();
 
   render(scene: Scene, camera: Camera): void {
@@ -45,6 +47,7 @@ export abstract class PolygonRenderer implements Renderer {
       this.renderObject3D(object, camera, []);
     });
 
+    this.onBeforeRender();
     this.renderPolygons();
     this.renderArrows();
     this.onComplete();
