@@ -7,7 +7,6 @@ import {
   WHITE,
   ORANGE,
   GREEN,
-  MASK_COLOR,
   BLACK,
 } from "./../colors";
 import { Group } from "./../../geometry/group";

@@ -7,11 +7,6 @@ import { MASK_COLOR } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
 import {
-  CubeOptions,
-  SkewbOptions,
-  MegaminxOptions,
-  PyraminxOptions,
-  Square1Options,
   PuzzleOptions,
   ColorScheme,
   ArrowDefinition,
@@ -21,23 +16,10 @@ import { Renderer } from "./../rendering/renderer";
 import { Scene } from "../rendering/scene";
 import { Camera } from "./../rendering/camera";
 import { Simulator, SimulatorValues } from "../simulator/simulator";
-import {
-  createCube,
-  createCubeNet,
-  createCubeTop,
-  createMegaminx,
-  createMegaminxNet,
-  createMegaminxTop,
-  createPyraminx,
-  createPyraminxNet,
-  createSkewb,
-  createSkewbNet,
-  createSquare1,
-  createSquare1Net,
-} from "./puzzleCreator";
 import { IColor } from "../geometry/color";
 import { applyTransformations } from "../rendering/utils";
 import { Group } from "../geometry/group";
+import { getPuzzleGeometry, getPuzzleSimulator } from "./puzzleCreator";
 
 /**
  * Applies a color scheme to simulator values
@@ -53,46 +35,6 @@ function applyColorScheme(
     colors[face] = faceValues[face].map((value) => scheme[value] || MASK_COLOR);
     return colors;
   }, {});
-}
-
-/**
- * Creates puzzle geometry and and simulator for a given puzzle type.
- * Will initialize the geometry and simulator based on puzzle options
- * passed in
- *
- * @param type Type of the puzzle {@link VisualizerType} (cube, skewb, etc...)
- * @param options  Puzzle options {@link PuzzleOptions}
- */
-function puzzleFactory<T extends PuzzleOptions>(
-  type: VisualizerType,
-  options: T
-): [PuzzleGeometry, Simulator] {
-  switch (type) {
-    case VisualizerType.CUBE:
-      return createCube(options as CubeOptions);
-    case VisualizerType.CUBE_NET:
-      return createCubeNet(options as CubeOptions);
-    case VisualizerType.CUBE_TOP:
-      return createCubeTop(options as CubeOptions);
-    case VisualizerType.MEGAMINX:
-      return createMegaminx(options as MegaminxOptions);
-    case VisualizerType.MEGAMINX_NET:
-      return createMegaminxNet(options as MegaminxOptions);
-    case VisualizerType.MEGAMINX_TOP:
-      return createMegaminxTop(options as MegaminxOptions);
-    case VisualizerType.PYRAMINX:
-      return createPyraminx(options as PyraminxOptions);
-    case VisualizerType.PYRAMINX_NET:
-      return createPyraminxNet(options as PyraminxOptions);
-    case VisualizerType.SKEWB:
-      return createSkewb(options as SkewbOptions);
-    case VisualizerType.SKEWB_NET:
-      return createSkewbNet(options as SkewbOptions);
-    case VisualizerType.SQUARE1:
-      return createSquare1(options as Square1Options);
-    case VisualizerType.SQUARE1_NET:
-      return createSquare1Net(options as Square1Options);
-  }
 }
 
 function isSquare1(type: VisualizerType) {
@@ -129,7 +71,7 @@ function canApplySimulatorColors(type: VisualizerType, size: number) {
   return true;
 }
 
-function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
+function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry, group: Group): Arrow {
   // Get the face the arrow is pointing to
   let startFace = puzzle.faces[a.start.face];
   let endFace = puzzle.faces[a.end.face];
@@ -138,8 +80,9 @@ function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry): Arrow {
     throw new Error(`Invalid arrow definition ${JSON.stringify(a)}`);
   }
 
-  let startTransformations = [startFace.matrix, puzzle.group.matrix];
-  let endTransformations = [endFace.matrix, puzzle.group.matrix];
+  // Transform from sticker coordinates to group coordinates
+  let startTransformations = [startFace.matrix, puzzle.group.matrix, group.matrix];
+  let endTransformations = [endFace.matrix, puzzle.group.matrix, group.matrix];
 
   let start: vec3;
   let end: vec3;
@@ -186,6 +129,7 @@ export class Visualizer {
   protected type: VisualizerType;
   protected options: PuzzleOptions;
 
+  public group: Group;
   public puzzleGeometry: PuzzleGeometry;
   public simulator: Simulator;
 
@@ -197,8 +141,19 @@ export class Visualizer {
     this.type = type;
     this.camera = new Camera();
     this.scene = new Scene();
+    this.group = new Group();
+    this.scene.add(this.group);
     this.renderer = renderer;
-    this.setPuzzleOptions(options);
+
+    this.initPuzzleOptions(options);
+    this.puzzleGeometry = getPuzzleGeometry(this.type, this.options);
+    this.simulator = getPuzzleSimulator(this.type, this.options);
+    this.buildGroupMatrix();
+    this.applyColors();
+    this.addArrows();
+
+    this.group.addObject(this.puzzleGeometry.group);
+
     this.render();
   }
 
@@ -266,27 +221,28 @@ export class Visualizer {
    * image.
    */
   private buildGroupMatrix() {
+    this.group.matrix = mat4.create();
+
     // Rotate the group matrix
     if (this.options.rotations) {
-      let matrix = mat4.create();
       this.options.rotations.forEach((rotation) => {
         const { x = 0, y = 0, z = 0 } = rotation;
         mat4.mul(
-          matrix,
+          this.group.matrix,
           mat4.fromQuat(mat4.create(), quat.fromEuler(quat.create(), x, y, z)),
-          matrix
+          this.group.matrix
         );
       });
 
-      mat4.mul(this.puzzleGeometry.group.matrix, mat4.create(), matrix);
+      // mat4.mul(this.group.matrix, this.puzzleGeometry.group.matrix, this.group.matrix);
     }
 
     // Scale the group matrix
     if (this.options.scale) {
       let scale = this.options.scale;
       mat4.scale(
-        this.puzzleGeometry.group.matrix,
-        this.puzzleGeometry.group.matrix,
+        this.group.matrix,
+        this.group.matrix,
         vec3.fromValues(scale, scale, scale)
       );
     }
@@ -300,9 +256,9 @@ export class Visualizer {
       );
 
       mat4.mul(
-        this.puzzleGeometry.group.matrix,
+        this.group.matrix,
         translationMatrix,
-        this.puzzleGeometry.group.matrix
+        this.group.matrix
       );
     }
   }
@@ -314,28 +270,38 @@ export class Visualizer {
 
     this.options.arrows.forEach((arrow) => {
       try {
-        this.scene.add(createArrow(arrow, this.puzzleGeometry));
-      } catch {
+        this.scene.add(createArrow(arrow, this.puzzleGeometry, this.group));
+      } catch (e) {
+        console.error(e)
         console.warn(`Invalid arrow ${JSON.stringify(arrow)}`);
       }
     });
   }
 
-  setPuzzleOptions(options: PuzzleOptions) {
+  private initPuzzleOptions(options: PuzzleOptions) {
     this.options = { ...getDefaultOptions(this.type), ...options };
     validatePuzzleOptions(this.options);
+  }
 
-    [this.puzzleGeometry, this.simulator] = puzzleFactory(
-      this.type,
-      this.options
-    );
+  private applyOptionsToPuzzle() {
+    this.simulator.reset();
+
     this.buildGroupMatrix();
     this.applyColors();
-
-    this.scene.clear();
-    this.scene.add(this.puzzleGeometry.group);
-
     this.addArrows();
+  }
+
+  setPuzzleOptions(options: PuzzleOptions) {
+    this.initPuzzleOptions(options);
+
+    // Handle square1 geometry separately, since it
+    // changes, unlike the other puzzles
+    if (isSquare1(this.type)) {
+      this.puzzleGeometry = getPuzzleGeometry(this.type, this.options);
+      this.group.setObjects([this.puzzleGeometry.group]);
+    }
+
+    this.applyOptionsToPuzzle();
   }
 
   render() {
