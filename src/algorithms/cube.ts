@@ -42,7 +42,7 @@ const cubeRotations: string[] = [
   CubeAlgorithmUnit.Z,
 ];
 
-const cubeTurnRegex = /([2-9]+)?([UuFfRrDdLlBbMESxyz])(w)?([2\'])?/g;
+const cubeTurnRegex = /([0-9]+)?([UuFfRrDdLlBbMESxyz])(w)?([2\'])?/g;
 
 /**
  * Takes in an algorithm string and parses the turns from it
@@ -93,7 +93,12 @@ function getSlices(rawSlices, outerBlockIndicator): number {
   } else if (!outerBlockIndicator && !rawSlices) {
     return 1;
   } else {
-    return parseInt(rawSlices);
+    const intValue = parseInt(rawSlices);
+    if (intValue > 1) {
+      return intValue;
+    }
+
+    throw new Error(`Invalid outer block move (${intValue}) must be greater than 1`);
   }
 }
 
