@@ -4,7 +4,9 @@ PuzzleGen is a javascript library intended to render [WCA puzzles](https://www.w
 
 PuzzleGen is built to be customizable, so if desired functionality can be extended to use cases other than embedding scramble previews in web pages.
 
-See the [docs](https://tdecker91.github.io/puzzle-gen/) for more information
+## Demonstration
+
+Check out the library in action [HERE](https://tdecker91.github.io/puzzlegen-demo/)
 
 ## Examples
 
@@ -43,6 +45,10 @@ Here are some examples of what the library is capable of.
 > npm install sr-puzzlegen
 ```
 
+## Usage
+
+For full usage demonsration see [here](https://tdecker91.github.io/puzzle-gen/#/basicusage)
+
 ## Development
 
 > Requirements
@@ -61,7 +67,7 @@ Install dependencies
 > npm install
 ```
 
-Run development demos. This will automatically start a web server and open a browser to the index.
+Run development demos. This will automatically start a web server and open a browser to the index. For more info see [Demos](src/demos/README.md)
 
 ```bash
 > npm run dev

@@ -16,16 +16,27 @@ PNG("#cube", Type.CUBE);
 Canvas("#cube", Type.CUBE);
 
 // Render to SVG
-const svgVisualizer = SVG("#cube", Type.CUBE);
-
-// Update visualizer options. This will re-render the output
-svgVisualizer.setSvgOptions({ alg: "M2 E2 S2"})
+SVG("#cube", Type.CUBE);
 ```
 
-## Customizations
+## Redrawing
+`Canvas`, and `SVG` are convenience methods that return an instance of [Visualizer](https://github.com/tdecker91/puzzle-gen/blob/cb0e29db06bd3d47e1c41c87729d5621373ef3b6/src/visualizer/visualizer.ts#L182). The Visuazlier class does the work of applying the puzzle options. You can call [setPuzzleOptions](https://github.com/tdecker91/puzzle-gen/blob/cb0e29db06bd3d47e1c41c87729d5621373ef3b6/src/visualizer/visualizer.ts#L324) to change and redraw the puzzle state.
+
+```typescript
+import { Canvas, Type } from "sr-puzzlegen"
+
+// Initial render of the cube to the screen
+let cube = Canvas("#cube", Type.Cube);
+
+// Update the settings and redraw the cube
+// to the same canvas
+cube.setPuzzleOptions({ alg: "M2 E2 S3"})
+```
+
+## Custom Renderers
 PuzzleGen can be customized to run outside of the browser. For example, you may want to build an application to render puzzle images serverside using node.js. Or you may want to generate puzzle images on a mobile devide using React Native.
 
-This can be accomplished by building a custom renderer and instantiating [Visualizer](https://github.com/tdecker91/puzzle-gen/blob/master/src/visualizer/visualizer.ts#L182) manually. `Visualizer` is the class that does the work of building puzzle geometry and applying all of the settings. The Renderer does the work of drawing the image.
+This can be accomplished by building a custom renderer and instantiating [Visualizer](https://github.com/tdecker91/puzzle-gen/blob/master/src/visualizer/visualizer.ts#L182) manually.
 
 Below is an example of a nodejs app using [canvas](https://www.npmjs.com/package/canvas) to render the puzzle image
 ```typescript
@@ -85,6 +96,8 @@ class NodeCanvasRenderer extends Rendering.PolygonRenderer {
   drawArrow(p1: any, p2: any, uid: string) {
     // Omitted for example
   }
+  
+  onBeforeRender() { }
 
   onComplete() {
     const out = fs.createWriteStream(__dirname + '/test.png');
@@ -127,3 +140,47 @@ let visualizer = new Visualizer(renderer, VisualizerType.MEGAMINX, {});
 ```
 
 Create an instance of the renderer class. When you instantiate the visuzlier it will automatically render the puzzle.
+
+## Custom Scenes
+If you're really curious you can play with the 3d classes that the visualizer uses so you can render a custom scene of your own. It's very rudimentary and probably nobody will have any use for it. But I thought I'd document it for fun.
+
+```typescript
+import {vertices, faces} from 'teapot/data';
+
+// Vertices for teapot geometry
+let v = vertices.map(vertex => {
+  const [_, x, y, z] = vertex.split(" ");
+  return vec3.fromValues(parseFloat(x), parseFloat(y), parseFloat(z));
+});
+
+// Gray face with black outline
+let outline = { value: "#DDD", stroke: "#FFF" };
+
+// Faces for teapot geometry
+const f = faces.map(face => {
+  const [_, a, b, c] = face.split(" ");
+  return new Face([parseInt(a) - 1, parseInt(b) - 1, parseInt(c) - 1], v, outline);
+});
+
+// Create 3d scene
+let camera: Camera = new Camera();
+let scene: Scene = new Scene();
+let teapotGeometry = new Geometry(v, f);
+scene.add(teapotGeometry);
+
+
+// Create the renderer
+let renderer = new HtmlCanvasRenderer(500, 500, .25);
+
+// Add renderer output to the DOM
+document.getElementById('teapot').appendChild(renderer.domElement);
+
+// Render a frame to the canvas
+renderer.render(scene, camera);
+```
+
+This examples takes [this data](https://github.com/tdecker91/puzzle-gen/blob/master/src/demos/teapot/data.ts) for the utah teapot that I got from [here](https://graphics.stanford.edu/courses/cs148-10-summer/as3/code/as3/teapot.obj) and renders it.
+
+> Results
+>
+> ![teapot geometry](/img/teapot.png)

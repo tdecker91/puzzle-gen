@@ -8,8 +8,9 @@ Install library with npm.
 ```
 
 ## Usage
-Call the PNG method to render puzzles to an html element in the dom. Pass in the element to render the puzzle under, and the puzzle type.
-> `PNG(element, type, options?)`
+Call a visualizer method to render puzzles to an html element in the dom. Pass in the element to render the puzzle under, and the puzzle type.
+> `PNG(element, type, options?)`<br>
+> `Canvas(element, type, options?)`
 
 ```html
 <div id="cube"></div>
@@ -17,12 +18,12 @@ Call the PNG method to render puzzles to an html element in the dom. Pass in the
 ```
 
 ```typescript
-import { PNG, Type } from "sr-puzzlegen"
+import { PNG, Canvas, Type } from "sr-puzzlegen"
 
-// pass query selector
-PNG("#cube", Type.CUBE);
+// pass query selector, render to a <canvas> element
+Canvas("#cube", Type.CUBE);
 
-// pass element directly
+// pass element directly, render to a `.png` <img>
 let skewb = document.getElementById("skewb");
 PNG(skewb, Type.SKEWB);
 ```
