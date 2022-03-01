@@ -4,7 +4,7 @@ import { PIECE_TYPE } from "./enum";
 import { Sqaure1Piece } from "./interface";
 import { vec3 } from "gl-matrix";
 
-export const ROTATION_VECTOR: vec3 = [0.96875, -0.24803, 0];
+export const ROTATION_VECTOR: vec3 = [0.92875, -0.24803, 0];
 
 export const TOP_COLOR: IColor = YELLOW;
 export const BOTTOM_COLOR: IColor = WHITE;

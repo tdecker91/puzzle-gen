@@ -1,6 +1,4 @@
 import { Square1Move } from "./../simulator/square1/square1Simulator";
-import { Square1Turns } from "../simulator/square1/square1Simulator";
-import { Turn } from "./algorithm";
 
 const square1TurnRegex = /((\()?(-?\d)\s*,\s*(-?\d)(\))?)|(\/)/g;
 

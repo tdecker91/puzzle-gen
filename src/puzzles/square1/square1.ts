@@ -16,6 +16,8 @@ import { vec3 } from "gl-matrix";
 import { IColor } from "./../../geometry/color";
 import { Group } from "../../geometry/group";
 
+const INNER_FACE_COLOR = { value: '#333', stroke: '#333' };
+
 export class Square1 extends Square1Builder {
   constructor(
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
@@ -47,12 +49,17 @@ export class Square1 extends Square1Builder {
       // they show gray when the cube is scrambled. But they are overlapping sometimes
       // with outward sticker faces. removing them for now, but it'd be nice to
       // fix this.
-      // new Face([4, 5, 6, 7], points, { value: '#333' }),
-      // new Face([0, 1, 5, 4], points, { value: '#333' }),
+      new Face([4, 5, 6, 7], points, INNER_FACE_COLOR),
+      new Face([0, 1, 5, 4], points, INNER_FACE_COLOR),
       new Face([2, 3, 7, 6], points, side1),
       new Face([1, 2, 6, 5], points, side2),
-      // new Face([0, 3, 7, 4], points, { value: '#333' }),
+      new Face([0, 3, 7, 4], points, INNER_FACE_COLOR),
     ];
+
+    const innerCentroid = vec3.fromValues(this.halfSide / 2, this.halfSide / 2, this.halfSide / 2);
+    faces[1].centroid = innerCentroid;
+    faces[2].centroid = innerCentroid;
+    faces[5].centroid = innerCentroid;
 
     return new Geometry(points, faces);
   }
@@ -102,11 +109,23 @@ export class Square1 extends Square1Builder {
 
     const faces: IFace[] = [
       new Face([0, 1, 2], points, top),
-      // new Face([3, 4, 5], points, { value: '#333' }),
+      new Face([3, 4, 5], points, INNER_FACE_COLOR),
       new Face([1, 2, 5, 4], points, side),
-      // new Face([0, 1, 4, 3], points, { value: '#333' }),
-      // new Face([0, 2, 5, 3], points, { value: '#333' }),
+      new Face([0, 1, 4, 3], points, INNER_FACE_COLOR),
+      new Face([0, 2, 5, 3], points, INNER_FACE_COLOR),
     ];
+
+    const innerFaceCentroid = vec3.rotateZ(
+      vec3.create(),
+      [0, this.halfSide / 2, this.halfSide / 2],
+      [0, 0, 0],
+      DEG_30_RADIANS
+    );
+
+    // Override centroid to avoid drawing over outside stickers
+    faces[1].centroid = innerFaceCentroid;
+    faces[3].centroid = innerFaceCentroid;
+    faces[4].centroid = innerFaceCentroid;
 
     return new Geometry(points, faces);
   }
@@ -129,9 +148,16 @@ export class Square1 extends Square1Builder {
       new Face([4, 5, 6, 7], vertices, { value: "#333" }),
       new Face([0, 1, 5, 4], vertices, side),
       new Face([1, 2, 6, 5], vertices, back),
-      new Face([2, 3, 7, 6], vertices, { value: "#333" }),
+      // new Face([2, 3, 7, 6], vertices, { value: "#333" }),
       new Face([0, 3, 7, 4], vertices, front),
     ];
+
+    const innerFaceCentroid = vec3.fromValues(-this.halfSide / 2, 0, 0);
+
+    // Override centroid to avoid drawing over outside stickers
+    faces[0].centroid = innerFaceCentroid;
+    faces[1].centroid = innerFaceCentroid;
+    faces[2].centroid = vec3.fromValues(-(this.halfSide + (this.halfSide * .45)), 0, 0);
 
     return new Geometry(vertices, faces);
   }
@@ -143,10 +169,6 @@ export class Square1 extends Square1Builder {
   ): Object3D[] {
     const topLayer = new Group(this.makeLayer(top));
     const bottomLayer = new Group(this.makeLayer(bottom));
-
-    // Prevent overlapping faces
-    topLayer.translate([0, 0, 0.005]);
-    bottomLayer.translate([0, 0, -0.005]);
 
     bottomLayer.rotate(Math.PI, [1, 0, 0]);
     bottomLayer.rotate(DEG_30_RADIANS, [0, 0, 1]);
