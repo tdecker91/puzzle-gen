@@ -1,6 +1,6 @@
 {
   "name": "sr-puzzlegen",
-  "version": "1.0.3-beta.23",
+  "version": "1.0.3",
   "description": "",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
