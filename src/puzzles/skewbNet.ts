@@ -2,11 +2,10 @@ import { Object3D } from "./../geometry/object3d";
 import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE, BLACK } from "./colors";
 import { Group } from "../geometry/group";
 import { IColor } from "../geometry/color";
-import { vec3 } from "gl-matrix";
 import { Plane } from "../geometry/plane";
 import { Geometry } from "../geometry/geometry";
 import { Triangle } from "../geometry/triangle";
-import { chunkArray } from "../utils/arrays";
+import { Vector3 } from "../math/vector";
 
 export class SkewbNet {
   stickers: Object3D[];
@@ -25,21 +24,39 @@ export class SkewbNet {
     const centerWidth = Math.sqrt(Math.pow(cubeWidth / 2, 2) * 2);
 
     const orange = new Group(
-      this.makeStickers(ORANGE, centerWidth, [-cubeWidth, 0, 0])
+      this.makeStickers(
+        ORANGE,
+        centerWidth,
+        Vector3.fromValues(-cubeWidth, 0, 0)
+      )
     );
     const green = new Group(
-      this.makeStickers(GREEN, centerWidth, [2 * cubeWidth, 0, 0])
+      this.makeStickers(
+        GREEN,
+        centerWidth,
+        Vector3.fromValues(2 * cubeWidth, 0, 0)
+      )
     );
     const white = new Group(
-      this.makeStickers(WHITE, centerWidth, [0, -cubeWidth, 0])
+      this.makeStickers(
+        WHITE,
+        centerWidth,
+        Vector3.fromValues(0, -cubeWidth, 0)
+      )
     );
     const red = new Group(
-      this.makeStickers(RED, centerWidth, [cubeWidth, 0, 0])
+      this.makeStickers(RED, centerWidth, Vector3.fromValues(cubeWidth, 0, 0))
     );
     const yellow = new Group(
-      this.makeStickers(YELLOW, centerWidth, [0, cubeWidth, 0])
+      this.makeStickers(
+        YELLOW,
+        centerWidth,
+        Vector3.fromValues(0, cubeWidth, 0)
+      )
     );
-    const blue = new Group(this.makeStickers(BLUE, centerWidth, [0, 0, 0]));
+    const blue = new Group(
+      this.makeStickers(BLUE, centerWidth, Vector3.fromValues(0, 0, 0))
+    );
 
     this.U = yellow;
     this.R = red;
@@ -60,33 +77,33 @@ export class SkewbNet {
     this.stickers = [red, yellow, blue, orange, green, white];
     this.group = new Group(this.stickers);
 
-    this.group.translate([-cubeWidth / 4, 0, 0]);
-    this.group.scale([0.5, 0.5, 0.5]);
+    this.group.translate(-cubeWidth / 4, 0, 0);
+    this.group.scale(0.5, 0.5, 0.5);
   }
 
   private makeStickers(
     color: IColor,
     width: number,
-    translate: vec3
+    translate: Vector3
   ): Geometry[] {
     const center = new Plane(width, width, color);
 
-    center.translate(translate);
-    center.rotate(Math.PI / 4, [0, 0, 1]);
-    center.translate([-width / 2, width / 2, 0]);
+    center.translate(translate.x, translate.y, translate.z);
+    center.rotate(Math.PI / 4, 0, 0, 1);
+    center.translate(-width / 2, width / 2, 0);
 
     const triangles = [];
     for (let i = 0; i < 4; i++) {
       const triangle = new Triangle(
-        [-width / 2, width / 2, 0],
-        [0, width, 0],
-        [width / 2, width / 2, 0],
+        Vector3.fromValues(-width / 2, width / 2, 0),
+        Vector3.fromValues(0, width, 0),
+        Vector3.fromValues(width / 2, width / 2, 0),
         color
       );
 
-      triangle.translate(translate);
-      triangle.rotate((-Math.PI / 2) * i, [0, 0, 1]);
-      triangle.rotate(Math.PI / 4, [0, 0, 1]);
+      triangle.translate(translate.x, translate.y, translate.z);
+      triangle.rotate((-Math.PI / 2) * i, 0, 0, 1);
+      triangle.rotate(Math.PI / 4, 0, 0, 1);
       triangles.push(triangle);
     }
 

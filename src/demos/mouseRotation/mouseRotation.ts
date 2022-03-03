@@ -1,9 +1,10 @@
-import { mat4 } from 'gl-matrix';
 import { HtmlSvgRenderer } from './../../rendering/htmlSvgRenderer';
 import { Group } from "../../geometry/group";
 import { RubiksCube } from "../../puzzles/rubiksCube/rubiksCube";
 import { Camera } from "../../rendering/camera";
 import { Scene } from "../../rendering/scene";
+import { createSquare1 } from '../../visualizer/puzzleCreator';
+import { Matrix4 } from '../../math/matrix';
 
 let renderer: HtmlSvgRenderer;
 let camera: Camera;
@@ -60,7 +61,7 @@ function throttle(callback, interval) {
 document.addEventListener("DOMContentLoaded", function (event) {
   renderDemo();
 
-  let originalMat: mat4 = mat4.create();
+  let originalMat: Matrix4 = new Matrix4();
 
   let frameOut: HTMLSpanElement = document.getElementById("frame-out");
   let start = new Date().getTime();
@@ -68,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
   renderer.svgElement.addEventListener('mousedown', e => {
     mouseDown = true;
     start = new Date().getTime();
-    mat4.copy(originalMat, rotationGroup.matrix);
+    Matrix4.copy(originalMat, rotationGroup.matrix);
     x = e.x;
     y = e.y;
   });
@@ -82,18 +83,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
       start = new Date().getTime();
       const [diffX, diffY] = [e.x - x, e.y - y];
 
-      let xRotation = mat4.fromXRotation(mat4.create(), diffY/128);
-      let yRotation = mat4.fromYRotation(mat4.create(), diffX/128);
+      let xRotation = Matrix4.fromXRotation(diffY / 128);
+      let yRotation = Matrix4.fromYRotation(diffX / 128);
 
       // Matrix to accumulate x and y rotations from mouse movements
-      let acc: mat4 = mat4.create();
+      let acc: Matrix4 = new Matrix4();
 
-      mat4.multiply(acc, acc, xRotation);
-      mat4.multiply(acc, acc, yRotation);
+      acc.multiply(xRotation);
+      acc.multiply(yRotation);
 
-      rotationGroup.matrix = mat4.multiply(rotationGroup.matrix, acc, originalMat);
-
-      valuesElement.innerHTML = mat4String(rotationGroup.matrix);
+      Matrix4.multiply(rotationGroup.matrix, acc, originalMat);
       renderer.render(scene, camera);
 
       const time = new Date().getTime() - start;
@@ -111,15 +110,16 @@ function round(n: number): string {
   return n.toFixed(3);
 }
 
-function mat4String(m: mat4) {
-  return `${round(m[0])}\t\t${round(m[1])}\t\t${round(m[2])}\t\t${round(m[3])}\n` +
-  `${round(m[4])}\t\t${round(m[5])}\t\t${round(m[6])}\t\t${round(m[7])}\n` +
-  `${round(m[8])}\t\t${round(m[9])}\t\t${round(m[10])}\t\t${round(m[11])}\n` +
-  `${round(m[12])}\t\t${round(m[13])}\t\t${round(m[14])}\t\t${round(m[15])}\n`;
+function mat4String(m: Matrix4) {
+  return `${round(m.values[0])}\t\t${round(m.values[1])}\t\t${round(m.values[2])}\t\t${round(m.values[3])}\n` +
+    `${round(m.values[4])}\t\t${round(m.values[5])}\t\t${round(m.values[6])}\t\t${round(m.values[7])}\n` +
+    `${round(m.values[8])}\t\t${round(m.values[9])}\t\t${round(m.values[10])}\t\t${round(m.values[11])}\n` +
+    `${round(m.values[12])}\t\t${round(m.values[13])}\t\t${round(m.values[14])}\t\t${round(m.values[15])}\n`;
 }
 
 export function reset() {
-  rotationGroup.matrix = mat4.create();
+
+  rotationGroup.matrix = new Matrix4();
   valuesElement.innerHTML = mat4String(rotationGroup.matrix);
   renderer.render(scene, camera);
 

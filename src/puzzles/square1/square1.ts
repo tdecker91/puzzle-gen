@@ -12,11 +12,11 @@ import { Sqaure1Piece, Square1Builder } from "./interface";
 import { DEG_30_RADIANS } from "./../../math/constants";
 import { Geometry } from "./../../geometry/geometry";
 import { IFace, Face } from "./../../geometry/face";
-import { vec3 } from "gl-matrix";
 import { IColor } from "./../../geometry/color";
 import { Group } from "../../geometry/group";
+import { Vector3 } from "../../math/vector";
 
-const INNER_FACE_COLOR = { value: '#333', stroke: '#333' };
+const INNER_FACE_COLOR = { value: "#333", stroke: "#333" };
 
 export class Square1 extends Square1Builder {
   constructor(
@@ -29,18 +29,30 @@ export class Square1 extends Square1Builder {
   }
 
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
-    const points: vec3[] = [
+    const points: Vector3[] = [
       // Top
-      [0, 0, this.halfSide],
-      [this.halfSide, this.halfEdgePiece, this.halfSide],
-      [this.halfSide, this.halfSide, this.halfSide],
-      [this.halfEdgePiece, this.halfSide, this.halfSide],
+      Vector3.fromValues(0, 0, this.halfSide),
+      Vector3.fromValues(this.halfSide, this.halfEdgePiece, this.halfSide),
+      Vector3.fromValues(this.halfSide, this.halfSide, this.halfSide),
+      Vector3.fromValues(this.halfEdgePiece, this.halfSide, this.halfSide),
 
       // Bottom
-      [0, 0, this.halfSide - this.layerWidth],
-      [this.halfSide, this.halfEdgePiece, this.halfSide - this.layerWidth],
-      [this.halfSide, this.halfSide, this.halfSide - this.layerWidth],
-      [this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth],
+      Vector3.fromValues(0, 0, this.halfSide - this.layerWidth),
+      Vector3.fromValues(
+        this.halfSide,
+        this.halfEdgePiece,
+        this.halfSide - this.layerWidth
+      ),
+      Vector3.fromValues(
+        this.halfSide,
+        this.halfSide,
+        this.halfSide - this.layerWidth
+      ),
+      Vector3.fromValues(
+        this.halfEdgePiece,
+        this.halfSide,
+        this.halfSide - this.layerWidth
+      ),
     ];
 
     const faces: IFace[] = [
@@ -56,7 +68,11 @@ export class Square1 extends Square1Builder {
       new Face([0, 3, 7, 4], points, INNER_FACE_COLOR),
     ];
 
-    const innerCentroid = vec3.fromValues(this.halfSide / 2, this.halfSide / 2, this.halfSide / 2);
+    const innerCentroid = Vector3.fromValues(
+      this.halfSide / 2,
+      this.halfSide / 2,
+      this.halfSide / 2
+    );
     faces[1].centroid = innerCentroid;
     faces[2].centroid = innerCentroid;
     faces[5].centroid = innerCentroid;
@@ -65,46 +81,38 @@ export class Square1 extends Square1Builder {
   }
 
   square1Edge(top: IColor, side: IColor): Geometry {
-    const points: vec3[] = [
+    const points: Vector3[] = [
       // Top
-      vec3.rotateZ(
-        vec3.create(),
-        [0, 0, this.halfSide],
-        [0, 0, 0],
+      Vector3.fromValues(0, 0, this.halfSide).rotateZ(
+        Vector3.fromValues(0, 0, 0),
         DEG_30_RADIANS
       ),
-      vec3.rotateZ(
-        vec3.create(),
-        [this.halfEdgePiece, this.halfSide, this.halfSide],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
-      vec3.rotateZ(
-        vec3.create(),
-        [-this.halfEdgePiece, this.halfSide, this.halfSide],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
+      Vector3.fromValues(
+        this.halfEdgePiece,
+        this.halfSide,
+        this.halfSide
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
+      Vector3.fromValues(
+        -this.halfEdgePiece,
+        this.halfSide,
+        this.halfSide
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
 
       // Bottom
-      vec3.rotateZ(
-        vec3.create(),
-        [0, 0, this.halfSide - this.layerWidth],
-        [0, 0, 0],
+      Vector3.fromValues(0, 0, this.halfSide - this.layerWidth).rotateZ(
+        Vector3.fromValues(0, 0, 0),
         DEG_30_RADIANS
       ),
-      vec3.rotateZ(
-        vec3.create(),
-        [this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
-      vec3.rotateZ(
-        vec3.create(),
-        [-this.halfEdgePiece, this.halfSide, this.halfSide - this.layerWidth],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
+      Vector3.fromValues(
+        this.halfEdgePiece,
+        this.halfSide,
+        this.halfSide - this.layerWidth
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
+      Vector3.fromValues(
+        -this.halfEdgePiece,
+        this.halfSide,
+        this.halfSide - this.layerWidth
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
     ];
 
     const faces: IFace[] = [
@@ -115,12 +123,11 @@ export class Square1 extends Square1Builder {
       new Face([0, 2, 5, 3], points, INNER_FACE_COLOR),
     ];
 
-    const innerFaceCentroid = vec3.rotateZ(
-      vec3.create(),
-      [0, this.halfSide / 2, this.halfSide / 2],
-      [0, 0, 0],
-      DEG_30_RADIANS
-    );
+    const innerFaceCentroid = Vector3.fromValues(
+      0,
+      this.halfSide / 2,
+      this.halfSide / 2
+    ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS);
 
     // Override centroid to avoid drawing over outside stickers
     faces[1].centroid = innerFaceCentroid;
@@ -131,16 +138,32 @@ export class Square1 extends Square1Builder {
   }
 
   square1Middle(front: IColor, side: IColor, back: IColor): Geometry {
-    const vertices: vec3[] = [
-      [-this.halfSide, -this.halfSide, this.halfMiddleWidth],
-      [-this.halfSide, this.halfSide, this.halfMiddleWidth],
-      [this.halfEdgePiece, this.halfSide, this.halfMiddleWidth],
-      [-this.halfEdgePiece, -this.halfSide, this.halfMiddleWidth],
+    const vertices: Vector3[] = [
+      Vector3.fromValues(-this.halfSide, -this.halfSide, this.halfMiddleWidth),
+      Vector3.fromValues(-this.halfSide, this.halfSide, this.halfMiddleWidth),
+      Vector3.fromValues(
+        this.halfEdgePiece,
+        this.halfSide,
+        this.halfMiddleWidth
+      ),
+      Vector3.fromValues(
+        -this.halfEdgePiece,
+        -this.halfSide,
+        this.halfMiddleWidth
+      ),
 
-      [-this.halfSide, -this.halfSide, -this.halfMiddleWidth],
-      [-this.halfSide, this.halfSide, -this.halfMiddleWidth],
-      [this.halfEdgePiece, this.halfSide, -this.halfMiddleWidth],
-      [-this.halfEdgePiece, -this.halfSide, -this.halfMiddleWidth],
+      Vector3.fromValues(-this.halfSide, -this.halfSide, -this.halfMiddleWidth),
+      Vector3.fromValues(-this.halfSide, this.halfSide, -this.halfMiddleWidth),
+      Vector3.fromValues(
+        this.halfEdgePiece,
+        this.halfSide,
+        -this.halfMiddleWidth
+      ),
+      Vector3.fromValues(
+        -this.halfEdgePiece,
+        -this.halfSide,
+        -this.halfMiddleWidth
+      ),
     ];
 
     const faces: IFace[] = [
@@ -152,12 +175,16 @@ export class Square1 extends Square1Builder {
       new Face([0, 3, 7, 4], vertices, front),
     ];
 
-    const innerFaceCentroid = vec3.fromValues(-this.halfSide / 2, 0, 0);
+    const innerFaceCentroid = Vector3.fromValues(-this.halfSide / 2, 0, 0);
 
     // Override centroid to avoid drawing over outside stickers
     faces[0].centroid = innerFaceCentroid;
     faces[1].centroid = innerFaceCentroid;
-    faces[2].centroid = vec3.fromValues(-(this.halfSide + (this.halfSide * .45)), 0, 0);
+    faces[2].centroid = Vector3.fromValues(
+      -(this.halfSide + this.halfSide * 0.45),
+      0,
+      0
+    );
 
     return new Geometry(vertices, faces);
   }
@@ -170,17 +197,22 @@ export class Square1 extends Square1Builder {
     const topLayer = new Group(this.makeLayer(top));
     const bottomLayer = new Group(this.makeLayer(bottom));
 
-    bottomLayer.rotate(Math.PI, [1, 0, 0]);
-    bottomLayer.rotate(DEG_30_RADIANS, [0, 0, 1]);
+    bottomLayer.rotate(Math.PI, 1, 0, 0);
+    bottomLayer.rotate(DEG_30_RADIANS, 0, 0, 1);
 
     const pieces: Object3D[] = [topLayer, bottomLayer];
 
     const m1 = this.square1Middle(FRONT_COLOR, LEFT_COLOR, BACK_COLOR);
     const m2 = this.square1Middle(BACK_COLOR, RIGHT_COLOR, FRONT_COLOR);
-    m2.rotate(Math.PI, [0, 0, 1]);
+    m2.rotate(Math.PI, 0, 0, 1);
 
     if (middleRotated) {
-      m2.rotate(Math.PI, ROTATION_VECTOR);
+      m2.rotate(
+        Math.PI,
+        ROTATION_VECTOR.x,
+        ROTATION_VECTOR.y,
+        ROTATION_VECTOR.z
+      );
     }
 
     pieces.push(m1);

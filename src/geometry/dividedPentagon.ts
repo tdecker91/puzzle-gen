@@ -1,5 +1,4 @@
 import { IColor } from "./color";
-import { vec2, vec3 } from "gl-matrix";
 import { IFace, Face } from "./../geometry/face";
 import { Geometry } from "../geometry/geometry";
 import {
@@ -8,6 +7,7 @@ import {
   pentagonInRadius,
   pentagonOutRadius,
 } from "../math/utils";
+import { Vector2, Vector3 } from "../math/vector";
 
 export class DividedPentagon extends Geometry {
   /**
@@ -90,7 +90,11 @@ function layerVertexNumbers(layer) {
   return vertexNumbers;
 }
 
-function makeFaces(layers: number, color: IColor, vertices: vec3[]): IFace[] {
+function makeFaces(
+  layers: number,
+  color: IColor,
+  vertices: Vector3[]
+): IFace[] {
   let faces: IFace[] = [];
 
   const firstLayerFace = new Face([0, 1, 2, 3, 4], vertices, color);
@@ -141,41 +145,41 @@ function makeFaces(layers: number, color: IColor, vertices: vec3[]): IFace[] {
  * @param segments how many points to extrapolate from each direction p1 -> p2 and p2 -> p1
  */
 function segmentPoints(
-  p1: vec2,
-  p2: vec2,
+  p1: Vector2,
+  p2: Vector2,
   segments: number,
   layerWidth: number
-): vec3[] {
+): Vector3[] {
   if (segments === 0) {
     return [
-      [p1[0], p1[1], 0],
-      [p2[0], p2[1], 0],
+      Vector3.fromValues(p1.x, p1.y, 0),
+      Vector3.fromValues(p2.x, p2.y, 0),
     ];
   }
 
   const length: number = lineSegmentLength(p1, p2);
 
-  let points: vec3[] = [];
+  let points: Vector3[] = [];
   for (let i = segments; i > 0; i--) {
-    // extrapolate from p1
-    let a: vec3 = [
-      p1[0] + ((p2[0] - p1[0]) / length) * layerWidth * i,
-      p1[1] + ((p2[1] - p1[1]) / length) * layerWidth * i,
-      0,
-    ];
+    // extrapolate from p1.v
+    let a: Vector3 = Vector3.fromValues(
+      p1.x + ((p2.x - p1.x) / length) * layerWidth * i,
+      p1.y + ((p2.y - p1.y) / length) * layerWidth * i,
+      0
+    );
     points.unshift(a);
 
-    // extrapolate from p2
-    let b: vec3 = [
-      p2[0] + ((p1[0] - p2[0]) / length) * layerWidth * i,
-      p2[1] + ((p1[1] - p2[1]) / length) * layerWidth * i,
-      0,
-    ];
+    // extrapolate from p2.v
+    let b: Vector3 = Vector3.fromValues(
+      p2.x + ((p1.x - p2.x) / length) * layerWidth * i,
+      p2.y + ((p1.y - p2.y) / length) * layerWidth * i,
+      0
+    );
     points.push(b);
   }
 
-  points.unshift([p1[0], p1[1], 0]);
-  points.push([p2[0], p2[1], 0]);
+  points.unshift(Vector3.fromValues(p1.x, p1.y, 0));
+  points.push(Vector3.fromValues(p2.x, p2.y, 0));
 
   return points;
 }
@@ -184,8 +188,8 @@ function layerVerticies(
   layer: number,
   radius: number,
   layerWidth: number
-): vec3[] {
-  let verticies: vec3[] = [];
+): Vector3[] {
+  let verticies: Vector3[] = [];
 
   for (let i = 0; i < 5; i++) {
     const theta = (i * (2 * Math.PI)) / 5 - Math.PI / 10;
@@ -194,7 +198,7 @@ function layerVerticies(
     if (verticies.length > 0) {
       const lastPoint = verticies[verticies.length - 1];
       const points = segmentPoints(
-        [lastPoint[0], lastPoint[1]],
+        Vector2.fromValues(lastPoint.x, lastPoint.y),
         v,
         layer,
         layerWidth
@@ -203,7 +207,7 @@ function layerVerticies(
 
       verticies = verticies.concat(points);
     } else {
-      verticies.push([v[0], v[1], 0]);
+      verticies.push(Vector3.fromValues(v.x, v.y, 0));
     }
   }
 
@@ -211,8 +215,8 @@ function layerVerticies(
   const first = verticies[0];
   const last = verticies[verticies.length - 1];
   const points = segmentPoints(
-    [last[0], last[1]],
-    [first[0], first[1]],
+    Vector2.fromValues(last.x, last.y),
+    Vector2.fromValues(first.x, first.y),
     layer,
     layerWidth
   );
@@ -228,8 +232,8 @@ function faceVerticies(
   radius: number,
   radiusDiff: number,
   layerWidth: number
-): vec3[] {
-  let verticies: vec3[] = [];
+): Vector3[] {
+  let verticies: Vector3[] = [];
 
   for (let i = 0; i < layers; i++) {
     const r = radius + radiusDiff * i;

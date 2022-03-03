@@ -1,11 +1,11 @@
-import { vec3 } from "gl-matrix";
 import { calculateCentroid } from "../math/utils";
+import { Vector3 } from "../math/vector";
 import { IColor } from "./color";
 import { generateUid } from "./uid";
 
 export interface IFace {
   indices: number[];
-  centroid: vec3;
+  centroid: Vector3;
   color?: IColor;
   uid: number;
 }
@@ -16,7 +16,7 @@ export interface IFace {
 export class Face implements IFace {
   indices: number[];
   color?: IColor;
-  centroid: vec3;
+  centroid: Vector3;
   uid: number;
 
   /**
@@ -24,7 +24,7 @@ export class Face implements IFace {
    * @param vertices vertices of the geometry to calculate centroid from
    * @param color color of the sticker
    */
-  constructor(indices: number[], vertices: vec3[], color?: IColor) {
+  constructor(indices: number[], vertices: Vector3[], color?: IColor) {
     this.indices = indices;
     this.color = color;
     this.uid = generateUid();
@@ -37,7 +37,7 @@ export class Face implements IFace {
   /**
    * recalculate the centroid of the face.
    */
-  calculateCentroid(vertices: vec3[]) {
+  calculateCentroid(vertices: Vector3[]) {
     this.centroid = calculateCentroid(
       // Calculate centroid from vertices included in the face
       vertices.filter((v, i) => this.indices.includes(i))

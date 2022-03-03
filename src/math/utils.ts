@@ -1,18 +1,18 @@
-import { vec2, vec3 } from "gl-matrix";
+import { Vector2, Vector3 } from "./vector";
 
 export function degreesToRadians(degrees: number): number {
   return (Math.PI * degrees) / 180;
 }
 
-export function polarToCartesian(radius: number, theta: number): vec2 {
+export function polarToCartesian(radius: number, theta: number): Vector2 {
   const x = radius * Math.cos(theta);
   const y = radius * Math.sin(theta);
 
-  return [x, y];
+  return Vector2.fromValues(x, y);
 }
 
-export function lineSegmentLength(p1: vec2, p2: vec2): number {
-  return Math.sqrt(Math.pow(p2[1] - p1[1], 2) + Math.pow(p2[0] - p1[0], 2));
+export function lineSegmentLength(p1: Vector2, p2: Vector2): number {
+  return Math.sqrt(Math.pow(p2.y - p1.y, 2) + Math.pow(p2.x - p1.x, 2));
 }
 
 /**
@@ -39,21 +39,21 @@ export function dodecahedronInRadius(length: number): number {
   return (length / 2) * Math.sqrt(5 / 2 + (11 / 10) * Math.sqrt(5));
 }
 
-export function calculateCentroid(vertices: vec3[]): vec3 {
+export function calculateCentroid(vertices: Vector3[]): Vector3 {
   let cx = 0,
     cy = 0,
     cz = 0;
   vertices.forEach((vertex) => {
-    cx += vertex[0];
-    cy += vertex[1];
-    cz += vertex[2];
+    cx += vertex.x;
+    cy += vertex.y;
+    cz += vertex.z;
   });
 
   cx /= vertices.length;
   cy /= vertices.length;
   cz /= vertices.length;
 
-  return vec3.clone([cx, cy, cz]);
+  return Vector3.fromValues(cx, cy, cz);
 }
 
 /**

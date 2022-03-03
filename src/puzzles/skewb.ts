@@ -3,9 +3,9 @@ import { Object3D } from "./../geometry/object3d";
 import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE, BLACK } from "./colors";
 import { Group } from "../geometry/group";
 import { IColor } from "../geometry/color";
-import { vec3 } from "gl-matrix";
 import { Plane } from "../geometry/plane";
 import { Triangle } from "../geometry/triangle";
+import { Vector3 } from "../math/vector";
 
 export class Skewb {
   stickers: Object3D[];
@@ -25,11 +25,19 @@ export class Skewb {
     const halfWidth = cubeWidth / 2;
 
     const red = new Group(this.makeStickers(RED, centerWidth));
-    const yellow = new Group(this.makeStickers(YELLOW, centerWidth, [1, 0, 0]));
-    const blue = new Group(this.makeStickers(BLUE, centerWidth, [0, 1, 0]));
+    const yellow = new Group(
+      this.makeStickers(YELLOW, centerWidth, Vector3.fromValues(1, 0, 0))
+    );
+    const blue = new Group(
+      this.makeStickers(BLUE, centerWidth, Vector3.fromValues(0, 1, 0))
+    );
     const orange = new Group(this.makeStickers(ORANGE, centerWidth));
-    const green = new Group(this.makeStickers(GREEN, centerWidth, [0, 1, 0]));
-    const white = new Group(this.makeStickers(WHITE, centerWidth, [1, 0, 0]));
+    const green = new Group(
+      this.makeStickers(GREEN, centerWidth, Vector3.fromValues(0, 1, 0))
+    );
+    const white = new Group(
+      this.makeStickers(WHITE, centerWidth, Vector3.fromValues(1, 0, 0))
+    );
 
     this.U = yellow;
     this.R = red;
@@ -47,51 +55,55 @@ export class Skewb {
       bottom: this.D,
     };
 
-    red.translate([0, 0, halfWidth]);
-    red.rotate(Math.PI, [1, 0, 0]);
-    red.rotate(Math.PI / 2, [0, 0, 1]);
+    red.translate(0, 0, halfWidth);
+    red.rotate(Math.PI, 1, 0, 0);
+    red.rotate(Math.PI / 2, 0, 0, 1);
 
-    orange.rotate(-Math.PI / 2, [0, 0, 1]);
-    orange.translate([0, 0, -halfWidth]);
+    orange.rotate(-Math.PI / 2, 0, 0, 1);
+    orange.translate(0, 0, -halfWidth);
 
-    blue.rotate(-Math.PI / 2, [1, 0, 0]);
-    blue.translate([-halfWidth, 0, 0]);
+    blue.rotate(-Math.PI / 2, 1, 0, 0);
+    blue.translate(-halfWidth, 0, 0);
 
-    green.translate([halfWidth, 0, 0]);
-    green.rotate(Math.PI, [0, 1, 0]);
-    green.rotate(-Math.PI / 2, [1, 0, 0]);
+    green.translate(halfWidth, 0, 0);
+    green.rotate(Math.PI, 0, 1, 0);
+    green.rotate(-Math.PI / 2, 1, 0, 0);
 
-    yellow.rotate(Math.PI, [0, 1, 0]);
-    yellow.translate([0, halfWidth, 0]);
+    yellow.rotate(Math.PI, 0, 1, 0);
+    yellow.translate(0, halfWidth, 0);
 
-    white.translate([0, -halfWidth, 0]);
-    white.rotate(Math.PI, [1, 0, 0]);
+    white.translate(0, -halfWidth, 0);
+    white.rotate(Math.PI, 1, 0, 0);
 
     this.stickers = [red, yellow, blue, orange, green, white];
     this.group = new Group(this.stickers);
   }
 
-  private makeStickers(color: IColor, width: number, axis?: vec3): Geometry[] {
+  private makeStickers(
+    color: IColor,
+    width: number,
+    axis?: Vector3
+  ): Geometry[] {
     const center = new Plane(width, width, color);
     if (axis) {
-      center.rotate(Math.PI / 2, axis);
+      center.rotate(Math.PI / 2, axis.x, axis.y, axis.z);
     }
-    center.rotate(Math.PI / 4, [0, 0, 1]);
-    center.translate([-width / 2, width / 2, 0]);
+    center.rotate(Math.PI / 4, 0, 0, 1);
+    center.translate(-width / 2, width / 2, 0);
 
     const triangles = [];
     for (let i = 0; i < 4; i++) {
       const triangle = new Triangle(
-        [-width / 2, width / 2, 0],
-        [0, width, 0],
-        [width / 2, width / 2, 0],
+        Vector3.fromValues(-width / 2, width / 2, 0),
+        Vector3.fromValues(0, width, 0),
+        Vector3.fromValues(width / 2, width / 2, 0),
         color
       );
       if (axis) {
-        triangle.rotate(Math.PI / 2, axis);
+        triangle.rotate(Math.PI / 2, axis.x, axis.y, axis.z);
       }
-      triangle.rotate((Math.PI / 2) * i, [0, 0, 1]);
-      triangle.rotate(Math.PI / 4, [0, 0, 1]);
+      triangle.rotate((Math.PI / 2) * i, 0, 0, 1);
+      triangle.rotate(Math.PI / 4, 0, 0, 1);
       triangles.push(triangle);
     }
 

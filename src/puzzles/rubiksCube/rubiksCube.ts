@@ -31,24 +31,24 @@ export class RubiksCube {
     this.L = new Group(makeGrid(cubeWidth, size, ORANGE));
     this.B = new Group(makeGrid(cubeWidth, size, GREEN));
 
-    this.U.rotate(-Math.PI / 2, [0, 1, 0]);
-    this.U.rotate(-Math.PI / 2, [1, 0, 0]);
-    this.U.translate([0, 0, halfWidth]);
+    this.U.rotate(-Math.PI / 2, 0, 1, 0);
+    this.U.rotate(-Math.PI / 2, 1, 0, 0);
+    this.U.translate(0, 0, halfWidth);
 
-    this.R.translate([0, 0, halfWidth]);
+    this.R.translate(0, 0, halfWidth);
 
-    this.F.rotate(-Math.PI / 2, [0, 1, 0]);
-    this.F.translate([0, 0, halfWidth]);
+    this.F.rotate(-Math.PI / 2, 0, 1, 0);
+    this.F.translate(0, 0, halfWidth);
 
-    this.D.rotate(-Math.PI / 2, [0, 1, 0]);
-    this.D.rotate(Math.PI / 2, [1, 0, 0]);
-    this.D.translate([0, 0, halfWidth]);
+    this.D.rotate(-Math.PI / 2, 0, 1, 0);
+    this.D.rotate(Math.PI / 2, 1, 0, 0);
+    this.D.translate(0, 0, halfWidth);
 
-    this.L.rotate(-Math.PI, [0, 1, 0]);
-    this.L.translate([0, 0, halfWidth]);
+    this.L.rotate(-Math.PI, 0, 1, 0);
+    this.L.translate(0, 0, halfWidth);
 
-    this.B.rotate(Math.PI / 2, [0, 1, 0]);
-    this.B.translate([0, 0, halfWidth]);
+    this.B.rotate(Math.PI / 2, 0, 1, 0);
+    this.B.translate(0, 0, halfWidth);
 
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
 

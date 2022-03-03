@@ -1,29 +1,30 @@
-import { mat4, ReadonlyVec3, vec3 } from "gl-matrix";
 import { IColor } from "./color";
 import { generateUid } from "./uid";
+import { Vector3 } from "../math/vector";
+import { Matrix4 } from "../math/matrix";
 
 export class Object3D {
-  matrix: mat4;
+  matrix: Matrix4;
   uid: number;
   color?: IColor;
-  centroid: vec3;
+  centroid: Vector3;
 
   constructor() {
     this.uid = generateUid();
-    this.matrix = mat4.create();
-    this.centroid = [0, 0, 0];
+    this.matrix = new Matrix4();
+    this.centroid = Vector3.fromValues(0, 0, 0);
   }
 
-  translate(vector: ReadonlyVec3) {
-    mat4.translate(this.matrix, this.matrix, vector);
+  translate(x: number, y: number, z: number) {
+    this.matrix.translate(x, y, z);
   }
 
-  rotate(rad: number, axis: ReadonlyVec3) {
-    mat4.rotate(this.matrix, this.matrix, rad, axis);
+  rotate(rad: number, x: number, y: number, z: number) {
+    this.matrix.rotate(rad, x, y, z);
   }
 
-  scale(v: vec3) {
-    mat4.scale(this.matrix, this.matrix, v);
+  scale(x: number, y: number, z: number) {
+    this.matrix.scale(x, y, z);
   }
 
   setColor(color: IColor) {

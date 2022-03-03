@@ -73,55 +73,55 @@ export class Megaminx {
     this.bl = new DividedPentagon(DARK_BLUE, layers, length, layerWidth);
     this.b = new DividedPentagon(ORANGE, layers, length, layerWidth);
 
-    this.F.translate([0, 0, megaminxRadius]);
+    this.F.translate(0, 0, megaminxRadius);
 
-    this.b.rotate(Math.PI, [0, 0, 1]);
-    this.b.rotate(Math.PI, [0, 1, 0]);
-    this.b.translate([0, 0, megaminxRadius]);
+    this.b.rotate(Math.PI, 0, 0, 1);
+    this.b.rotate(Math.PI, 0, 1, 0);
+    this.b.translate(0, 0, megaminxRadius);
 
-    this.U.rotate(Math.PI, [0, 0, 1]);
-    this.U.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.U.translate([0, 0, megaminxRadius]);
+    this.U.rotate(Math.PI, 0, 0, 1);
+    this.U.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.U.translate(0, 0, megaminxRadius);
 
-    this.L.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.L.rotate(Math.PI, [0, 0, 1]);
-    this.L.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.L.translate([0, 0, megaminxRadius]);
+    this.L.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.L.rotate(Math.PI, 0, 0, 1);
+    this.L.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.L.translate(0, 0, megaminxRadius);
 
-    this.R.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.R.rotate(Math.PI / 5, [0, 0, 1]);
-    this.R.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.R.translate([0, 0, megaminxRadius]);
+    this.R.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.R.rotate(Math.PI / 5, 0, 0, 1);
+    this.R.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.R.translate(0, 0, megaminxRadius);
 
-    this.dr.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.dr.rotate(-Math.PI / 5, [0, 0, 1]);
-    this.dr.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.dr.translate([0, 0, megaminxRadius]);
+    this.dr.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.dr.rotate(-Math.PI / 5, 0, 0, 1);
+    this.dr.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.dr.translate(0, 0, megaminxRadius);
 
-    this.dl.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.dl.rotate((-3 * Math.PI) / 5, [0, 0, 1]);
-    this.dl.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.dl.translate([0, 0, megaminxRadius]);
+    this.dl.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.dl.rotate((-3 * Math.PI) / 5, 0, 0, 1);
+    this.dl.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.dl.translate(0, 0, megaminxRadius);
 
-    this.BL.rotate(Math.PI / 5, [0, 0, 1]);
-    this.BL.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.BL.translate([0, 0, megaminxRadius]);
+    this.BL.rotate(Math.PI / 5, 0, 0, 1);
+    this.BL.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.BL.translate(0, 0, megaminxRadius);
 
-    this.BR.rotate(-Math.PI / 5, [0, 0, 1]);
-    this.BR.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.BR.translate([0, 0, megaminxRadius]);
+    this.BR.rotate(-Math.PI / 5, 0, 0, 1);
+    this.BR.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.BR.translate(0, 0, megaminxRadius);
 
-    this.bl.rotate((3 * Math.PI) / 5, [0, 0, 1]);
-    this.bl.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.bl.translate([0, 0, megaminxRadius]);
+    this.bl.rotate((3 * Math.PI) / 5, 0, 0, 1);
+    this.bl.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.bl.translate(0, 0, megaminxRadius);
 
-    this.d.rotate((5 * Math.PI) / 5, [0, 0, 1]);
-    this.d.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.d.translate([0, 0, megaminxRadius]);
+    this.d.rotate((5 * Math.PI) / 5, 0, 0, 1);
+    this.d.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.d.translate(0, 0, megaminxRadius);
 
-    this.br.rotate((7 * Math.PI) / 5, [0, 0, 1]);
-    this.br.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.br.translate([0, 0, megaminxRadius]);
+    this.br.rotate((7 * Math.PI) / 5, 0, 0, 1);
+    this.br.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.br.translate(0, 0, megaminxRadius);
 
     this.stickers = [
       this.U,

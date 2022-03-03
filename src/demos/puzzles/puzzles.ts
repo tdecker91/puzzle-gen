@@ -1,6 +1,6 @@
 import { SVGVisualizerOptions } from './../../visualizer/svg';
 import { VisualizerType } from './../../visualizer/enum';
-import { PNG, PNGVisualizerOptions } from '../../visualizer/png';
+import { PNG } from '../../visualizer/png';
 
 function renderDefault() {
   const options: SVGVisualizerOptions = {

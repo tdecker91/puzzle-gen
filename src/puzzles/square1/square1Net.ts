@@ -1,26 +1,26 @@
 import { Sqaure1Piece, Square1Builder } from "./interface";
 import { DEG_30_RADIANS } from "./../../math/constants";
 import { IFace, Face } from "./../../geometry/face";
-import { vec3 } from "gl-matrix";
 import { IColor } from "./../../geometry/color";
 import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
 import { FRONT_COLOR, RIGHT_COLOR, BACK_COLOR } from "./constants";
+import { Vector3 } from "../../math/vector";
 
 export class Square1Net extends Square1Builder {
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
-    const points: vec3[] = [
+    const points: Vector3[] = [
       // Top
-      [0, 0, 0],
-      [this.halfSide, this.halfEdgePiece, 0],
-      [this.halfSide, this.halfSide, 0],
-      [this.halfEdgePiece, this.halfSide, 0],
+      Vector3.fromValues(0, 0, 0),
+      Vector3.fromValues(this.halfSide, this.halfEdgePiece, 0),
+      Vector3.fromValues(this.halfSide, this.halfSide, 0),
+      Vector3.fromValues(this.halfEdgePiece, this.halfSide, 0),
 
       // Sides
-      [this.outerHalfSide, this.outerHalfEdgePiece, 0],
-      [this.outerHalfSide, this.outerHalfSide, 0],
-      [this.outerHalfEdgePiece, this.outerHalfSide, 0],
+      Vector3.fromValues(this.outerHalfSide, this.outerHalfEdgePiece, 0),
+      Vector3.fromValues(this.outerHalfSide, this.outerHalfSide, 0),
+      Vector3.fromValues(this.outerHalfEdgePiece, this.outerHalfSide, 0),
     ];
 
     const faces: IFace[] = [
@@ -33,35 +33,32 @@ export class Square1Net extends Square1Builder {
   }
 
   square1Edge(top: IColor, side: IColor): Geometry {
-    const points: vec3[] = [
+    const points: Vector3[] = [
       // Top
-      vec3.rotateZ(vec3.create(), [0, 0, 0], [0, 0, 0], DEG_30_RADIANS),
-      vec3.rotateZ(
-        vec3.create(),
-        [this.halfEdgePiece, this.halfSide, 0],
-        [0, 0, 0],
+      Vector3.fromValues(0, 0, 0).rotateZ(
+        Vector3.fromValues(0, 0, 0),
         DEG_30_RADIANS
       ),
-      vec3.rotateZ(
-        vec3.create(),
-        [-this.halfEdgePiece, this.halfSide, 0],
-        [0, 0, 0],
+      Vector3.fromValues(this.halfEdgePiece, this.halfSide, 0).rotateZ(
+        Vector3.fromValues(0, 0, 0),
+        DEG_30_RADIANS
+      ),
+      Vector3.fromValues(-this.halfEdgePiece, this.halfSide, 0).rotateZ(
+        Vector3.fromValues(0, 0, 0),
         DEG_30_RADIANS
       ),
 
       // Side
-      vec3.rotateZ(
-        vec3.create(),
-        [this.outerHalfEdgePiece, this.outerHalfSide, 0],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
-      vec3.rotateZ(
-        vec3.create(),
-        [-this.outerHalfEdgePiece, this.outerHalfSide, 0],
-        [0, 0, 0],
-        DEG_30_RADIANS
-      ),
+      Vector3.fromValues(
+        this.outerHalfEdgePiece,
+        this.outerHalfSide,
+        0
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
+      Vector3.fromValues(
+        -this.outerHalfEdgePiece,
+        this.outerHalfSide,
+        0
+      ).rotateZ(Vector3.fromValues(0, 0, 0), DEG_30_RADIANS),
     ];
 
     const faces: IFace[] = [
@@ -83,20 +80,20 @@ export class Square1Net extends Square1Builder {
     const halfMiddleHeight = middleHeight / 2;
     const cornerLength = this.outerHalfSide - this.outerHalfEdgePiece;
 
-    const vertices: vec3[] = [
-      [-this.outerHalfSide, halfMiddleHeight, -0.01],
-      [-this.outerHalfEdgePiece, halfMiddleHeight, -0.01],
-      [this.outerHalfSide, halfMiddleHeight, -0.01],
+    const vertices: Vector3[] = [
+      Vector3.fromValues(-this.outerHalfSide, halfMiddleHeight, -0.01),
+      Vector3.fromValues(-this.outerHalfEdgePiece, halfMiddleHeight, -0.01),
+      Vector3.fromValues(this.outerHalfSide, halfMiddleHeight, -0.01),
 
-      [-this.outerHalfSide, -halfMiddleHeight, -0.01],
-      [-this.outerHalfEdgePiece, -halfMiddleHeight, -0.01],
-      [this.outerHalfSide, -halfMiddleHeight, -0.01],
+      Vector3.fromValues(-this.outerHalfSide, -halfMiddleHeight, -0.01),
+      Vector3.fromValues(-this.outerHalfEdgePiece, -halfMiddleHeight, -0.01),
+      Vector3.fromValues(this.outerHalfSide, -halfMiddleHeight, -0.01),
 
       // Points for when middle is rotated
-      [2 * this.outerHalfEdgePiece, halfMiddleHeight, -0.01],
-      [2 * this.outerHalfEdgePiece, -halfMiddleHeight, -0.01],
-      [2 * cornerLength, halfMiddleHeight, -0.01],
-      [2 * cornerLength, -halfMiddleHeight, -0.01],
+      Vector3.fromValues(2 * this.outerHalfEdgePiece, halfMiddleHeight, -0.01),
+      Vector3.fromValues(2 * this.outerHalfEdgePiece, -halfMiddleHeight, -0.01),
+      Vector3.fromValues(2 * cornerLength, halfMiddleHeight, -0.01),
+      Vector3.fromValues(2 * cornerLength, -halfMiddleHeight, -0.01),
     ];
 
     // Left
@@ -127,9 +124,9 @@ export class Square1Net extends Square1Builder {
     const topLayer = new Group(this.makeLayer(top));
     const bottomLayer = new Group(this.makeLayer(bottom));
 
-    topLayer.translate([0, this.outerHalfSide + halfMiddleHeight, 0]);
-    bottomLayer.translate([0, -(this.outerHalfSide + halfMiddleHeight), 0]);
-    bottomLayer.rotate(DEG_30_RADIANS, [0, 0, 1]);
+    topLayer.translate(0, this.outerHalfSide + halfMiddleHeight, 0);
+    bottomLayer.translate(0, -(this.outerHalfSide + halfMiddleHeight), 0);
+    bottomLayer.rotate(DEG_30_RADIANS, 0, 0, 1);
 
     pieces = [topLayer, bottomLayer];
 

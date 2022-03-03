@@ -1,8 +1,8 @@
 import { IColor } from "./color";
 import { IFace, Face } from "./face";
-import { vec3 } from "gl-matrix";
 import { Geometry } from "./geometry";
 import { SQRT_3 } from "../math/constants";
+import { Vector3 } from "../math/vector";
 
 /**
  * Geometry to build a triangle lattice for the
@@ -16,7 +16,7 @@ export class TriangleLattice extends Geometry {
     const triangleHeight = fullHeight / size;
     const inradius = fullHeight / 3;
 
-    let vertices: vec3[] = [];
+    let vertices: Vector3[] = [];
     let faces: Face[] = [];
 
     /**
@@ -39,7 +39,7 @@ export class TriangleLattice extends Geometry {
           triangleBase * vertex + (layer * triangleBase) / 2 + horizontalOffset;
         const y = triangleHeight * layer + verticalOffset;
 
-        vertices.push([x, y, 0]);
+        vertices.push(Vector3.fromValues(x, y, 0));
 
         if (layer > 0) {
           // down triangle

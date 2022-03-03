@@ -1,4 +1,3 @@
-import { mat4, vec3 } from "gl-matrix";
 import { Arrow } from "./../geometry/arrow";
 import { Object3D } from "../geometry/object3d";
 import { Geometry } from "../geometry/geometry";
@@ -8,12 +7,14 @@ import { Renderer } from "./renderer";
 import { Scene } from "./scene";
 import { applyTransformations } from "./utils";
 import { Face, IFace } from "../geometry/face";
+import { Vector3 } from "../math/vector";
+import { Matrix4 } from "../math/matrix";
 
 export interface Polygon {
-  points: vec3[]; // Screen points for the polygon to render
+  points: Vector3[]; // Screen points for the polygon to render
   face: Face; // original geometry face the polygon comes from
   object: Geometry; // parent geometry
-  centroid: vec3; // centroid of the face in 3d space
+  centroid: Vector3; // centroid of the face in 3d space
 }
 
 /**
@@ -32,11 +33,11 @@ export interface Polygon {
  *   - onComplete - handle any final logic
  */
 export abstract class PolygonRenderer implements Renderer {
-  protected polygons = [];
+  protected polygons: Polygon[] = [];
   protected arrows = [];
 
   abstract drawPolygon(polygon: Polygon);
-  abstract drawArrow(p1: vec3, p2: vec3, uid: string);
+  abstract drawArrow(p1: Vector3, p2: Vector3, uid: string);
   abstract onBeforeRender();
   abstract onComplete();
 
@@ -54,8 +55,8 @@ export abstract class PolygonRenderer implements Renderer {
   }
 
   protected renderPolygons() {
-    this.polygons.sort((a, b) => {
-      return a.centroid[2] - b.centroid[2];
+    this.polygons.sort((a: Polygon, b: Polygon) => {
+      return a.centroid.z - b.centroid.z;
     });
 
     this.polygons.forEach((p) => this.drawPolygon(p));
@@ -70,7 +71,7 @@ export abstract class PolygonRenderer implements Renderer {
   protected renderObject3D(
     object: Object3D,
     camera: Camera,
-    transformations: mat4[]
+    transformations: Matrix4[]
   ) {
     if (object instanceof Geometry) {
       this.renderGeometry(object, camera, transformations);
@@ -78,10 +79,10 @@ export abstract class PolygonRenderer implements Renderer {
       this.renderArrow(object, camera, transformations);
     } else if (object instanceof Group) {
       let group = <Group>object;
-      this.sortObjects(group.objects, camera, [
-        group.matrix,
-        ...transformations,
-      ]);
+      // let sorted = this.sortObjects(group.objects, camera, [
+      //   group.matrix,
+      //   ...transformations,
+      // ]);
       group.objects.forEach((object) => {
         this.renderObject3D(object, camera, [group.matrix, ...transformations]);
       });
@@ -91,12 +92,12 @@ export abstract class PolygonRenderer implements Renderer {
   protected renderGeometry(
     object: Geometry,
     camera: Camera,
-    transformations: mat4[]
+    transformations: Matrix4[]
   ) {
     // this.sortFaces(object.faces, object, transformations);
 
     object.faces.forEach((face) => {
-      let points: vec3[] = [];
+      let points: Vector3[] = [];
       face.indices
         .map((index) => object.vertices[index])
         .forEach((vertex) => {
@@ -105,10 +106,10 @@ export abstract class PolygonRenderer implements Renderer {
             ...transformations,
             camera.matrix,
           ];
-          let v: vec3 = applyTransformations(vertex, objectToScreen);
+          let screenPoint: Vector3 = applyTransformations(vertex, objectToScreen);
 
           // Need to flip y to look correct on svg viewbox
-          let screenPoint = vec3.multiply(v, v, [1, -1, 1]);
+          screenPoint.multiply(1, -1, 1);
           points.push(screenPoint);
         });
 
@@ -119,7 +120,7 @@ export abstract class PolygonRenderer implements Renderer {
   protected renderArrow(
     object: Arrow,
     camera: Camera,
-    transformations: mat4[]
+    transformations: Matrix4[]
   ) {
     let objectToScreen = [object.matrix, ...transformations, camera.matrix];
     let p1Screen = applyTransformations(object.p1, objectToScreen);
@@ -129,10 +130,10 @@ export abstract class PolygonRenderer implements Renderer {
   }
 
   protected addPolygon(
-    points,
+    points: Vector3[],
     face: IFace,
     object: Geometry,
-    transformations: mat4[]
+    transformations: Matrix4[]
   ) {
     this.polygons.push({
       points,
@@ -148,17 +149,19 @@ export abstract class PolygonRenderer implements Renderer {
   protected sortObjects(
     objects: Object3D[],
     camera: Camera,
-    transformations: mat4[]
-  ) {
-    [...objects].sort((a, b) => {
+    transformations: Matrix4[]
+  ): Object3D[] {
+    let sorted = [...objects];
+    sorted.sort((a, b) => {
       let aToWorld = [a.matrix, ...transformations];
       let bToWorld = [b.matrix, ...transformations];
 
-      let aCentroid: vec3 = applyTransformations(a.centroid, aToWorld);
-      let bCentroid: vec3 = applyTransformations(b.centroid, bToWorld);
+      let aCentroid: Vector3 = applyTransformations(a.centroid, aToWorld);
+      let bCentroid: Vector3 = applyTransformations(b.centroid, bToWorld);
 
       // TODO actually use camera, currently only sorting by Z
-      return aCentroid[2] - bCentroid[2];
+      return aCentroid.z - bCentroid.z;
     });
+    return sorted;
   }
 }

@@ -90,9 +90,9 @@ export function getPuzzleGeometry<T extends PuzzleOptions>(
 
 /**
  * Returns a puzzle simulator for the type of puzzle
- * 
- * @param type 
- * @param options 
+ *
+ * @param type
+ * @param options
  */
 export function getPuzzleSimulator<T extends PuzzleOptions>(
   type: VisualizerType,
@@ -119,37 +119,27 @@ export function getPuzzleSimulator<T extends PuzzleOptions>(
   }
 }
 
-export function createCube(
-  options: CubeOptions = {}
-): RubiksCube {
+export function createCube(options: CubeOptions = {}): RubiksCube {
   if (!geometryCache[VisualizerType.CUBE][options.size]) {
     geometryCache[VisualizerType.CUBE][options.size] = new RubiksCube(
       options.size
     );
   }
 
-  return geometryCache[VisualizerType.CUBE][
-    options.size
-  ] as RubiksCube;
+  return geometryCache[VisualizerType.CUBE][options.size] as RubiksCube;
 }
 
-export function createCubeNet(
-  options: CubeOptions = {}
-): RubiksCubeNet {
+export function createCubeNet(options: CubeOptions = {}): RubiksCubeNet {
   if (!geometryCache[VisualizerType.CUBE_NET][options.size]) {
     geometryCache[VisualizerType.CUBE_NET][options.size] = new RubiksCubeNet(
       options.size
     );
   }
 
-  return geometryCache[VisualizerType.CUBE_NET][
-    options.size
-  ] as RubiksCubeNet;
+  return geometryCache[VisualizerType.CUBE_NET][options.size] as RubiksCubeNet;
 }
 
-export function createCubeTop(
-  options: CubeOptions = {}
-): RubiksCubeTopLayer {
+export function createCubeTop(options: CubeOptions = {}): RubiksCubeTopLayer {
   if (!geometryCache[VisualizerType.CUBE_TOP][options.size]) {
     geometryCache[VisualizerType.CUBE_TOP][
       options.size
@@ -161,23 +151,17 @@ export function createCubeTop(
   ] as RubiksCubeTopLayer;
 }
 
-export function createMegaminx(
-  options: MegaminxOptions = {}
-): Megaminx {
+export function createMegaminx(options: MegaminxOptions = {}): Megaminx {
   if (!geometryCache[VisualizerType.MEGAMINX][options.size]) {
     geometryCache[VisualizerType.MEGAMINX][options.size] = new Megaminx(
       options.size
     );
   }
 
-  return geometryCache[VisualizerType.MEGAMINX][
-    options.size
-  ] as Megaminx;
+  return geometryCache[VisualizerType.MEGAMINX][options.size] as Megaminx;
 }
 
-export function createMegaminxNet(
-  options: MegaminxOptions = {}
-): MegaminxNet {
+export function createMegaminxNet(options: MegaminxOptions = {}): MegaminxNet {
   if (!geometryCache[VisualizerType.MEGAMINX_NET][options.size]) {
     geometryCache[VisualizerType.MEGAMINX_NET][options.size] = new MegaminxNet(
       options.size
@@ -189,9 +173,7 @@ export function createMegaminxNet(
   ] as MegaminxNet;
 }
 
-export function createMegaminxTop(
-  options: MegaminxOptions = {}
-): MegaminxTop {
+export function createMegaminxTop(options: MegaminxOptions = {}): MegaminxTop {
   if (!geometryCache[VisualizerType.MEGAMINX_TOP][2]) {
     // megaminx top size not supported, so just cache by size 2
     geometryCache[VisualizerType.MEGAMINX_TOP][2] = new MegaminxTop();
@@ -200,23 +182,17 @@ export function createMegaminxTop(
   return geometryCache[VisualizerType.MEGAMINX_TOP][2] as MegaminxTop;
 }
 
-export function createPyraminx(
-  options: PyraminxOptions = {}
-): Pyraminx {
+export function createPyraminx(options: PyraminxOptions = {}): Pyraminx {
   if (!geometryCache[VisualizerType.PYRAMINX][options.size]) {
     geometryCache[VisualizerType.PYRAMINX][options.size] = new Pyraminx(
       options.size
     );
   }
 
-  return geometryCache[VisualizerType.PYRAMINX][
-    options.size
-  ] as Pyraminx;
+  return geometryCache[VisualizerType.PYRAMINX][options.size] as Pyraminx;
 }
 
-export function createPyraminxNet(
-  options: PyraminxOptions = {}
-): PyraminxNet {
+export function createPyraminxNet(options: PyraminxOptions = {}): PyraminxNet {
   if (!geometryCache[VisualizerType.PYRAMINX_NET][options.size]) {
     geometryCache[VisualizerType.PYRAMINX_NET][options.size] = new PyraminxNet(
       options.size
@@ -228,9 +204,7 @@ export function createPyraminxNet(
   ] as PyraminxNet;
 }
 
-export function createSkewb(
-  options: SkewbOptions = {}
-): Skewb {
+export function createSkewb(options: SkewbOptions = {}): Skewb {
   if (!geometryCache[VisualizerType.SKEWB][1]) {
     // Skewb size not supported, so just cache by size 1
     geometryCache[VisualizerType.SKEWB][1] = new Skewb();
@@ -239,9 +213,7 @@ export function createSkewb(
   return geometryCache[VisualizerType.SKEWB][1] as Skewb;
 }
 
-export function createSkewbNet(
-  options: SkewbOptions = {}
-): SkewbNet {
+export function createSkewbNet(options: SkewbOptions = {}): SkewbNet {
   if (!geometryCache[VisualizerType.SKEWB_NET][1]) {
     // Skewb size not supported, so just cache by size 1
     geometryCache[VisualizerType.SKEWB_NET][1] = new SkewbNet();
@@ -250,9 +222,7 @@ export function createSkewbNet(
   return geometryCache[VisualizerType.SKEWB_NET][1] as SkewbNet;
 }
 
-export function createSquare1(
-  options: Square1Options = {}
-): Square1 {
+export function createSquare1(options: Square1Options = {}): Square1 {
   const simulator = initSquare1Simulator(options);
   const geometry = new Square1(
     simulator.topLayer,
@@ -263,9 +233,7 @@ export function createSquare1(
   return geometry;
 }
 
-export function createSquare1Net(
-  options: Square1Options = {}
-): Square1Net {
+export function createSquare1Net(options: Square1Options = {}): Square1Net {
   const simulator = initSquare1Simulator(options);
   const geometry = new Square1Net(
     simulator.topLayer,

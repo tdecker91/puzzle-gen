@@ -1,9 +1,4 @@
 import { Face } from "./../geometry/face";
-import {
-  DEG_30_RADIANS,
-  DEG_36_RADIANS,
-  DEG_72_RADIANS,
-} from "./../math/constants";
 import { IColor } from "./../geometry/color";
 import { WHITE, RED, BLUE, GREEN, BLACK, YELLOW, PURPLE } from "./colors";
 import { DividedPentagon } from "./../geometry/dividedPentagon";
@@ -49,29 +44,29 @@ export class MegaminxTop {
     this.BR = new DividedPentagon(YELLOW, layers, length, layerWidth);
     this.BL = new DividedPentagon(PURPLE, layers, length, layerWidth);
 
-    this.F.translate([0, 0, megaminxRadius]);
+    this.F.translate(0, 0, megaminxRadius);
 
-    this.U.rotate(Math.PI, [0, 0, 1]);
-    this.U.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.U.translate([0, 0, megaminxRadius]);
+    this.U.rotate(Math.PI, 0, 0, 1);
+    this.U.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.U.translate(0, 0, megaminxRadius);
 
-    this.L.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.L.rotate(Math.PI, [0, 0, 1]);
-    this.L.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.L.translate([0, 0, megaminxRadius]);
+    this.L.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.L.rotate(Math.PI, 0, 0, 1);
+    this.L.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.L.translate(0, 0, megaminxRadius);
 
-    this.R.rotate((72 * Math.PI) / 180, [0, 0, 1]);
-    this.R.rotate(Math.PI / 5, [0, 0, 1]);
-    this.R.rotate(((180 - 116.57) * Math.PI) / 180, [1, 0, 0]);
-    this.R.translate([0, 0, megaminxRadius]);
+    this.R.rotate((72 * Math.PI) / 180, 0, 0, 1);
+    this.R.rotate(Math.PI / 5, 0, 0, 1);
+    this.R.rotate(((180 - 116.57) * Math.PI) / 180, 1, 0, 0);
+    this.R.translate(0, 0, megaminxRadius);
 
-    this.BL.rotate(Math.PI / 5, [0, 0, 1]);
-    this.BL.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.BL.translate([0, 0, megaminxRadius]);
+    this.BL.rotate(Math.PI / 5, 0, 0, 1);
+    this.BL.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.BL.translate(0, 0, megaminxRadius);
 
-    this.BR.rotate(-Math.PI / 5, [0, 0, 1]);
-    this.BR.rotate((-116.57 * Math.PI) / 180, [1, 0, 0]);
-    this.BR.translate([0, 0, megaminxRadius]);
+    this.BR.rotate(-Math.PI / 5, 0, 0, 1);
+    this.BR.rotate((-116.57 * Math.PI) / 180, 1, 0, 0);
+    this.BR.translate(0, 0, megaminxRadius);
 
     this.faces = {
       U: this.U,
@@ -83,7 +78,7 @@ export class MegaminxTop {
     };
 
     this.group = new Group([this.U, this.F, this.R, this.BR, this.BL, this.L]);
-    this.group.rotate(degreesToRadians(63), [1, 0, 0]);
+    this.group.rotate(degreesToRadians(63), 1, 0, 0);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {

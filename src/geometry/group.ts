@@ -1,6 +1,5 @@
 import { Object3D } from "./object3d";
-import { Geometry } from "./geometry";
-import { vec3 } from "gl-matrix";
+import { Vector3 } from "../math/vector";
 
 export class Group extends Object3D {
   objects: Object3D[];
@@ -18,7 +17,7 @@ export class Group extends Object3D {
     this.objects.push(object);
   }
 
-  setCentroid(vector: vec3) {
+  setCentroid(vector: Vector3) {
     this.centroid = vector;
   }
 }

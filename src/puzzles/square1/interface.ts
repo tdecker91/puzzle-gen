@@ -73,13 +73,13 @@ export abstract class Square1Builder {
             piece.colors[1],
             piece.colors[2]
           );
-          corner.rotate(angle, [0, 0, 1]);
+          corner.rotate(angle, 0, 0, 1);
           geometry.push(corner);
           angle -= DEG_60_RADIANS;
           break;
         case PIECE_TYPE.EDGE:
           const edge = this.square1Edge(piece.colors[0], piece.colors[1]);
-          edge.rotate(angle - DEG_60_RADIANS, [0, 0, 1]);
+          edge.rotate(angle - DEG_60_RADIANS, 0, 0, 1);
           geometry.push(edge);
           angle -= DEG_30_RADIANS;
           break;

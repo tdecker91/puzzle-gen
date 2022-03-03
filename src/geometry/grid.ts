@@ -1,7 +1,7 @@
 import { Face } from "./face";
-import { vec3 } from "gl-matrix";
 import { Geometry } from "./geometry";
 import { IColor } from "./color";
+import { Vector3 } from "../math/vector";
 
 /**
  * Makes a (size*size) grid of colored planes for the
@@ -61,11 +61,27 @@ export function makeRow(
 
   for (let i = 0; i < size; i++) {
     let hOffset = -halfLength + halfElementWidth + elementWidth * i;
-    let vertices: vec3[] = [
-      [-halfElementWidth + hOffset, halfElementWidth + vOffset, 0],
-      [halfElementWidth + hOffset, halfElementWidth + vOffset, 0],
-      [halfElementWidth + hOffset, -halfElementWidth + vOffset, 0],
-      [-halfElementWidth + hOffset, -halfElementWidth + vOffset, 0],
+    let vertices: Vector3[] = [
+      Vector3.fromValues(
+        -halfElementWidth + hOffset,
+        halfElementWidth + vOffset,
+        0
+      ),
+      Vector3.fromValues(
+        halfElementWidth + hOffset,
+        halfElementWidth + vOffset,
+        0
+      ),
+      Vector3.fromValues(
+        halfElementWidth + hOffset,
+        -halfElementWidth + vOffset,
+        0
+      ),
+      Vector3.fromValues(
+        -halfElementWidth + hOffset,
+        -halfElementWidth + vOffset,
+        0
+      ),
     ];
     let faces = [new Face([0, 1, 2, 3], vertices, color)];
     stickers.push(new Geometry(vertices, faces));

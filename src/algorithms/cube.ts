@@ -98,7 +98,9 @@ function getSlices(rawSlices, outerBlockIndicator): number {
       return intValue;
     }
 
-    throw new Error(`Invalid outer block move (${intValue}) must be greater than 1`);
+    throw new Error(
+      `Invalid outer block move (${intValue}) must be greater than 1`
+    );
   }
 }
 

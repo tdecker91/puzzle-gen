@@ -2,7 +2,6 @@ import { Square1 } from "./../puzzles/square1/square1";
 import { Geometry } from "./../geometry/geometry";
 import { Arrow } from "./../geometry/arrow";
 import { getDefaultOptions } from "./options";
-import { mat4, quat, vec3 } from "gl-matrix";
 import { MASK_COLOR } from "./../puzzles/colors";
 import { VisualizerType } from "./enum";
 import { PuzzleGeometry } from "./../puzzles/puzzleGeometry";
@@ -20,6 +19,9 @@ import { IColor } from "../geometry/color";
 import { applyTransformations } from "../rendering/utils";
 import { Group } from "../geometry/group";
 import { getPuzzleGeometry, getPuzzleSimulator } from "./puzzleCreator";
+import { Vector3 } from "../math/vector";
+import { Matrix4 } from "../math/matrix";
+import { Quaternion } from "../math/quaternion";
 
 /**
  * Applies a color scheme to simulator values
@@ -71,7 +73,11 @@ function canApplySimulatorColors(type: VisualizerType, size: number) {
   return true;
 }
 
-function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry, group: Group): Arrow {
+function createArrow(
+  a: ArrowDefinition,
+  puzzle: PuzzleGeometry,
+  group: Group
+): Arrow {
   // Get the face the arrow is pointing to
   let startFace = puzzle.faces[a.start.face];
   let endFace = puzzle.faces[a.end.face];
@@ -81,11 +87,15 @@ function createArrow(a: ArrowDefinition, puzzle: PuzzleGeometry, group: Group): 
   }
 
   // Transform from sticker coordinates to group coordinates
-  let startTransformations = [startFace.matrix, puzzle.group.matrix, group.matrix];
+  let startTransformations = [
+    startFace.matrix,
+    puzzle.group.matrix,
+    group.matrix,
+  ];
   let endTransformations = [endFace.matrix, puzzle.group.matrix, group.matrix];
 
-  let start: vec3;
-  let end: vec3;
+  let start: Vector3;
+  let end: Vector3;
 
   // Get the stickers on the face
   if (startFace instanceof Geometry && endFace instanceof Geometry) {
@@ -221,45 +231,31 @@ export class Visualizer {
    * image.
    */
   private buildGroupMatrix() {
-    this.group.matrix = mat4.create();
+    this.group.matrix = new Matrix4();
 
     // Rotate the group matrix
     if (this.options.rotations) {
       this.options.rotations.forEach((rotation) => {
         const { x = 0, y = 0, z = 0 } = rotation;
-        mat4.mul(
-          this.group.matrix,
-          mat4.fromQuat(mat4.create(), quat.fromEuler(quat.create(), x, y, z)),
-          this.group.matrix
+        let rotationMatrix = Matrix4.fromQuaternion(
+          Quaternion.fromEuler(x, y, z)
         );
+        Matrix4.multiply(this.group.matrix, rotationMatrix, this.group.matrix);
       });
-
-      // mat4.mul(this.group.matrix, this.puzzleGeometry.group.matrix, this.group.matrix);
     }
 
     // Scale the group matrix
     if (this.options.scale) {
       let scale = this.options.scale;
-      mat4.scale(
-        this.group.matrix,
-        this.group.matrix,
-        vec3.fromValues(scale, scale, scale)
-      );
+      this.group.matrix.scale(scale, scale, scale);
     }
 
     // Translate the group matrix
     if (this.options.translation) {
       const { x = 0, y = 0, z = 0 } = this.options.translation;
-      let translationMatrix = mat4.fromTranslation(
-        mat4.create(),
-        vec3.fromValues(x, y, z)
-      );
+      let translationMatrix = Matrix4.fromTranslation(x, y, z);
 
-      mat4.mul(
-        this.group.matrix,
-        translationMatrix,
-        this.group.matrix
-      );
+      Matrix4.multiply(this.group.matrix, translationMatrix, this.group.matrix);
     }
   }
 
@@ -272,7 +268,7 @@ export class Visualizer {
       try {
         this.scene.add(createArrow(arrow, this.puzzleGeometry, this.group));
       } catch (e) {
-        console.error(e)
+        console.error(e);
         console.warn(`Invalid arrow ${JSON.stringify(arrow)}`);
       }
     });

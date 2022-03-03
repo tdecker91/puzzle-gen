@@ -1,18 +1,10 @@
 import { Geometry } from "./../../geometry/geometry";
 import { IColor } from "./../../geometry/color";
-import {
-  YELLOW,
-  RED,
-  BLUE,
-  WHITE,
-  ORANGE,
-  GREEN,
-  BLACK,
-} from "./../colors";
+import { YELLOW, RED, BLUE, WHITE, ORANGE, GREEN, BLACK } from "./../colors";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
 import { makeGrid } from "../../geometry/grid";
-import { chunkArray } from "../../utils/arrays";
+import { Vector3 } from "../../math/vector";
 
 export class RubiksCubeNet {
   stickers: Object3D[];
@@ -40,21 +32,21 @@ export class RubiksCubeNet {
     const B = makeGrid(cubeWidth, size, GREEN);
 
     this.U = new Group(U);
-    this.U.translate([0, cubeWidth, 0]);
+    this.U.translate(0, cubeWidth, 0);
 
     this.R = new Group(R);
-    this.R.translate([cubeWidth, 0, 0]);
+    this.R.translate(cubeWidth, 0, 0);
 
     this.F = new Group(F);
 
     this.D = new Group(D);
-    this.D.translate([0, -cubeWidth, 0]);
+    this.D.translate(0, -cubeWidth, 0);
 
     this.L = new Group(L);
-    this.L.translate([-cubeWidth, 0, 0]);
+    this.L.translate(-cubeWidth, 0, 0);
 
     this.B = new Group(B);
-    this.B.translate([2 * cubeWidth, 0, 0]);
+    this.B.translate(2 * cubeWidth, 0, 0);
 
     this.stickers = [this.U, this.R, this.F, this.D, this.L, this.B];
 
@@ -68,8 +60,8 @@ export class RubiksCubeNet {
     };
 
     this.group = new Group(this.stickers);
-    this.group.translate([-cubeWidth / 4, 0, 0]);
-    this.group.scale([0.5, 0.5, 0.5]);
+    this.group.translate(-cubeWidth / 4, 0, 0);
+    this.group.scale(0.5, 0.5, 0.5);
   }
 
   private setFaceColors(faceStickers: Group, colors: IColor[]) {

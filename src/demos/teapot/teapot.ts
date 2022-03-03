@@ -1,11 +1,12 @@
 import { faces, vertices } from './data';
 import { Geometry } from '../../geometry/geometry';
-import { mat4, vec3 } from 'gl-matrix';
 import { Face } from '../../geometry/face';
 import { Camera } from '../../rendering/camera';
 import { Scene } from '../../rendering/scene';
 import { Group } from '../../geometry/group';
 import { HtmlCanvasRenderer } from '../../rendering/htmlCanvasRenderer';
+import { Vector3 } from '../../math/vector';
+import { Matrix4 } from '../../math/matrix';
 
 let camera: Camera = new Camera();
 let g: Group = new Group();
@@ -20,7 +21,7 @@ let width: number = 500;
 let height: number = 500;
 
 const teapot = createTeapot();
-mat4.translate(camera.matrix, camera.matrix, [0, -1.5, -10]);
+camera.matrix.translate(0, -1.5, -10)
 scene = new Scene();
 renderer = new HtmlCanvasRenderer(width, height, .25);
 
@@ -28,14 +29,14 @@ g.addObject(teapot);
 scene.add(g);
 
 export function renderDemo() {
-  teapot.matrix = mat4.rotate(teapot.matrix, teapot.matrix, Math.PI / 16, [1, 1, 0]);
+  teapot.matrix.rotate(Math.PI / 16, 1, 1, 0);
   renderer.render(scene, camera);
 }
 
 function createTeapot(): Geometry {
   const v = vertices.map(vertex => {
     const [_, x, y, z] = vertex.split(" ");
-    return vec3.fromValues(parseFloat(x), parseFloat(y), parseFloat(z));
+    return Vector3.fromValues(parseFloat(x), parseFloat(y), parseFloat(z));
   })
 
   let outline = { value: "#DDD", stroke: "#FFF" };
@@ -65,13 +66,13 @@ document.addEventListener("DOMContentLoaded", function (event) {
   document.getElementById('teapot').appendChild(renderer.domElement);
   renderDemo();
 
-  let originalMat: mat4 = mat4.create();
+  let originalMat: Matrix4 = new Matrix4();
   let start = new Date().getTime();
 
   renderer.domElement.addEventListener('mousedown', e => {
     mouseDown = true;
     start = new Date().getTime();
-    mat4.copy(originalMat, g.matrix);
+    Matrix4.copy(originalMat, g.matrix);
     x = e.x;
     y = e.y;
   });
@@ -85,16 +86,16 @@ document.addEventListener("DOMContentLoaded", function (event) {
       start = new Date().getTime();
       const [diffX, diffY] = [e.x - x, e.y - y];
 
-      let xRotation = mat4.fromXRotation(mat4.create(), diffY / 128);
-      let yRotation = mat4.fromYRotation(mat4.create(), diffX / 128);
+      let xRotation = Matrix4.fromXRotation(diffY / 128);
+      let yRotation = Matrix4.fromYRotation(diffX / 128);
 
       // Matrix to accumulate x and y rotations from mouse movements
-      let acc: mat4 = mat4.create();
+      let acc: Matrix4 = new Matrix4();
 
-      mat4.multiply(acc, acc, xRotation);
-      mat4.multiply(acc, acc, yRotation);
+      acc.multiply(xRotation);
+      acc.multiply(yRotation);
 
-      g.matrix = mat4.multiply(g.matrix, acc, originalMat);
+      Matrix4.multiply(g.matrix, acc, originalMat);
       renderer.render(scene, camera);
     }
   }, 10));

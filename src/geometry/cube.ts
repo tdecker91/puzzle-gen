@@ -1,6 +1,6 @@
 import { Geometry } from "./geometry";
-import { vec3 } from "gl-matrix";
 import { IFace, Face } from "./face";
+import { Vector3 } from "../math/vector";
 
 export class Cube extends Geometry {
   /**
@@ -13,15 +13,15 @@ export class Cube extends Geometry {
    *       7 - - - 6
    */
   constructor(width: number) {
-    const vertices: vec3[] = [
-      [-width / 2, width / 2, width / 2],
-      [width / 2, width / 2, width / 2],
-      [width / 2, -width / 2, width / 2],
-      [-width / 2, -width / 2, width / 2],
-      [-width / 2, width / 2, -width / 2],
-      [width / 2, width / 2, -width / 2],
-      [width / 2, -width / 2, -width / 2],
-      [-width / 2, -width / 2, -width / 2],
+    const vertices: Vector3[] = [
+      Vector3.fromValues(-width / 2, width / 2, width / 2),
+      Vector3.fromValues(width / 2, width / 2, width / 2),
+      Vector3.fromValues(width / 2, -width / 2, width / 2),
+      Vector3.fromValues(-width / 2, -width / 2, width / 2),
+      Vector3.fromValues(-width / 2, width / 2, -width / 2),
+      Vector3.fromValues(width / 2, width / 2, -width / 2),
+      Vector3.fromValues(width / 2, -width / 2, -width / 2),
+      Vector3.fromValues(-width / 2, -width / 2, -width / 2),
     ];
     const faces: IFace[] = [
       new Face([0, 1, 2, 3], vertices),
@@ -31,6 +31,7 @@ export class Cube extends Geometry {
       new Face([1, 0, 4, 5], vertices),
       new Face([0, 3, 7, 4], vertices),
     ];
+
     super(vertices, faces);
   }
 }

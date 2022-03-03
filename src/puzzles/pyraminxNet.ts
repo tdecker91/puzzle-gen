@@ -35,17 +35,17 @@ export class PyraminxNet {
     this.U = U;
     this.B = B;
 
-    R.rotate(-DEG_60_RADIANS, [0, 0, 1]);
-    R.translate([0, inDiameter + faceSpacing, 0]);
-    R.rotate(2 * DEG_60_RADIANS, [0, 0, 1]);
+    R.rotate(-DEG_60_RADIANS, 0, 0, 1);
+    R.translate(0, inDiameter + faceSpacing, 0);
+    R.rotate(2 * DEG_60_RADIANS, 0, 0, 1);
 
-    U.rotate(DEG_60_RADIANS, [0, 0, 1]);
-    U.translate([0, inDiameter + faceSpacing, 0]);
-    U.rotate(-2 * DEG_60_RADIANS, [0, 0, 1]);
+    U.rotate(DEG_60_RADIANS, 0, 0, 1);
+    U.translate(0, inDiameter + faceSpacing, 0);
+    U.rotate(-2 * DEG_60_RADIANS, 0, 0, 1);
 
-    B.rotate(3 * DEG_60_RADIANS, [0, 0, 1]);
-    B.translate([0, inDiameter + faceSpacing, 0]);
-    B.rotate(-2 * DEG_60_RADIANS, [0, 0, 1]);
+    B.rotate(3 * DEG_60_RADIANS, 0, 0, 1);
+    B.translate(0, inDiameter + faceSpacing, 0);
+    B.rotate(-2 * DEG_60_RADIANS, 0, 0, 1);
 
     this.faces = {
       top: this.U,

@@ -1,5 +1,5 @@
-import { vec3 } from "gl-matrix";
 import { IColor } from "../geometry/color";
+import { Vector3 } from "../math/vector";
 import { BLACK } from "../puzzles/colors";
 import { Polygon, PolygonRenderer } from "./polygonRenderer";
 
@@ -64,15 +64,15 @@ export class HtmlCanvasRenderer extends PolygonRenderer {
     this.ctx.strokeStyle = "#000000";
 
     this.ctx.moveTo(
-      this.convertRange(polygon.points[0][0], this.width),
-      this.convertRange(polygon.points[0][1], this.height)
+      this.convertRange(polygon.points[0].x, this.width),
+      this.convertRange(polygon.points[0].y, this.height)
     );
     this.ctx.beginPath();
     for (let i = 0; i <= polygon.points.length; i++) {
       let point = polygon.points[(i + 1) % polygon.points.length];
       this.ctx.lineTo(
-        this.convertRange(point[0], this.width),
-        this.convertRange(point[1], this.height)
+        this.convertRange(point.x, this.width),
+        this.convertRange(point.y, this.height)
       );
     }
 
@@ -81,11 +81,11 @@ export class HtmlCanvasRenderer extends PolygonRenderer {
     this.ctx.stroke();
   }
 
-  drawArrow(p1: vec3, p2: vec3, uid: string) {
-    const toX = this.convertRange(p2[0], this.width);
-    const toY = this.convertRange(-p2[1], this.height);
-    const fromX = this.convertRange(p1[0], this.width);
-    const fromY = this.convertRange(-p1[1], this.height);
+  drawArrow(p1: Vector3, p2: Vector3, uid: string) {
+    const toX = this.convertRange(p2.x, this.width);
+    const toY = this.convertRange(-p2.y, this.height);
+    const fromX = this.convertRange(p1.x, this.width);
+    const fromY = this.convertRange(-p1.y, this.height);
     const headlen = 20; // length of head in pixels
     const dx = toX - fromX;
     const dy = toY - fromY;

@@ -2,9 +2,13 @@ import { WHITE, RED, BLUE, GREEN, ORANGE, YELLOW } from "./../colors";
 import { IColor } from "./../../geometry/color";
 import { PIECE_TYPE } from "./enum";
 import { Sqaure1Piece } from "./interface";
-import { vec3 } from "gl-matrix";
+import { Vector3 } from "../../math/vector";
 
-export const ROTATION_VECTOR: vec3 = [0.92875, -0.24803, 0];
+export const ROTATION_VECTOR: Vector3 = Vector3.fromValues(
+  0.92875,
+  -0.24803,
+  0
+);
 
 export const TOP_COLOR: IColor = YELLOW;
 export const BOTTOM_COLOR: IColor = WHITE;

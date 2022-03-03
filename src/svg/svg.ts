@@ -1,5 +1,5 @@
-import { vec3 } from "gl-matrix";
 import { IColor } from "../geometry/color";
+import { Vector3 } from "../math/vector";
 import { BLACK } from "../puzzles/colors";
 
 export function createSVGElement(
@@ -27,7 +27,7 @@ export function createSVGElement(
 }
 
 export function createPolygonElement(
-  points: vec3[],
+  points: Vector3[],
   color?: IColor,
   strokeWidth?: string
 ): SVGPolygonElement {
@@ -40,8 +40,8 @@ export function createPolygonElement(
 }
 
 export function createArrowLineElement(
-  start: vec3,
-  end: vec3,
+  start: Vector3,
+  end: Vector3,
   color?: IColor,
   strokeWidth?: string
 ): SVGLineElement {
@@ -49,10 +49,10 @@ export function createArrowLineElement(
 
   let strokeColor = color ? color.value : BLACK.value;
 
-  line.setAttributeNS(null, "x1", start[0].toString());
-  line.setAttributeNS(null, "y1", (-start[1]).toString());
-  line.setAttributeNS(null, "x2", end[0].toString());
-  line.setAttributeNS(null, "y2", (-end[1]).toString());
+  line.setAttributeNS(null, "x1", start.x.toString());
+  line.setAttributeNS(null, "y1", (-start.y).toString());
+  line.setAttributeNS(null, "x2", end.x.toString());
+  line.setAttributeNS(null, "y2", (-end.y).toString());
   line.setAttributeNS(null, "stroke", strokeColor);
   line.setAttributeNS(null, "marker-end", "url(#arrowhead)");
 
@@ -65,7 +65,7 @@ export function createArrowLineElement(
 
 export function updatePolygonElement(
   polygon: SVGPolygonElement,
-  points: vec3[],
+  points: Vector3[],
   color?: IColor,
   strokeWidth?: string
 ) {
@@ -113,8 +113,8 @@ export function createMarkers(color: IColor): SVGDefsElement {
   return defs;
 }
 
-function makePointsAttributeValue(points: vec3[]): string {
+function makePointsAttributeValue(points: Vector3[]): string {
   return points.reduce((pointString, point) => {
-    return `${pointString ? pointString + " " : ""}${point[0]}, ${point[1]}`;
+    return `${pointString ? pointString + " " : ""}${point.x}, ${point.y}`;
   }, "");
 }

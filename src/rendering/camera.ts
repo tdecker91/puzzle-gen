@@ -1,12 +1,11 @@
-import { mat4 } from "gl-matrix";
+import { Matrix4 } from "../math/matrix";
 
 export class Camera {
-  matrix: mat4;
+  matrix: Matrix4;
 
   constructor() {
-    this.matrix = mat4.create();
-    mat4.perspective(this.matrix, Math.PI / 2, 1, 0.1, 1000);
-    mat4.translate(this.matrix, this.matrix, [0, 0, -5]);
-    mat4.scale(this.matrix, this.matrix, [4, 4, 1]);
+    this.matrix = Matrix4.perspective(Math.PI / 2, 1, 0.1, 1000);
+    this.matrix.translate(0, 0, -5);
+    this.matrix.scale(4, 4, 1);
   }
 }

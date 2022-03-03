@@ -1,5 +1,4 @@
 import { BLACK } from "./../puzzles/colors";
-import { vec3 } from "gl-matrix";
 import { IColor } from "../geometry/color";
 import { Polygon, PolygonRenderer } from "./polygonRenderer";
 import {
@@ -9,6 +8,7 @@ import {
   createArrowLineElement,
   createMarkers,
 } from "../svg/svg";
+import { Vector3 } from "../math/vector";
 
 /**
  * Renderer to draw puzzles using html svg elements
@@ -70,7 +70,7 @@ export class HtmlSvgRenderer extends PolygonRenderer {
     this.domElement.appendChild(this.svgElement);
   }
 
-  onBeforeRender() { }
+  onBeforeRender() {}
 
   drawPolygon({ points, face, object }: Polygon) {
     if (!this.uidToPolygon[face.uid]) {
@@ -94,7 +94,7 @@ export class HtmlSvgRenderer extends PolygonRenderer {
     this.svgElement.appendChild(this.uidToPolygon[face.uid]);
   }
 
-  drawArrow(p1Screen: vec3, p2Screen: vec3, uid: string) {
+  drawArrow(p1Screen: Vector3, p2Screen: Vector3, uid: string) {
     let arrow: SVGLineElement;
 
     if (!this.uidToLine[uid]) {

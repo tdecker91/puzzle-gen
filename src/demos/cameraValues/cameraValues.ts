@@ -2,7 +2,6 @@ import { MegaminxSimulator } from './../../simulator/megaminx/megaminxSimulator'
 import { PINK, LIGHT_YELLOW, GREY, LIGHT_GREEN, PURPLE, DARK_BLUE } from './../../puzzles/colors';
 import { PyraminxSimulator } from '../../simulator/pyraminx/pyraminxSimulator';
 import { RED, BLUE, WHITE, ORANGE, GREEN } from '../../puzzles/colors';
-import { mat4 } from 'gl-matrix';
 import { HtmlSvgRenderer } from '../../rendering/htmlSvgRenderer';
 import { Square1Net } from '../../puzzles/square1/square1Net';
 import { Square1 } from '../../puzzles/square1/square1';
@@ -19,6 +18,7 @@ import { Group } from '../../geometry/group';
 import { Camera } from '../../rendering/camera';
 import { Scene } from '../../rendering/scene';
 import { YELLOW } from '../../puzzles/colors';
+import { Matrix4 } from '../../math/matrix';
 
 let camera: Camera = new Camera();
 let g: Group = new Group();
@@ -48,7 +48,7 @@ let strokeWidth: number = .02;
 
 function setInputs() {
   if (camera && camera.matrix) {
-    camera.matrix.forEach((value, index) => {
+    camera.matrix.values.forEach((value, index) => {
       (<any>document.getElementById(`c${index + 1}`)).value = value;
     });
   }
@@ -83,7 +83,7 @@ export function getInputs() {
   let m15 = parseFloat((<any>document.getElementById(`c15`)).value);
   let m16 = parseFloat((<any>document.getElementById(`c16`)).value);
 
-  camera.matrix = mat4.fromValues(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16)
+  camera.matrix = Matrix4.fromValues(m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15, m16)
 
   width = parseFloat((<any>document.getElementById(`width`)).value);
   height = parseFloat((<any>document.getElementById(`height`)).value);
@@ -193,10 +193,10 @@ export function renderDemo() {
   let downX = 0;
   let downY = 0;
 
-  let identity = mat4.create();
-  let accRot = mat4.create();
-  let xRot = mat4.create();
-  let yRot = mat4.create();
+  let identity = new Matrix4();
+  let accRot = new Matrix4();
+  let xRot = new Matrix4();
+  let yRot = new Matrix4();
 
   renderer.domElement.addEventListener('mousedown', e => {
     down = true;
@@ -221,11 +221,11 @@ export function renderDemo() {
       const [diffX, diffY] = [e.x - downX, e.y - downY];
       [downX, downY] = [e.x, e.y];
 
-      mat4.fromRotation(xRot, diffY/128, [1,0,0]);
-      mat4.fromRotation(yRot, diffX/128, [0,1,0]);
+      xRot = Matrix4.fromXRotation(diffY / 128);
+      yRot = Matrix4.fromYRotation(diffX / 128);
 
-      mat4.multiply(g.matrix, g.matrix, xRot);
-      mat4.multiply(g.matrix, g.matrix, yRot);
+      g.matrix.multiply(xRot);
+      g.matrix.multiply(yRot);
 
       window.requestAnimationFrame(() => renderer.render(scene, camera));
     }
@@ -263,7 +263,7 @@ export function svgStep() {
   ].forEach(puzzle => {
     if (puzzle && puzzle.group) {
 
-      puzzle.group.rotate(Math.PI/32, [1,1, 0]);
+      puzzle.group.rotate(Math.PI / 32, 1, 1, 0);
     } 
   });
 

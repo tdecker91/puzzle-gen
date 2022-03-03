@@ -1,4 +1,3 @@
-import { mat4 } from "gl-matrix";
 import { Geometry } from "./../geometry/geometry";
 import { Face } from "./../geometry/face";
 import { IColor } from "./../geometry/color";
@@ -18,10 +17,10 @@ import {
   BLACK,
 } from "./colors";
 import { Group } from "./../geometry/group";
-import { Object3D } from "./../geometry/object3d";
 import { DividedPentagon } from "./../geometry/dividedPentagon";
 import { pentagonInRadius } from "../math/utils";
 import { chunkArray } from "../utils/arrays";
+import { Matrix4 } from "../math/matrix";
 
 const DEG_36_RADIANS = (36 * Math.PI) / 180;
 const DEG_72_RADIANS = (72 * Math.PI) / 180;
@@ -84,61 +83,57 @@ export class MegaminxNet {
     const ind = 2 * pentagonInRadius(sideLength);
 
     // Left
-    this.U.translate([0, ind, 0]);
-    this.U.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.U.translate(0, ind, 0);
+    this.U.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.R.rotate(-DEG_72_RADIANS, [0, 0, 1]);
-    this.R.translate([0, ind, 0]);
-    this.R.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.R.rotate(-DEG_72_RADIANS, 0, 0, 1);
+    this.R.translate(0, ind, 0);
+    this.R.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.L.rotate(DEG_72_RADIANS, [0, 0, 1]);
-    this.L.translate([0, ind, 0]);
-    this.L.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.L.rotate(DEG_72_RADIANS, 0, 0, 1);
+    this.L.translate(0, ind, 0);
+    this.L.rotate(-5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.dl.rotate(2 * DEG_72_RADIANS, [0, 0, 1]);
-    this.dl.translate([0, ind, 0]);
-    this.dl.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.dl.rotate(2 * DEG_72_RADIANS, 0, 0, 1);
+    this.dl.translate(0, ind, 0);
+    this.dl.rotate(-5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.dr.rotate(-2 * DEG_72_RADIANS, [0, 0, 1]);
-    this.dr.translate([0, ind, 0]);
-    this.dr.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.dr.rotate(-2 * DEG_72_RADIANS, 0, 0, 1);
+    this.dr.translate(0, ind, 0);
+    this.dr.rotate(-5 * DEG_36_RADIANS, 0, 0, 1);
 
     // Right
-    this.b.rotate(Math.PI, [0, 0, 1]);
-    this.b.rotate(-2 * DEG_36_RADIANS, [0, 0, 1]);
+    this.b.rotate(Math.PI, 0, 0, 1);
+    this.b.rotate(-2 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.d.rotate(3 * DEG_36_RADIANS, [0, 0, 1]);
-    this.d.translate([0, ind, 0]);
-    this.d.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.d.rotate(3 * DEG_36_RADIANS, 0, 0, 1);
+    this.d.translate(0, ind, 0);
+    this.d.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.br.rotate(DEG_36_RADIANS, [0, 0, 1]);
-    this.br.translate([0, ind, 0]);
-    this.br.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.br.rotate(DEG_36_RADIANS, 0, 0, 1);
+    this.br.translate(0, ind, 0);
+    this.br.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.BR.rotate(-DEG_36_RADIANS, [0, 0, 1]);
-    this.BR.translate([0, ind, 0]);
-    this.BR.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.BR.rotate(-DEG_36_RADIANS, 0, 0, 1);
+    this.BR.translate(0, ind, 0);
+    this.BR.rotate(-5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.BL.rotate(-3 * DEG_36_RADIANS, [0, 0, 1]);
-    this.BL.translate([0, ind, 0]);
-    this.BL.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.BL.rotate(-3 * DEG_36_RADIANS, 0, 0, 1);
+    this.BL.translate(0, ind, 0);
+    this.BL.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
 
-    this.bl.rotate(5 * DEG_36_RADIANS, [0, 0, 1]);
-    this.bl.translate([0, ind, 0]);
-    this.bl.rotate(-5 * DEG_36_RADIANS, [0, 0, 1]);
+    this.bl.rotate(5 * DEG_36_RADIANS, 0, 0, 1);
+    this.bl.translate(0, ind, 0);
+    this.bl.rotate(-5 * DEG_36_RADIANS, 0, 0, 1);
 
-    let bottomTransforms = mat4.create();
-    mat4.rotate(bottomTransforms, bottomTransforms, -DEG_72_RADIANS, [0, 0, 1]);
-    mat4.translate(bottomTransforms, bottomTransforms, [0, 2 * ind, 0]);
-    mat4.rotate(bottomTransforms, bottomTransforms, 2 * DEG_72_RADIANS, [
-      0,
-      0,
-      1,
-    ]);
-    mat4.translate(bottomTransforms, bottomTransforms, [0, -ind, 0]);
+    let bottomTransforms = new Matrix4();
+    bottomTransforms.rotate(-DEG_72_RADIANS, 0, 0, 1);
+    bottomTransforms.translate(0, 2 * ind, 0);
+    bottomTransforms.rotate(2 * DEG_72_RADIANS, 0, 0, 1);
+    bottomTransforms.translate(0, -ind, 0);
 
     [this.d, this.bl, this.BL, this.BR, this.br, this.b].forEach((face) => {
-      mat4.mul(face.matrix, bottomTransforms, face.matrix);
+      Matrix4.multiply(face.matrix, bottomTransforms, face.matrix);
     });
 
     this.faces = {
@@ -170,8 +165,8 @@ export class MegaminxNet {
       this.br,
       this.b,
     ]);
-    this.group.scale([0.33, 0.33, 0.33]);
-    this.group.translate([-1.75 * sideLength, 0, 0]);
+    this.group.scale(0.33, 0.33, 0.33);
+    this.group.translate(-1.75 * sideLength, 0, 0);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {
