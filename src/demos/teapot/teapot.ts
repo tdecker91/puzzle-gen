@@ -1,4 +1,3 @@
-import { faces, vertices } from './data';
 import { Geometry } from '../../geometry/geometry';
 import { Face } from '../../geometry/face';
 import { Camera } from '../../rendering/camera';
@@ -20,20 +19,22 @@ let y: number;
 let width: number = 500;
 let height: number = 500;
 
-const teapot = createTeapot();
+let teapot;
 camera.matrix.translate(0, -1.5, -10)
 scene = new Scene();
 renderer = new HtmlCanvasRenderer(width, height, .25);
 
-g.addObject(teapot);
-scene.add(g);
-
 export function renderDemo() {
-  teapot.matrix.rotate(Math.PI / 16, 1, 1, 0);
-  renderer.render(scene, camera);
+  import('./data').then(data => {
+    teapot = createTeapot(data.faces, data.vertices);
+    teapot.matrix.rotate(Math.PI / 16, 1, 1, 0);
+    g.addObject(teapot);
+    scene.add(g);
+    renderer.render(scene, camera);
+  });
 }
 
-function createTeapot(): Geometry {
+function createTeapot(faces, vertices): Geometry {
   const v = vertices.map(vertex => {
     const [_, x, y, z] = vertex.split(" ");
     return Vector3.fromValues(parseFloat(x), parseFloat(y), parseFloat(z));

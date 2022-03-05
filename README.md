@@ -57,7 +57,7 @@ For full usage demonsration see [here](https://tdecker91.github.io/puzzle-gen/#/
 
 > Requirements
 >
-> - [Node.js](nodejs.org) - v14.15.4 but other versions may work
+> - [Node.js](nodejs.org) - v16.14.0 but other versions may work
 
 > Tools Used
 >
