@@ -1,6 +1,6 @@
 {
   "name": "sr-puzzlegen",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Generate WCA puzzle images",
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
