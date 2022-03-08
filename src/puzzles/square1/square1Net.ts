@@ -5,10 +5,28 @@ import { IColor } from "./../../geometry/color";
 import { Geometry } from "./../../geometry/geometry";
 import { Group } from "./../../geometry/group";
 import { Object3D } from "./../../geometry/object3d";
-import { FRONT_COLOR, RIGHT_COLOR, BACK_COLOR } from "./constants";
+import {
+  FRONT_COLOR,
+  RIGHT_COLOR,
+  BACK_COLOR,
+  DEFAULT_SQ1_SCHEME,
+  SOLVED_TOP_PIECES,
+  SOLVED_BOTTOM_PIECES,
+} from "./constants";
 import { Vector3 } from "../../math/vector";
+import { ColorScheme } from "../../visualizer";
 
 export class Square1Net extends Square1Builder {
+  constructor(
+    topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
+    bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
+    middleRotated: boolean = false,
+    scheme: ColorScheme = DEFAULT_SQ1_SCHEME,
+    sideLength: number = 0.7
+  ) {
+    super(topLayer, bottomLayer, middleRotated, scheme, sideLength);
+  }
+
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
     const points: Vector3[] = [
       // Top
@@ -130,10 +148,14 @@ export class Square1Net extends Square1Builder {
 
     pieces = [topLayer, bottomLayer];
 
+    const frontColor = this.scheme.front || DEFAULT_SQ1_SCHEME.front;
+    const leftColor = this.scheme.left || DEFAULT_SQ1_SCHEME.left;
+    const backColor = this.scheme.back || DEFAULT_SQ1_SCHEME.back;
+
     const m = this.square1Middle(
-      FRONT_COLOR,
-      RIGHT_COLOR,
-      BACK_COLOR,
+      frontColor,
+      leftColor,
+      backColor,
       middleRotated
     );
 

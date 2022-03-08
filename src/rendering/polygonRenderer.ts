@@ -106,7 +106,10 @@ export abstract class PolygonRenderer implements Renderer {
             ...transformations,
             camera.matrix,
           ];
-          let screenPoint: Vector3 = applyTransformations(vertex, objectToScreen);
+          let screenPoint: Vector3 = applyTransformations(
+            vertex,
+            objectToScreen
+          );
 
           // Need to flip y to look correct on svg viewbox
           screenPoint.multiply(1, -1, 1);

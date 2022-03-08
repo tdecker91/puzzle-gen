@@ -7,6 +7,7 @@ import {
   RIGHT_COLOR,
   SOLVED_TOP_PIECES,
   SOLVED_BOTTOM_PIECES,
+  DEFAULT_SQ1_SCHEME,
 } from "./constants";
 import { Sqaure1Piece, Square1Builder } from "./interface";
 import { DEG_30_RADIANS } from "./../../math/constants";
@@ -15,6 +16,7 @@ import { IFace, Face } from "./../../geometry/face";
 import { IColor } from "./../../geometry/color";
 import { Group } from "../../geometry/group";
 import { Vector3 } from "../../math/vector";
+import { ColorScheme } from "../../visualizer";
 
 const INNER_FACE_COLOR = { value: "#333", stroke: "#333" };
 
@@ -23,9 +25,10 @@ export class Square1 extends Square1Builder {
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
     bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
     middleRotated: boolean = false,
+    scheme: ColorScheme = DEFAULT_SQ1_SCHEME,
     sideLength: number = 1.25
   ) {
-    super(topLayer, bottomLayer, middleRotated, sideLength);
+    super(topLayer, bottomLayer, middleRotated, scheme, sideLength);
   }
 
   square1Corner(top: IColor, side1: IColor, side2: IColor): Geometry {
@@ -202,8 +205,14 @@ export class Square1 extends Square1Builder {
 
     const pieces: Object3D[] = [topLayer, bottomLayer];
 
-    const m1 = this.square1Middle(FRONT_COLOR, LEFT_COLOR, BACK_COLOR);
-    const m2 = this.square1Middle(BACK_COLOR, RIGHT_COLOR, FRONT_COLOR);
+    const frontColor = this.scheme.front || DEFAULT_SQ1_SCHEME.front;
+    const leftColor = this.scheme.left || DEFAULT_SQ1_SCHEME.left;
+    const backColor = this.scheme.back || DEFAULT_SQ1_SCHEME.back;
+    const rightColor = this.scheme.right || DEFAULT_SQ1_SCHEME.right;
+
+    const m1 = this.square1Middle(frontColor, leftColor, backColor);
+    const m2 = this.square1Middle(backColor, rightColor, frontColor);
+
     m2.rotate(Math.PI, 0, 0, 1);
 
     if (middleRotated) {

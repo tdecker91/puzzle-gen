@@ -141,9 +141,8 @@ export function createCubeNet(options: CubeOptions = {}): RubiksCubeNet {
 
 export function createCubeTop(options: CubeOptions = {}): RubiksCubeTopLayer {
   if (!geometryCache[VisualizerType.CUBE_TOP][options.size]) {
-    geometryCache[VisualizerType.CUBE_TOP][
-      options.size
-    ] = new RubiksCubeTopLayer(options.size);
+    geometryCache[VisualizerType.CUBE_TOP][options.size] =
+      new RubiksCubeTopLayer(options.size);
   }
 
   return geometryCache[VisualizerType.CUBE_TOP][
@@ -227,7 +226,8 @@ export function createSquare1(options: Square1Options = {}): Square1 {
   const geometry = new Square1(
     simulator.topLayer,
     simulator.bottomLayer,
-    simulator.middleRotated
+    simulator.middleRotated,
+    options.scheme
   );
 
   return geometry;
@@ -238,7 +238,8 @@ export function createSquare1Net(options: Square1Options = {}): Square1Net {
   const geometry = new Square1Net(
     simulator.topLayer,
     simulator.bottomLayer,
-    simulator.middleRotated
+    simulator.middleRotated,
+    options.scheme
   );
 
   return geometry;

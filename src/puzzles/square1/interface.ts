@@ -1,4 +1,8 @@
-import { SOLVED_BOTTOM_PIECES, SOLVED_TOP_PIECES } from "./constants";
+import {
+  DEFAULT_SQ1_SCHEME,
+  SOLVED_BOTTOM_PIECES,
+  SOLVED_TOP_PIECES,
+} from "./constants";
 import { Object3D } from "./../../geometry/object3d";
 import { Group } from "./../../geometry/group";
 import { Geometry } from "./../../geometry/geometry";
@@ -9,6 +13,7 @@ import {
 } from "./../../math/constants";
 import { PIECE_TYPE } from "./enum";
 import { IColor } from "./../../geometry/color";
+import { ColorScheme } from "../../visualizer";
 
 export interface Sqaure1Piece {
   type: PIECE_TYPE;
@@ -33,12 +38,16 @@ export abstract class Square1Builder {
   protected outerHalfSide: number;
   protected outerHalfEdgePiece: number;
 
+  protected scheme: ColorScheme;
+
   constructor(
     topLayer: Sqaure1Piece[] = SOLVED_TOP_PIECES,
     bottomLayer: Sqaure1Piece[] = SOLVED_BOTTOM_PIECES,
     middleRotated: boolean = false,
+    scheme: ColorScheme = DEFAULT_SQ1_SCHEME,
     sideLength: number = 0.7
   ) {
+    this.scheme = scheme;
     this.sideLength = sideLength;
     this.halfSide = this.sideLength / 2;
     this.halfEdgePiece = this.halfSide * ATAN_15_DEG;

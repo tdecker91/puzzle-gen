@@ -1,6 +1,7 @@
 import { Turn, TurnType } from "./algorithm";
 
-const megaminxTurnNotation = /([RD])([\+\+|\-\-]+)|([UFRL]|BR|BL)([2-3]?)(\'?)/g;
+const megaminxTurnNotation =
+  /([RD])([\+\+|\-\-]+)|([UFRL]|BR|BL)([2-3]?)(\'?)/g;
 
 enum PochmannDirections {
   Clockwise = "++",
