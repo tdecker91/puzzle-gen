@@ -1,15 +1,13 @@
-import { Face } from "./../geometry/face";
-import { IColor } from "./../geometry/color";
-import { GREEN, RED, BLUE, YELLOW, BLACK } from "./colors";
-import { TriangleLattice } from "./../geometry/triangleLattice";
-import { Group } from "./../geometry/group";
-import { Vector3 } from "../math/vector";
+import { Face } from "../../geometry/face";
+import { IColor } from "../../geometry/color";
+import { GREEN, RED, BLUE, YELLOW, BLACK } from "../colors";
+import { TriangleLattice } from "../../geometry/triangleLattice";
+import { Group } from "../../geometry/group";
+import { SQRT_3 } from "../../math/constants";
 
-const ARC_COS_THIRD = Math.acos(1 / 3);
-const DEG_120_RADIANS = (120 * Math.PI) / 180;
-const SQRT_24 = Math.sqrt(24);
+const DEG_60_RADIANS = (60 * Math.PI) / 180;
 
-export class Pyraminx {
+export class PyraminxNet {
   faces: { [face: string]: TriangleLattice };
   group: Group;
 
@@ -20,10 +18,12 @@ export class Pyraminx {
   private U: TriangleLattice;
   private B: TriangleLattice;
 
-  constructor(size: number, sideLength: number = 1.75) {
+  constructor(size: number, sideLength: number = 0.925) {
     this.size = size;
 
-    const insphereRadius = sideLength / SQRT_24;
+    const fullHeight = sideLength * (SQRT_3 / 2);
+    const inDiameter = fullHeight / 1.5;
+    const faceSpacing = inDiameter * 0.1;
 
     const U = new TriangleLattice(sideLength, size, YELLOW);
     const R = new TriangleLattice(sideLength, size, GREEN);
@@ -35,19 +35,17 @@ export class Pyraminx {
     this.U = U;
     this.B = B;
 
-    U.rotate(DEG_120_RADIANS, 0, 0, 1);
-    U.rotate(ARC_COS_THIRD, 1, 0, 0);
-    U.translate(0, 0, insphereRadius);
+    R.rotate(-DEG_60_RADIANS, 0, 0, 1);
+    R.translate(0, inDiameter + faceSpacing, 0);
+    R.rotate(2 * DEG_60_RADIANS, 0, 0, 1);
 
-    R.rotate(ARC_COS_THIRD, 1, 0, 0);
-    R.translate(0, 0, insphereRadius);
+    U.rotate(DEG_60_RADIANS, 0, 0, 1);
+    U.translate(0, inDiameter + faceSpacing, 0);
+    U.rotate(-2 * DEG_60_RADIANS, 0, 0, 1);
 
-    L.rotate(-DEG_120_RADIANS, 0, 0, 1);
-    L.rotate(ARC_COS_THIRD, 1, 0, 0);
-    L.translate(0, 0, insphereRadius);
-
-    B.rotate(Math.PI, 0, 1, 0);
-    B.translate(0, 0, insphereRadius);
+    B.rotate(3 * DEG_60_RADIANS, 0, 0, 1);
+    B.translate(0, inDiameter + faceSpacing, 0);
+    B.rotate(-2 * DEG_60_RADIANS, 0, 0, 1);
 
     this.faces = {
       top: this.U,
@@ -56,7 +54,7 @@ export class Pyraminx {
       back: this.B,
     };
 
-    this.group = new Group([U, L, R, B]);
+    this.group = new Group([U, R, L, B]);
   }
 
   setColors(colors: { [face: string]: IColor[] }) {

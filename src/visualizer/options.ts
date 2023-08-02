@@ -14,6 +14,7 @@ import {
   DARK_BLUE,
 } from "./../puzzles/colors";
 import {
+  ClockOptions,
   CubeOptions,
   MegaminxOptions,
   PuzzleOptions,
@@ -126,6 +127,8 @@ export const defaultSquare1Options: Square1Options = {
   ],
 };
 
+export const defaultClockOptions: ClockOptions = {};
+
 export function getDefaultOptions(type: VisualizerType): PuzzleOptions {
   switch (type) {
     case VisualizerType.CUBE:
@@ -150,6 +153,8 @@ export function getDefaultOptions(type: VisualizerType): PuzzleOptions {
       return defaultSquare1Options;
     case VisualizerType.SQUARE1_NET:
       return { ...defaultSquare1Options, rotations: null };
+    case VisualizerType.CLOCK:
+      return { ...defaultClockOptions, rotations: null };
     default:
       throw new Error(`Could not get default options for puzzle ${type}`);
   }

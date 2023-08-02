@@ -1,5 +1,5 @@
-import { Face } from "./../geometry/face";
-import { IColor } from "./../geometry/color";
+import { Face } from "../../geometry/face";
+import { IColor } from "../../geometry/color";
 import {
   WHITE,
   RED,
@@ -14,11 +14,11 @@ import {
   GREY,
   PURPLE,
   BLACK,
-} from "./colors";
-import { Group } from "./../geometry/group";
-import { Object3D } from "./../geometry/object3d";
-import { DividedPentagon } from "../geometry/dividedPentagon";
-import { dodecahedronInRadius } from "../math/utils";
+} from "../colors";
+import { Group } from "../../geometry/group";
+import { Object3D } from "../../geometry/object3d";
+import { DividedPentagon } from "../../geometry/dividedPentagon";
+import { dodecahedronInRadius } from "../../math/utils";
 
 const OPTIMAL_LAYER_WIDTH = {
   2: 0.3,

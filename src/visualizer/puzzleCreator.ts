@@ -1,30 +1,33 @@
-import { MegaminxTop } from "./../puzzles/megaminxTop";
+import { MegaminxTop } from "./../puzzles/megaminx/megaminxTop";
 import { RubiksCubeTopLayer } from "./../puzzles/rubiksCube/rubiksCubeTop";
 import { Square1Net } from "./../puzzles/square1/square1Net";
 import { Square1Simualtor } from "./../simulator/square1/square1Simulator";
 import { Square1 } from "./../puzzles/square1/square1";
-import { SkewbNet } from "./../puzzles/skewbNet";
+import { SkewbNet } from "./../puzzles/skewb/skewbNet";
 import { SkewbSimulator } from "./../simulator/skewb/skewbSimulator";
-import { Skewb } from "./../puzzles/skewb";
+import { Skewb } from "../puzzles/skewb/skewb";
 import { PyraminxSimulator } from "./../simulator/pyraminx/pyraminxSimulator";
-import { PyraminxNet } from "./../puzzles/pyraminxNet";
-import { MegaminxNet } from "./../puzzles/megaminxNet";
-import { Megaminx } from "./../puzzles/megaminx";
+import { PyraminxNet } from "../puzzles/pyraminx/pyraminxNet";
+import { MegaminxNet } from "./../puzzles/megaminx/megaminxNet";
+import { Megaminx } from "../puzzles/megaminx/megaminx";
 import { MegaminxSimulator } from "./../simulator/megaminx/megaminxSimulator";
 import { RubiksCubeNet } from "./../puzzles/rubiksCube/rubiksCubeNet";
 import { RubiksCube } from "../puzzles/rubiksCube/rubiksCube";
 import { RubiksCubeSimulator } from "../simulator/rubiksCube/rubiksCubeSimulator";
 import {
+  ClockOptions,
   CubeOptions,
   MegaminxOptions,
   PyraminxOptions,
   SkewbOptions,
   Square1Options,
 } from "./interface";
-import { Pyraminx } from "../puzzles/pyraminx";
+import { Pyraminx } from "../puzzles/pyraminx/pyraminx";
 import { PuzzleGeometry } from "../puzzles/puzzleGeometry";
 import { VisualizerType } from "./enum";
 import { PuzzleOptions } from "./interface";
+import { ClockSimulator } from "../simulator/clock/clockSimulator";
+import { Clock } from "../puzzles/clock/clock";
 
 /**
  * Since puzzle geometry doesn't change for any instance of "Visuzlier"
@@ -85,6 +88,8 @@ export function getPuzzleGeometry<T extends PuzzleOptions>(
       return createSquare1(options as Square1Options);
     case VisualizerType.SQUARE1_NET:
       return createSquare1Net(options as Square1Options);
+    case VisualizerType.CLOCK:
+      return createClock(options as ClockOptions);
   }
 }
 
@@ -116,6 +121,8 @@ export function getPuzzleSimulator<T extends PuzzleOptions>(
     case VisualizerType.SQUARE1:
     case VisualizerType.SQUARE1_NET:
       return initSquare1Simulator(options);
+    case VisualizerType.CLOCK:
+      return initClockSimulator(options);
   }
 }
 
@@ -245,12 +252,34 @@ export function createSquare1Net(options: Square1Options = {}): Square1Net {
   return geometry;
 }
 
+export function createClock(options: ClockOptions = {}): Clock {
+  const simulator = initClockSimulator(options);
+  const geometry = new Clock(
+    simulator.top,
+    simulator.bottom,
+    simulator.pegs,
+    simulator.flipped
+  );
+
+  return geometry;
+}
+
 function initSquare1Simulator(options: Square1Options): Square1Simualtor {
   const simulator = new Square1Simualtor(options.scheme);
 
   if (options.case) {
     simulator.case(options.case);
   } else if (options.alg) {
+    simulator.alg(options.alg);
+  }
+
+  return simulator;
+}
+
+function initClockSimulator(options: ClockOptions) {
+  const simulator = new ClockSimulator();
+
+  if (options.alg) {
     simulator.alg(options.alg);
   }
 

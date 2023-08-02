@@ -1,9 +1,9 @@
-import { Face } from "./../geometry/face";
-import { IColor } from "./../geometry/color";
-import { WHITE, RED, BLUE, GREEN, BLACK, YELLOW, PURPLE } from "./colors";
-import { DividedPentagon } from "./../geometry/dividedPentagon";
-import { degreesToRadians, dodecahedronInRadius } from "../math/utils";
-import { Group } from "../geometry/group";
+import { Face } from "./../../geometry/face";
+import { IColor } from "./../../geometry/color";
+import { WHITE, RED, BLUE, GREEN, BLACK, YELLOW, PURPLE } from "./../colors";
+import { DividedPentagon } from "./../../geometry/dividedPentagon";
+import { degreesToRadians, dodecahedronInRadius } from "../../math/utils";
+import { Group } from "../../geometry/group";
 
 const OPTIMAL_LAYER_WIDTH = {
   2: 0.3,

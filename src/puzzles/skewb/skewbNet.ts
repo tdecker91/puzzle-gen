@@ -1,11 +1,11 @@
-import { Object3D } from "./../geometry/object3d";
-import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE, BLACK } from "./colors";
-import { Group } from "../geometry/group";
-import { IColor } from "../geometry/color";
-import { Plane } from "../geometry/plane";
-import { Geometry } from "../geometry/geometry";
-import { Triangle } from "../geometry/triangle";
-import { Vector3 } from "../math/vector";
+import { Object3D } from "./../../geometry/object3d";
+import { RED, YELLOW, BLUE, ORANGE, GREEN, WHITE, BLACK } from "./../colors";
+import { Group } from "../../geometry/group";
+import { IColor } from "../../geometry/color";
+import { Plane } from "../../geometry/plane";
+import { Geometry } from "../../geometry/geometry";
+import { Triangle } from "../../geometry/triangle";
+import { Vector3 } from "../../math/vector";
 
 export class SkewbNet {
   stickers: Object3D[];

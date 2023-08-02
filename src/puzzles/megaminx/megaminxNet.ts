@@ -1,6 +1,6 @@
-import { Geometry } from "./../geometry/geometry";
-import { Face } from "./../geometry/face";
-import { IColor } from "./../geometry/color";
+import { Geometry } from "./../../geometry/geometry";
+import { Face } from "./../../geometry/face";
+import { IColor } from "./../../geometry/color";
 import {
   WHITE,
   RED,
@@ -15,12 +15,12 @@ import {
   LIGHT_GREEN,
   ORANGE,
   BLACK,
-} from "./colors";
-import { Group } from "./../geometry/group";
-import { DividedPentagon } from "./../geometry/dividedPentagon";
-import { pentagonInRadius } from "../math/utils";
-import { chunkArray } from "../utils/arrays";
-import { Matrix4 } from "../math/matrix";
+} from "./../colors";
+import { Group } from "./../../geometry/group";
+import { DividedPentagon } from "./../../geometry/dividedPentagon";
+import { pentagonInRadius } from "../../math/utils";
+import { chunkArray } from "../../utils/arrays";
+import { Matrix4 } from "../../math/matrix";
 
 const DEG_36_RADIANS = (36 * Math.PI) / 180;
 const DEG_72_RADIANS = (72 * Math.PI) / 180;

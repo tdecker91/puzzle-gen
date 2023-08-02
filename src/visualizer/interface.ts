@@ -142,6 +142,8 @@ export interface PyraminxOptions extends PuzzleOptions {
 
 export interface Square1Options extends PuzzleOptions {}
 
+export interface ClockOptions extends PuzzleOptions {}
+
 export function validatePuzzleOptions(options: PuzzleOptions) {
   if (options.alg && typeof options.alg !== "string") {
     console.warn(`Inavlid alg ${options.alg}. alg must be a string`);

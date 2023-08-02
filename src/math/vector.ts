@@ -12,6 +12,10 @@ export class Vector3 {
     return new Vector3(x, y, z);
   }
 
+  static fromVec2(vec2: Vector2) {
+    return new Vector3(vec2.x, vec2.y, 0);
+  }
+
   constructor(x: number, y: number, z: number) {
     this.x = x;
     this.y = y;
@@ -47,6 +51,14 @@ export class Vector3 {
     this.x = x;
     this.y = y;
     this.z = z;
+  }
+
+  translate(x: number, y: number, z: number) {
+    this.x += x;
+    this.y += y;
+    this.z += z;
+
+    return this;
   }
 
   multiply(x: number, y: number, z: number) {

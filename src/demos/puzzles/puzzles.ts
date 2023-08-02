@@ -8,8 +8,10 @@ function renderDefault() {
     height: 250,
     puzzle: {
       scale: 1,
-      translation: { x: 0, y: 0, z: 0 }
-    }
+      translation: { x: 0, y: 0, z: 0 },
+      rotations: []
+    },
+
   }
   PNG("#cube", VisualizerType.CUBE, options);
   PNG("#megaminx", VisualizerType.MEGAMINX, options);
@@ -23,6 +25,7 @@ function renderDefault() {
   PNG("#square1-net", VisualizerType.SQUARE1_NET, options);
   PNG("#cube-top", VisualizerType.CUBE_TOP, options);
   PNG("#mega-top", VisualizerType.MEGAMINX_TOP, options);
+  PNG("#clock", VisualizerType.CLOCK, {...options, strokeWidth: .009, width: 500, height: 500});
 }
 
 function renderScrambled() {
@@ -53,6 +56,8 @@ function renderScrambled() {
 
   const square1Alg = "(-2,3)/(3,-1)/(3,-3)/(6,6)/(6,0)/(-2,-1)/(-4,-2)/(0,-3)/(0,-4)/(-4,5)/(-5,-2)/(2,-5)/(6,-4)/(-3,6)/(-2,2)/(3,-5)/";
 
+  const clockAlg = "UR3+ DR3+ DL2+ UL6+ U0+ R0+ D2+ L3+ ALL3- y2 U5- R6+ D2+ L2+ ALL5-";
+
   PNG("#cube-scrambled", VisualizerType.CUBE, {...options, puzzle: { alg: cubeAlg }});
   PNG("#cube-net-scrambled", VisualizerType.CUBE_NET, {...options, puzzle: { alg: cubeAlg }});
   PNG("#cube-top-scrambled", VisualizerType.CUBE_TOP, {...options, puzzle: { alg: cubeAlg }});
@@ -65,6 +70,7 @@ function renderScrambled() {
   PNG("#square1-scrambled", VisualizerType.SQUARE1, {...options, puzzle: { alg: square1Alg }});
   PNG("#square1-net-scrambled", VisualizerType.SQUARE1_NET, {...options, puzzle: { alg: square1Alg }});
   PNG("#mega-top-scrambled", VisualizerType.MEGAMINX_TOP, {...options, puzzle: { alg: megaminxAlg }});
+  PNG("#clock-scrambled", VisualizerType.CLOCK, {...options, strokeWidth: .009, width: 500, height: 500, puzzle: { alg: clockAlg }});
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {

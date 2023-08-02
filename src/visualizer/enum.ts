@@ -11,4 +11,5 @@ export enum VisualizerType {
   SKEWB_NET = "skewb-net",
   SQUARE1 = "square1",
   SQUARE1_NET = "square1-net",
+  CLOCK = "clock",
 }

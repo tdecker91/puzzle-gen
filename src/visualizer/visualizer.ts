@@ -57,6 +57,10 @@ function isMegaminx(type: VisualizerType) {
   );
 }
 
+function isClock(type: VisualizerType) {
+  return type === VisualizerType.CLOCK;
+}
+
 /**
  * Return true if we can apply simulator colors. Currently
  * we don't simulate n-layered megaminx/pyraminx.
@@ -168,7 +172,10 @@ export class Visualizer {
   }
 
   private applyColors() {
-    const hasCustomColors = this.options.stickerColors && !isSquare1(this.type);
+    const hasCustomColors =
+      this.options.stickerColors &&
+      !isSquare1(this.type) &&
+      !isClock(this.type);
     const canUseSimulator = canApplySimulatorColors(
       this.type,
       (<any>this.options).size
