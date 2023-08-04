@@ -279,7 +279,9 @@ function initSquare1Simulator(options: Square1Options): Square1Simualtor {
 function initClockSimulator(options: ClockOptions) {
   const simulator = new ClockSimulator();
 
-  if (options.alg) {
+  if (options.case) {
+    simulator.case(options.case);
+  } else if (options.alg) {
     simulator.alg(options.alg);
   }
 

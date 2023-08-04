@@ -262,67 +262,84 @@ export class ClockSimulator extends Simulator {
     this.pegs = this.invertPegState();
   }
 
+  case(alg: string) {
+    parseClockAlgorithm(alg)
+      .map((move) => ({ 
+        ...move,
+        clockwise: !move.clockwise,
+        value: move.value * -1
+      }))
+      .reverse()
+      .forEach((move) => {
+        this.doClockMove(move);
+      });
+  }
+
   alg(alg: string) {
     parseClockAlgorithm(alg).forEach((move) => {
-      console.log("doing clock move", move);
-      if (move.type == ClockMoveType.ROTATE) {
-        this.y2();
-      } else {
-        // set pegs
-        switch (move.corner) {
-          case ClockCorner.ALL:
-            this.setPegs(true, true, true, true);
-            break;
-          case ClockCorner.UR:
-            this.setPegs(false, true, false, false);
-            break;
-          case ClockCorner.DR:
-            this.setPegs(false, false, false, true);
-            break;
-          case ClockCorner.DL:
-            this.setPegs(false, false, true, false);
-            break;
-          case ClockCorner.UL:
-            this.setPegs(true, false, false, false);
-            break;
-          case ClockCorner.U:
-            this.setPegs(true, true, false, false);
-            break;
-          case ClockCorner.D:
-            this.setPegs(false, false, true, true);
-            break;
-          case ClockCorner.R:
-            this.setPegs(false, true, false, true);
-            break;
-          case ClockCorner.L:
-            this.setPegs(true, false, true, false);
-            break;
-        }
-
-        // rotate correct number of values
-        switch (move.corner) {
-          case ClockCorner.ALL:
-          case ClockCorner.UR:
-          case ClockCorner.U:
-          case ClockCorner.R:
-            this.UR(move.value as TurnValue);
-            break;
-
-          case ClockCorner.DR:
-          case ClockCorner.D:
-            this.DR(move.value as TurnValue);
-            break;
-
-          case ClockCorner.DL:
-          case ClockCorner.L:
-            this.DL(move.value as TurnValue);
-            break;
-
-          case ClockCorner.UL:
-            this.UL(move.value as TurnValue);
-            break;
-        }
-      }
+      this.doClockMove(move);
     });
+  }
+
+  private doClockMove(move) {
+    console.log("doing clock move", move);
+    if (move.type == ClockMoveType.ROTATE) {
+      this.y2();
+    } else {
+      // set pegs
+      switch (move.corner) {
+        case ClockCorner.ALL:
+          this.setPegs(true, true, true, true);
+          break;
+        case ClockCorner.UR:
+          this.setPegs(false, true, false, false);
+          break;
+        case ClockCorner.DR:
+          this.setPegs(false, false, false, true);
+          break;
+        case ClockCorner.DL:
+          this.setPegs(false, false, true, false);
+          break;
+        case ClockCorner.UL:
+          this.setPegs(true, false, false, false);
+          break;
+        case ClockCorner.U:
+          this.setPegs(true, true, false, false);
+          break;
+        case ClockCorner.D:
+          this.setPegs(false, false, true, true);
+          break;
+        case ClockCorner.R:
+          this.setPegs(false, true, false, true);
+          break;
+        case ClockCorner.L:
+          this.setPegs(true, false, true, false);
+          break;
+      }
+
+      // rotate correct number of values
+      switch (move.corner) {
+        case ClockCorner.ALL:
+        case ClockCorner.UR:
+        case ClockCorner.U:
+        case ClockCorner.R:
+          this.UR(move.value as TurnValue);
+          break;
+
+        case ClockCorner.DR:
+        case ClockCorner.D:
+          this.DR(move.value as TurnValue);
+          break;
+
+        case ClockCorner.DL:
+        case ClockCorner.L:
+          this.DL(move.value as TurnValue);
+          break;
+
+        case ClockCorner.UL:
+          this.UL(move.value as TurnValue);
+          break;
+      }
+    }
   }
 }
