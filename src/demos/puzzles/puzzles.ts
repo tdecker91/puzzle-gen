@@ -25,7 +25,7 @@ function renderDefault() {
   PNG("#square1-net", VisualizerType.SQUARE1_NET, options);
   PNG("#cube-top", VisualizerType.CUBE_TOP, options);
   PNG("#mega-top", VisualizerType.MEGAMINX_TOP, options);
-  PNG("#clock", VisualizerType.CLOCK, {...options, strokeWidth: .009, width: 500, height: 500});
+  PNG("#clock", VisualizerType.CLOCK, {...options, strokeWidth: .009});
 }
 
 function renderScrambled() {
@@ -70,7 +70,7 @@ function renderScrambled() {
   PNG("#square1-scrambled", VisualizerType.SQUARE1, {...options, puzzle: { alg: square1Alg }});
   PNG("#square1-net-scrambled", VisualizerType.SQUARE1_NET, {...options, puzzle: { alg: square1Alg }});
   PNG("#mega-top-scrambled", VisualizerType.MEGAMINX_TOP, {...options, puzzle: { alg: megaminxAlg }});
-  PNG("#clock-scrambled", VisualizerType.CLOCK, {...options, strokeWidth: .009, width: 500, height: 500, puzzle: { alg: clockAlg }});
+  PNG("#clock-scrambled", VisualizerType.CLOCK, {...options, strokeWidth: .009, puzzle: { alg: clockAlg }});
 }
 
 document.addEventListener('DOMContentLoaded', function (event) {

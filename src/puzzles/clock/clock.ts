@@ -7,7 +7,7 @@ import { Object3D } from "../../geometry/object3d";
 import { polarToCartesian } from "../../math/utils";
 import { Vector3 } from "../../math/vector";
 import { YELLOW } from "../colors";
-import { CLOCK_BACKROUND_VERTICES } from "./data";
+import { CLOCK_BACKGROUND_VERTICES } from "./data";
 
 const GRID_GAP = 0.625;
 const FACE_RADIUS = 0.195;
@@ -82,7 +82,7 @@ function clockBackground(color: IColor): Geometry {
   let vertices = [];
   let faceIndices = [];
 
-  CLOCK_BACKROUND_VERTICES.forEach((v, i) => {
+  CLOCK_BACKGROUND_VERTICES.forEach((v, i) => {
     vertices.push(Vector3.fromValues(v[0], v[1], 0));
     faceIndices.push(i);
   });

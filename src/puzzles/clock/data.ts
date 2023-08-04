@@ -1,4 +1,5 @@
-export const CLOCK_BACKROUND_VERTICES = [
+// Vertices that make up the background of the rubik's clock polygon
+export const CLOCK_BACKGROUND_VERTICES = [
   [1, 0],
   [0.9951847266721969, 0.0980171403295606],
   [0.9807852804032304, 0.19509032201612825],
